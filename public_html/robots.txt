@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Disallow: /includes/
+Disallow: /data/
+Disallow: /assets/js/
+Disallow: /submit_donation.php
+Disallow: /404.php
+
+Sitemap: https://www.shajardost.com/sitemap.xml
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2

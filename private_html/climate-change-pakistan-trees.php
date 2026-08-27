@@ -1,0 +1,12 @@
+<?php
+$page_title = 'Climate Change Pakistan - Trees as Solution | ShajarDost';
+$page_description = 'How trees combat climate change in Pakistan. Role of tree planting in climate resilience and carbon sequestration.';
+include 'includes/header.php';
+?>
+<nav class="breadcrumb"><div class="container"><ol class="breadcrumb-list"><li><a href="index.php">Home</a></li><li>Climate Change Pakistan</li></ol></div></nav>
+<section class="hero-banner primary-bg"><div class="container"><h1>Climate Change and Trees in Pakistan</h1><p>How trees combat climate change in Pakistan. Role of tree planting in climate resilience and carbon sequestration.</p></div></section>
+<section class="section-padding"><div class="container"><div class="seo-content">
+<h2>Climate Change in Pakistan: Trees as Our Best Defense</h2><p>Pakistan is among the top 10 countries most vulnerable to climate change. Trees are one of the most effective natural solutions. Our 1.2 million trees absorb approximately 24,000 tonnes of CO2 annually.</p><h3>Pakistan Climate Challenges</h3><p>Rising temperatures, unpredictable monsoons, glacial melt, increasing natural disasters. The 2022 floods affected 33 million people. Tree planting builds climate resilience and protects vulnerable communities.</p>
+</div></div></section>
+<section class="section-padding" style="background:#f9f9f9;"><div class="container"><div class="text-center"><h2 class="section-title">Take Action Today</h2></div><div class="grid-3"><div class="card text-center fade-in"><div class="card-content"><i class="fas fa-donate" style="font-size:2.5rem;color:var(--gold);margin-bottom:10px;"></i><h4>Donate a Tree</h4><p>Starting from just 200 PKR.</p><a href="donate.php" class="btn btn-primary btn-block">Donate Now</a></div></div><div class="card text-center fade-in"><div class="card-content"><i class="fas fa-seedling" style="font-size:2.5rem;color:var(--secondary);margin-bottom:10px;"></i><h4>Donate Plants</h4><p>Buy saplings, we plant them.</p><a href="buy-plants.php" class="btn btn-secondary btn-block">Donate Plants</a></div></div><div class="card text-center fade-in"><div class="card-content"><i class="fas fa-hands-helping" style="font-size:2.5rem;color:var(--primary);margin-bottom:10px;"></i><h4>Volunteer</h4><p>Join our teams.</p><a href="join-us.php" class="btn btn-primary btn-block">Join Us</a></div></div></div></div></section>
+<?php include 'includes/footer.php'; ?>

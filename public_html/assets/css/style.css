@@ -1,0 +1,561 @@
+/* --- 1. RESET & BASIC SETUP --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* System fonts work best everywhere */
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* --- 2. COLORS --- */
+:root {
+    --primary: #2E7D32;
+    /* Standard Green */
+    --secondary: #4CAF50;
+    /* Light Green */
+    --dark: #1B5E20;
+    /* Dark Green */
+    --white: #ffffff;
+    --gray: #f4f4f4;
+}
+
+/* --- 3. HEADER & NAVIGATION --- */
+header {
+    background-color: var(--white);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    /* Fixed height for consistency */
+}
+
+/* Logo Styling */
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    gap: 10px;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    font-weight: 600;
+    color: #555;
+    font-size: 1rem;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary);
+}
+
+.nav-links .btn-nav {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 8px 20px;
+    border-radius: 4px;
+}
+
+.nav-links .btn-nav:hover {
+    background-color: var(--dark);
+}
+
+/* Mobile Toggle (Hidden on Desktop) */
+.mobile-toggle {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* --- 4. HERO SECTION --- */
+.hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://picsum.photos/seed/pakistanforest/1920/1080');
+    background-size: cover;
+    background-position: center;
+    color: var(--white);
+    text-align: center;
+    padding-top: 140px;
+    padding-bottom: 80px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #f0f0f0;
+}
+
+/* --- 5. BUTTONS --- */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--dark);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-secondary:hover {
+    background-color: var(--gray);
+}
+
+.btn-gold {
+    background-color: #ffb703;
+    color: #fff;
+    font-weight: bold;
+}
+
+.btn-gold:hover {
+    background-color: #fb8500;
+}
+
+/* --- 6. CARDS & GRID --- */
+.section-padding {
+    padding: 60px 0;
+}
+
+.section-title {
+    font-size: 2.2rem;
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.section-desc {
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    text-align: left;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    height: 200px;
+    overflow: hidden;
+}
+
+.card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.card h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 1.4rem;
+}
+
+.card p {
+    color: #666;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+/* --- 7. FOOTER STYLES --- */
+footer {
+    background-color: #1f2937;
+    /* Dark Grey/Black */
+    color: #d1d5db;
+    /* Light Grey Text */
+    padding: 60px 0 20px;
+    font-size: 0.95rem;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-col h3 {
+    color: var(--white);
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+/* Small underline under titles */
+.footer-col h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary);
+}
+
+.footer-col p {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.footer-links ul li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: #d1d5db;
+    transition: 0.3s;
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    color: var(--primary);
+    padding-left: 5px;
+    /* Slide effect on hover */
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.contact-item i {
+    color: var(--primary);
+    margin-top: 5px;
+}
+
+/* Social Icons in Footer */
+.social-icons-footer {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-icons-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--white);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+.social-icons-footer a:hover {
+    background-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    padding-top: 20px;
+    font-size: 0.85rem;
+    color: #9ca3af;
+}
+
+/* Footer Logo adjustment */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    color: var(--white);
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-decoration: none;
+}
+
+.footer-logo img {
+    height: 40px;
+}
+
+/* --- 8. WHATSAPP CHATBOX BUTTON (NEW) --- */
+.whatsapp-chat-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 10000;
+    background-color: #25d366;
+    /* WhatsApp Green */
+    color: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    height: 65px;
+    padding: 0;
+    width: 65px;
+    /* Starts as a circle */
+}
+
+/* Hover Effect: Box expands */
+.whatsapp-chat-btn:hover {
+    width: 240px;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    transform: translateY(-3px);
+}
+
+/* Icon Styling */
+.whatsapp-chat-btn i {
+    font-size: 36px;
+    flex-shrink: 0;
+    /* Icon ko chhota nahi hone denge */
+    margin-right: 0;
+    transition: margin 0.3s ease;
+}
+
+/* Text that appears on hover */
+.whatsapp-chat-btn span {
+    font-size: 17px;
+    font-weight: 600;
+    opacity: 0;
+    white-space: nowrap;
+    transform: translateX(-20px);
+    /* Text initially left side hidden */
+    transition: all 0.3s ease 0.1s;
+    /* Thora delay */
+}
+
+.whatsapp-chat-btn:hover i {
+    margin-right: 15px;
+    /* Icon aur text ke beech gap */
+}
+
+.whatsapp-chat-btn:hover span {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Mobile: Sirf circle rahe, expand na ho (user experience ke liye) */
+@media (max-width: 768px) {
+    .whatsapp-chat-btn {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .whatsapp-chat-btn:hover {
+        width: 55px;
+        padding: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+
+    .whatsapp-chat-btn i {
+        margin-right: 0;
+    }
+
+    .whatsapp-chat-btn span {
+        display: none;
+    }
+}
+
+/* --- 9. RESPONSIVE (MOBILE) --- */
+@media (max-width: 768px) {
+
+    /* Navigation Mobile Menu */
+    .nav-links {
+        display: none;
+        /* Hidden by default on mobile */
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .mobile-toggle {
+        display: block;
+    }
+
+    /* Hero Mobile */
+    .hero h1 {
+        font-size: 2rem;
+    }
+}
+/* --- VIDEO WRAPPER FOR RESPONSIVE YOUTUBE --- */
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+/* --- BUTTON STYLES (Clean & Consistent) --- */
+.btn-nav {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    background-color: var(--primary);
+    transition: 0.3s ease;
+}
+
+.btn-nav:hover {
+    background-color: var(--dark);
+    color: white;
+}
+
+/* --- DROPDOWN (For Buy Plants) --- */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none; /* Default hidden */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--white);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    min-width: 200px;
+    border-radius: 8px;
+    z-index: 100;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Dropdown Links */
+.dropdown-content li {
+    display: block;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--bg-light);
+    color: var(--primary);
+    padding-left: 20px;
+}

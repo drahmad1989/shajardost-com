@@ -1,0 +1,12 @@
+<?php
+$page_title = 'Billion Tree Tsunami Pakistan - History and Impact | ShajarDost';
+$page_description = 'Learn about Pakistan Billion Tree Tsunami afforestation project. Its impact and how ShajarDost contributes.';
+include 'includes/header.php';
+?>
+<nav class="breadcrumb"><div class="container"><ol class="breadcrumb-list"><li><a href="index.php">Home</a></li><li>Billion Tree Tsunami</li></ol></div></nav>
+<section class="hero-banner primary-bg"><div class="container"><h1>Billion Tree Tsunami Pakistan</h1><p>Learn about Pakistan Billion Tree Tsunami afforestation project. Its impact and how ShajarDost contributes.</p></div></section>
+<section class="section-padding"><div class="container"><div class="seo-content">
+<h2>Billion Tree Tsunami: Pakistan Green Success Story</h2><p>Launched in KP in 2014, this project exceeded its target, restoring 350,000 hectares and earning international recognition from UNEP. The success led to the Ten Billion Trees Programme.</p><h3>Impact</h3><p>Carbon sequestration, biodiversity restoration, soil conservation, and thousands of green jobs created. The project empowered local communities through employment.</p><h3>ShajarDost Alignment</h3><p>We work at the community level, ensuring trees are planted where people live and study. Our 1.2 million trees contribute to the national goal.</p>
+</div></div></section>
+<section class="section-padding" style="background:#f9f9f9;"><div class="container"><div class="text-center"><h2 class="section-title">Take Action Today</h2></div><div class="grid-3"><div class="card text-center fade-in"><div class="card-content"><i class="fas fa-donate" style="font-size:2.5rem;color:var(--gold);margin-bottom:10px;"></i><h4>Donate a Tree</h4><p>Starting from just 200 PKR.</p><a href="donate.php" class="btn btn-primary btn-block">Donate Now</a></div></div><div class="card text-center fade-in"><div class="card-content"><i class="fas fa-seedling" style="font-size:2.5rem;color:var(--secondary);margin-bottom:10px;"></i><h4>Donate Plants</h4><p>Buy saplings, we plant them.</p><a href="buy-plants.php" class="btn btn-secondary btn-block">Donate Plants</a></div></div><div class="card text-center fade-in"><div class="card-content"><i class="fas fa-hands-helping" style="font-size:2.5rem;color:var(--primary);margin-bottom:10px;"></i><h4>Volunteer</h4><p>Join our teams.</p><a href="join-us.php" class="btn btn-primary btn-block">Join Us</a></div></div></div></div></section>
+<?php include 'includes/footer.php'; ?>

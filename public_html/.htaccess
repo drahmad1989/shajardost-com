@@ -1,0 +1,79 @@
+# ShajarDost - .htaccess (Fixed)
+RewriteEngine On
+
+# Set RewriteBase - critical for subdirectory installations
+# If site is at root, use / | If in subdirectory, use /subdirectory/
+RewriteBase /
+
+# Force www (301 redirect for SEO consistency)
+RewriteCond %{HTTP_HOST} ^shajardost\.com$ [NC]
+RewriteRule ^(.*)$ https://www.shajardost.com/$1 [R=301,L]
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Remove .php extension (clean URLs)
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^/]+?)/?$ $1.php [L]
+
+# Redirect tree-care-guide-pakistan to tree-guide (SEO consolidation)
+RewriteRule ^tree-care-guide-pakistan\.php$ tree-guide.php [R=301,L]
+
+# SEO-friendly URLs for blog posts
+RewriteRule ^blog/([0-9]+)/([^/]+)$ single-blog.php?id=$1 [L,QSA]
+
+# SEO-friendly URLs for projects
+RewriteRule ^project/([0-9]+)/([^/]+)$ single-project.php?id=$1 [L,QSA]
+
+# Cache Control
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/html "access plus 1 hour"
+</IfModule>
+
+# GZIP Compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
+    AddOutputFilterByType DEFLATE application/javascript application/json
+    AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Block only BAD bots (not Google/Bing which are essential for SEO)
+# Note: Googlebot, Bingbot, and other search bots are ALLOWED via robots.txt
+RewriteCond %{HTTP_USER_AGENT} (semrushbot|ahrefsbot|dotbot|mj12bot|seznambot|babbarbot|blexbot|serpstatbot) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+# Custom error pages (using proper paths)
+ErrorDocument 404 /404.php
+ErrorDocument 500 /index.php
+
+# Protect sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|env)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Prevent directory listing
+Options -Indexes
+
+# Disable ETags for better caching
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None
