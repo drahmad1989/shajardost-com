@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="95" fill="#2d6a4f"/>
+  <circle cx="100" cy="100" r="80" fill="#1b4332"/>
+  <path d="M100 45 L100 140 M75 75 L100 50 L125 75 M80 110 Q90 90 100 105 Q110 90 120 110" stroke="#52b788" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <text x="100" y="160" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="18" fill="#d4a017">ShajarDost</text>
+</svg>

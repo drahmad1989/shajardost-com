@@ -1,0 +1,19 @@
+{
+  "name": "ShajarDost \u2014 Tree Plantation NGO Pakistan",
+  "short_name": "ShajarDost",
+  "description": "Plant trees in Pakistan. 1.2 million trees planted. National record holders.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#faf9f6",
+  "theme_color": "#2d6a4f",
+  "scope": "/",
+  "lang": "en-PK",
+  "icons": [
+    {
+      "src": "/assets/images/Shajardost-logo.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

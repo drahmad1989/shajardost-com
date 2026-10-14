@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#2d6a4f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Shajardost">
+<link rel="apple-touch-icon" href="/pwa-icon-192.png">
+<link rel="manifest" href="/manifest.json">
+    <title>Home | ShajarDost - 1.2 Million Trees</title>
+    <meta name="description" content="Join ShajarDost to plant trees. We have planted over 1.2 Million trees. Be a part of Mission 50, Green Scouts, and Mini Nursery projects.">
+    <link rel="canonical" href="https://shajardost.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+    <meta property="og:title" content="Home | ShajarDost - 1.2 Million Trees">
+    <meta property="og:description" content="Join ShajarDost to plant trees. We have planted over 1.2 Million trees. Be a part of Mission 50, Green Scouts, and Mini Nursery projects.">
+    <meta property="og:url" content="https://shajardost.com">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ShajarDost">
+    <meta property="og:image" content="https://shajardost.com/assets/images/Shajardost-logo.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Home | ShajarDost - 1.2 Million Trees">
+    <meta name="twitter:description" content="Join ShajarDost to plant trees. We have planted over 1.2 Million trees. Be a part of Mission 50, Green Scouts, and Mini Nursery projects.">
+    <meta name="twitter:image" content="https://shajardost.com/assets/images/Shajardost-logo.svg">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "NGO",
+      "name": "ShajarDost",
+      "alternateName": "Green Seekers",
+      "url": "https://shajardost.com",
+      "logo": "https://shajardost.com/assets/images/Shajardost-logo.svg",
+      "description": "Pakistan grassroots tree planting organization. 1.2 Million+ trees planted since 2011.",
+      "foundingDate": "2011",
+      "founder": {
+            "@type": "Person",
+            "name": "Muhammad Ahmad Baloch"
+      },
+      "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Al-Falah Building, Bonga Balochan",
+            "addressLocality": "Pattoki",
+            "addressRegion": "Punjab",
+            "addressCountry": "PK"
+      },
+      "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+92-333-3197977",
+            "contactType": "customer service"
+      },
+      "sameAs": [
+            "https://www.facebook.com/ShajarDostcom/",
+            "https://www.youtube.com/@ShajarDost"
+      ]
+}
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="logo">
+                    <img width="400" height="300" loading="lazy" src="/assets/images/Shajardost-logo.svg" alt="ShajarDost Logo">
+                    <span>ShajarDost</span>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/mission-fifty/">Mission 50</a></li>
+                    <li><a href="/green-scouts/">Green Scouts</a></li>
+                    <li><a href="/mini-nursery/">Mini Nursery</a></li>
+                    <li><a href="/gallery/">Gallery</a></li>
+                    <li><a href="/team-showcase/" style="color: #ff0000;"><i class="fas fa-video"></i> Team</a></li>
+                    <li><a href="/buy-plants/" class="btn-nav" style="background: #25d366;">Buy Plants</a></li>
+                    <li><a href="/donate/" class="btn-nav" style="background: var(--secondary);">Donate</a></li>
+                    <li><a href="/sponsorship/" class="btn-nav">Sponsor Us</a></li>
+                </ul>
+                <div class="mobile-toggle" id="menuBtn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <a href="https://wa.me/923360000597" class="whatsapp-chat-btn" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with Us</span>
+    </a>
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const icon = menuBtn.querySelector('i');
+        if(menuBtn && navLinks){
+            menuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                if (navLinks.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        }
+    </script>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Join the Fight to Make Pakistan Green</h1>
+            <p>Become a ShajarDost, plant a tree, and lay the foundation for a better future.</p>
+            <div style="margin-top: 30px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="#donate-options" class="btn btn-gold">
+                    Start Planting
+                </a>
+                <a href="/mission-fifty/" class="btn btn-primary">
+                    Join Mission 50
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEW SECTION: TEN BILLION TREES PROJECT (Updated Narrative) -->
+<section id="tbtp-section" style="padding: 80px 0; background: linear-gradient(135deg, #0f4c81, #1e3c72); color: white;">
+    <div class="container">
+        <div style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
+            <div style="flex: 1;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Ten Billion Trees Project</h2>
+                <p style="font-size: 1.1rem; opacity: 0.9; line-height: 1.6;">
+                    ShajarDost is aligned with the vision of a <strong>Green Pakistan</strong>.
+                </p>
+                
+                <p style="font-size: 1rem; line-height: 1.6;">
+                    <strong>Our Journey & Timeline:</strong>
+                </p>
+                
+                <ul style="list-style: none; margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
+                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-calendar-check" style="color: #4cd137; margin-right: 15px; margin-top: 5px;"></i>
+                        <span>
+                            <strong>June 2018:</strong> Firstly we launched the <strong>Ten Billion Trees Project</strong> -TBTP by<strong> Muhammad Ahmad Baloch</strong>..
+                        </span>
+                    </li>
+                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-flag" style="color: #4cd137; margin-right: 15px; margin-top: 5px;"></i>
+                        <span>
+                            <strong>August 2018:</strong> After two months, another project was launched by <strong>Prime Minister Imran Khan</strong>.
+                        </span>
+                    </li>
+                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-handshake" style="color: #4cd137; margin-right: 15px; margin-top: 5px;"></i>
+                        <span>
+                            <strong>Our Alignment:</strong> We aligned our grassroots movement with the national agenda to maximize our impact.
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div style="flex: 0 0 350px; text-align: center;">
+                 <!-- Placeholder Image for TBTP -->
+                 <div style="font-size: 8rem; color: rgba(255,255,255,0.15);">
+                    <i class="fas fa-tree"></i>
+                </div>
+                <div style="margin-top: 20px; font-size: 3rem; font-weight: bold;">
+                    10 Billion<br>Trees
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- National Record Section -->
+<section class="section-padding" style="background: #fff;">
+    <div class="container">
+        <div class="card" style="border-left: 5px solid var(--primary); display: flex; align-items: center; gap: 40px; background: #f0fdf4; padding: 30px;">
+            <div style="flex: 1;">
+                <span style="background: #FFD700; color: #000; padding: 5px 10px; border-radius: 4px; font-weight: bold; font-size: 0.8rem;">NATIONAL RECORD HOLDER</span>
+                <h2 style="margin: 10px 0; color: var(--dark);">14th August 2018</h2>
+                <h3 style="color: var(--primary); font-size: 2rem; margin-bottom: 15px;">630,000 Trees in One Day</h3>
+                <p>Setting a national record by planting hundreds of thousands of trees in a single day across Punjab.</p>
+            </div>
+            <div style="width: 300px;">
+                <img width="400" height="300" loading="lazy" src="assets/images/national-record-2018.webp" alt="National Record" style="border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TOTAL STATS HIGHLIGHT (1.2 Million) -->
+<section class="section-padding" style="background: var(--dark); color: white; text-align: center;">
+    <div class="container">
+        <h1 style="font-size: 3.5rem; color: var(--gold); margin-bottom: 10px;">1,200,000+</h1>
+        <p style="font-size: 1.2rem; opacity: 0.9;">Total Trees Planted by Our Community</p>
+        
+        <div class="grid-3" style="margin-top: 50px; text-align: center; gap: 40px;">
+            <div>
+                <h2 style="font-size: 2.5rem; color: var(--gold);">12 Lakh+</h2>
+                <p>Plantation</p>
+            </div>
+            <div>
+                <h2 style="font-size: 2.5rem; color: var(--gold);">630K</h2>
+                <p>Record Day</p>
+            </div>
+            <div>
+                <h2 style="font-size: 2.5rem; color: var(--gold);">600+</h2>
+                <p>Green Scouts</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Donation Choice -->
+<section id="donate-options" class="section-padding">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">Make a Difference Your Way</h2>
+            <p class="section-desc">Support the Ten Billion Trees Project vision with ShajarDost.</p>
+        </div>
+
+        <div class="grid-3">
+            
+            <!-- Option A: Donate Money -->
+            <div class="card" style="border-top: 5px solid var(--gold);">
+                <div class="card-content text-center">
+                    <i class="fas fa-donate" style="font-size: 3rem; color: var(--gold); margin-bottom: 15px;"></i>
+                    <h3>Donate Money</h3>
+                    <p>We handle everything. From buying saplings to planting and maintaining them.</p>
+                    <ul style="text-align: left; margin: 15px 0; font-size: 0.9rem;">
+                        <li>Cost: 200 PKR (Basic)</li>
+                        <li>Cost: 2000 PKR (Premium)</li>
+                        <li>Certificate Included</li>
+                    </ul>
+                    <a href="/donate/" class="btn btn-primary" style="width: 100%;">Donate Now</a>
+                </div>
+            </div>
+
+            <!-- Option B: Donate Plants (Highlighted) -->
+            <div class="card" style="transform: scale(1.05); border-top: 5px solid var(--secondary); box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+                <div style="background: var(--secondary); color: white; padding: 5px; font-weight: bold; text-align: center;">NOT MONEY? DONATE PLANTS</div>
+                <div class="card-content text-center">
+                    <i class="fas fa-seedling" style="font-size: 3rem; color: var(--secondary); margin-bottom: 15px;"></i>
+                    <h3>Donate Plants</h3>
+                    <p>We have the land (Schools, Colleges, Hospitals). We have the teams. We just need the saplings.</p>
+                    <p style="font-size: 0.9rem; margin: 10px 0;">You buy them, we plant them!</p>
+                    <a href="/buy-plants/" class="btn btn-secondary" style="width: 100%; background: var(--secondary); color: white;">Donate Plants</a>
+                </div>
+            </div>
+
+            <!-- Option C: Corporate -->
+            <div class="card" style="border-top: 5px solid var(--dark);">
+                <div class="card-content text-center">
+                    <i class="fas fa-building" style="font-size: 3rem; color: var(--dark); margin-bottom: 15px;"></i>
+                    <h3>Corporate</h3>
+                    <p>Sponsor a plantation drive, a park, or a Miyawaki forest for your company's CSR.</p>
+                    <a href="/sponsorship/" class="btn btn-primary" style="width: 100%;">Sponsor Us</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Our Core Programs -->
+<section class="section-padding" style="background: #f9f9f9;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">Our Core Programs</h2>
+            <p class="section-desc">Join a movement and become a ShajarDost.</p>
+        </div>
+
+        <div class="grid-3">
+            
+            <div class="card">
+                <div class="card-img">
+                    <img width="400" height="300" loading="lazy" src="assets/images/mission-50-campaign.webp" alt="Mission Fifty">
+                </div>
+                <div class="card-content">
+                    <h3>Mission Fifty</h3>
+                    <p>Pledge to plant and grow 50 trees in your lifetime. Earn a "Green Warrior" certificate.</p>
+                    <a href="/mission-fifty/" class="btn btn-primary" style="width: 100%;">Start Mission</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img width="400" height="300" loading="lazy" src="assets/images/green-scouts-school.webp" alt="Green Scouts">
+                </div>
+                <div class="card-content">
+                    <h3>Green Scouts</h3>
+                    <p>Training next generation. 200+ students from 5 schools have already joined.</p>
+                    <a href="/green-scouts/" class="btn btn-secondary" style="width: 100%;">View Program</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-img">
+                    <img width="400" height="300" loading="lazy" src="assets/images/mini-nursery-project.webp" alt="Mini Nursery">
+                </div>
+                <div class="card-content">
+                    <h3>Mini Nursery</h3>
+                    <p>Turn your rooftop into a forest factory. Grow saplings and donate them to us.</p>
+                    <a href="/mini-nursery/" class="btn btn-secondary" style="width: 100%;">Start Nursery</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- NEW SECTION: Miyawaki Forest Highlight -->
+<section class="section-padding">
+    <div class="container">
+        <div class="card" style="background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://picsum.photos/seed/forest/1920/600'); background-size: cover; background-position: center; color: white; padding: 50px; border: none;">
+            <div style="display: flex; align-items: center; gap: 40px; flex-wrap: wrap;">
+                <div style="flex: 1;">
+                    <h2 style="font-size: 2.5rem; margin-bottom: 15px;">Create a Miyawaki Forest</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px; opacity: 0.9;">
+                        Want a dense forest on a small plot? Our Miyawaki method creates forests that grow 10x faster and 30x denser.
+                    </p>
+                    <div style="margin-bottom: 20px;">
+                        <span style="background: var(--gold); color: #000; padding: 5px 10px; border-radius: 4px; font-weight: bold;">Cost: 800 - 1000 PKR / Plant</span>
+                    </div>
+                    <a href="/miyawaki-forest/" class="btn btn-gold">Learn About Miyawaki</a>
+                </div>
+                <div style="flex: 1; text-align: center;">
+                    <i class="fas fa-tree" style="font-size: 8rem; color: rgba(255,255,255,0.2);"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Visual Evidence Gallery (Green Seekers) -->
+<section class="section-padding" style="background: #f9f9f9;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">Visual Evidence of Our Work</h2>
+            <p class="section-desc">We don't just talk, we do. Check our 433+ photos of plantation drives, nurseries, and training sessions.</p>
+        </div>
+
+        <div class="grid-3">
+            <!-- Image 1 -->
+            <div class="card">
+                <div style="height: 200px; overflow: hidden;">
+                    <img width="400" height="300" loading="lazy" src="assets/images/gallery/greenseekers(1).webp" class="gallery-img" alt="Green Seekers Work">
+                </div>
+                <div class="card-content text-center">
+                    <p style="font-size: 0.9rem;">Beginning of the Journey</p>
+                </div>
+            </div>
+
+            <!-- Image 2 -->
+            <div class="card">
+                <div style="height: 200px; overflow: hidden;">
+                    <img width="400" height="300" loading="lazy" src="assets/images/gallery/greenseekers(10).webp" class="gallery-img" alt="Green Seekers Work">
+                </div>
+                <div class="card-content text-center">
+                    <p style="font-size: 0.9rem;">Team Work</p>
+                </div>
+            </div>
+
+            <!-- Image 3 -->
+            <div class="card">
+                <div style="height: 200px; overflow: hidden;">
+                    <img width="400" height="300" loading="lazy" src="assets/images/gallery/greenseekers(50).webp" class="gallery-img" alt="Green Seekers Work">
+                </div>
+                <div class="card-content text-center">
+                    <p style="font-size: 0.9rem;">Training Sessions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- View All Button -->
+        <div class="text-center" style="margin-top: 40px;">
+            <a href="/gallery/" class="btn btn-primary btn-lg">
+                <i class="fas fa-images"></i> View All 433 Photos
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA -->
+<section class="section-padding" style="background: var(--primary); color: white; text-align: center;">
+    <div class="container">
+        <h2 style="margin-bottom: 20px;">You Can Be a Part of This Change</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9;">Whether you donate money, plants, or time, your contribution is invaluable.</p>
+        <a href="/contact/" class="btn btn-gold">Become a ShajarDost</a>
+    </div>
+</section>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <a href="/" class="footer-logo">
+                        <img width="400" height="300" loading="lazy" src="/assets/images/Shajardost-logo.svg" alt="ShajarDost Logo">
+                        ShajarDost
+                    </a>
+                    <p>A movement dedicated to making Pakistan greener, one tree at a time. We are proud contributors to the Ten Billion Trees Project.</p>
+                    <div class="social-icons-footer">
+                        <a href="https://www.facebook.com/ShajarDostcom/" target="blank" title="Follow on Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.youtube.com/@ShajarDost" target="_blank" title="Subscribe on YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/mission-fifty/">Mission 50</a></li>
+                        <li><a href="/donate/">Donate / Name Your Tree</a></li>
+                        <li><a href="/green-scouts/">Green Scouts</a></li>
+                        <li><a href="/teams/">Our Teams</a></li>
+                        <li><a href="/projects/">Projects</a></li>
+                        <li><a href="/blog/">Green Journal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact Us</h3>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Al-Falah Building, Bonga Balochan,<br>p/o Phool Nagar, Tehsil Pattoki,<br>District Kasur.</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span><a href="tel:03333197977" style="color: inherit;">0333-3197977</a><br><small>(JS Bank / Zindagi App)</small></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <span><a href="https://wa.me/923360000597" target="_blank" style="color: inherit;">Chat on WhatsApp</a></span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="502338313a3122343f2324333f3d10373d31393c7e333f3d">[email&#160;protected]</a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2026 ShajarDost. All Rights Reserved. | Designed by DigitalKasur.com</p>
+            </div>
+        </div>
+    </footer>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+  function s(){
+    var d={site:"shajardost",page:window.location.pathname,referrer:document.referrer,ua:navigator.userAgent,screen:screen.width+"x"+screen.height};
+    navigator.sendBeacon("https://page-analytics.ahmad22mao.workers.dev/collect",JSON.stringify(d));
+  }
+  s();
+  var o=window.addEventListener;window.addEventListener=function(t,f,c){
+    if(t==="pagehide"||t==="beforeunload"){var g=f;f=function(e){s();g(e);};}
+    o.call(this,t,f,c);
+  };
+})();
+</script>
+<script src="https://leads-system.ahmad22mao.workers.dev/widget.js?source=shajardost"></script>
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('/sw.js').catch(function(){});
+  });
+}
+</script>
+<script src="https://chatbot-auto-reply.ahmad22mao.workers.dev/widget.js?site=shajardost"></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"cb6a40a7365e4c81bc8499bfcefd3083","r":1,"spa":2}' crossorigin="anonymous"></script>
+
+<!-- DeraTalk Floating Button (bottom-left) -->
+<a href="https://app.deratalk.com/b/ahmad?src=shajardost&msg=Hi%21%20I%20visited%20ShajarDost%20and%20want%20to%20know%20more." 
+   target="_blank" rel="noopener" 
+   style="position:fixed;bottom:20px;left:20px;z-index:9998;background:#00A884;color:#fff;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0, 168, 132,0.4);text-decoration:none;transition:transform 0.2s;" 
+   onmouseover="this.style.transform='scale(1.1)';" 
+   onmouseout="this.style.transform='scale(1)';" 
+   title="Chat with us on DeraTalk">
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+</a>
+
+</body>
+</html>
