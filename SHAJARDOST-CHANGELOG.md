@@ -181,6 +181,49 @@
 
 ---
 
+## [v1.0.2] — 2026-10-15 02:16 (Asia/Karachi)
+
+**Pushed by:** Muhammad Ahmad (via Z.ai agent)
+**Live URL verified:** https://shajardost.com/ → HTTP 200 ✓
+**Cloudflare Pages deploy:** 77ac0dde.shajardost-com.pages.dev
+**GitHub:** branch `static-live` commit b1b61cc
+
+### Owner decision executed: OPTION C — WhatsApp removed site-wide
+Owner confirmed: "C) WhatsApp hatao — sirf Direct Call (0333-3197977) + DeraTalk raho" + provided DeraTalk QR (https://app.deratalk.com/r/F6U6LP)
+
+### Changes
+- **Floating button (bottom-right):** WhatsApp float div → Direct Call button `tel:+923333197977` (brand green #2d6a4f, ri-phone-line icon, same position/size/animation) — 14 pages
+- **wa.me links: 57 → 0.** Links with prefilled message (donate packages, Get Quote buttons) → DeraTalk deep links `app.deratalk.com/b/ahmad?src=shajardost&msg=<same message re-encoded>` (prefill preserved). Plain links: phone-text anchors → `tel:`, others → DeraTalk referral `app.deratalk.com/r/F6U6LP`
+- **Form fallbacks rebuilt (9 pages):** "Prefer WhatsApp?" → "Prefer to talk?" with [Call 0333-3197977] + [DeraTalk Chat] buttons
+- **Form field label (9 pages):** "WhatsApp *" → "Mobile Number *"
+- **Copy/SEO updates:** meta descriptions, JSON-LD schema, FAQ answers, how-to-donate steps, thank-you page — all WhatsApp/old-number mentions → Direct Call 0333-3197977 + DeraTalk (0 visible "WhatsApp" text remains; only cosmetic CSS class names btn-whatsapp/form-whatsapp-fallback kept to avoid CSS rewrite)
+- **/contact page:** WhatsApp card → "Direct Call" card (tel:); NEW "Scan to Chat on DeraTalk" QR section (owner-provided QR at /assets/images/deratalk-qr.png) + DeraTalk referral button
+- **Bug 9 FIXED:** index.html og:image + twitter:image 404 hero.jpg → national-record-2018.jpg
+- **whatsapp-tracker.js** script references removed from 14 pages (file kept in repo, now unreferenced). script.js waFloat handler is dead code (guarded, harmless)
+- **style.css:** additive block only (`.call-float` + `.btn-call`, comment-separated) — no rewrite
+
+### Files modified
+All 18 HTML pages + assets/css/style.css (append) + assets/images/deratalk-qr.png (NEW)
+
+### Verification
+- [x] `wa.me` occurrences across all 18 live pages: **0**
+- [x] `ri-whatsapp-line` icons: **0**
+- [x] Visible "WhatsApp" text: **0** (except CSS class names)
+- [x] `call-float` on 14 pages live; `tel:+923333197977` present (/ and /donate = 3 each)
+- [x] DeraTalk links: 61 total (float + deep links + referral + QR section)
+- [x] QR image live: /assets/images/deratalk-qr.png → HTTP 200
+- [x] Contact QR section live ("Scan to Chat on DeraTalk")
+- [x] og:image fixed (national-record-2018.jpg ×4 refs, hero.jpg 0)
+- [x] Forms untouched from v1.0.1 (access_key/subject/interest intact)
+- [x] Bing IndexNow: 17 URLs → HTTP 200
+
+### Known regressions / follow-ups
+- script.js `const WA='923360000597'` + waFloat handler now dead code — cleanup optional in v1.0.3
+- whatsapp-tracker.js file unreferenced — delete optional in v1.0.3
+- Pending: Bug 5 (volunteer page), Bug 6 (payment details), Bug 7 (shop vs products), Bug 8 (privacy/terms + sitemap)
+
+---
+
 ## ROADMAP — FUTURE VERSIONS
 
 ### v1.0.1 (patch — URGENT, do first, ~30 min)
