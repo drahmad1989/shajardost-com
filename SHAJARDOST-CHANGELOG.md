@@ -341,4 +341,58 @@ Har form submission ab **2 jagah** jaati hai:
 
 ---
 
+## v1.0.4 — RATE MODEL + TRUST FIXES (2026-10-17, Asia/Karachi)
+
+**Deploy:** 83dd4186.shajardost-com.pages.dev → production | **Commit:** 0eacdcb
+**Source:** Dusra agent (owner ke doosre AI) ka plan — owner ne forward kiya: "dekh lo jo kam ka lagay, khas kr dekho rates etc"
+
+### 1. NEW RATE MODEL (per-plant: Size × Care)
+- **/donate par Rate Chart section add hua:** matrix table 3 sizes (2–3 ft / 3–5 ft / 5–7 ft) × 4 care tiers (1/2/3/5 yr), Rs. 500 → Rs. 10,000
+- **Quantity slabs:** 1–9 list / 10–49 (−5%) / 50–199 (−10%) / 200–999 (−15%) / 1,000+ (−20%) / 10,000+ custom quote
+- Matrix middle values PROPOSED hain (owner confirmation pending — sirf wo table cells badalna hai jab confirm kare)
+
+### 2. Package cards re-priced (purani bundles Rs.500 model se contradict karti thin)
+| Card | Old | New |
+|---|---|---|
+| Starter Plant | Rs. 200 | **Rs. 500** (1 plant 2–3 ft + 1 yr) |
+| Standard Plant | Rs. 500 (3 trees) | **Growth Plant Rs. 2,500** (1 plant 3–5 ft + 2 yr) — ab Most Popular |
+| Community Planter | Rs. 2,000 (10 trees) | **Sadqah Jariyah Bundle Rs. 4,750** (10 plants, 5% off) |
+| Mission 50 Sponsor | Rs. 5,000 (25 trees) | **Rs. 11,875** (25 plants, 5% off) |
+| Mini Forest Sponsor | Rs. 25,000 (100+ trees) | **Community Forest Rs. 22,500** (50 plants, 10% off) |
+| Education Sponsor | Rs. 500 | unchanged (school kit — tree rates se alag product) |
+
+### 3. Homepage (index.html)
+- Rs. 100 → Rs. 500 model language (FAQ JSON-LD + visible FAQ + form helper + donor card)
+- og:description + JSON-LD: "Donate from Rs. 200" → "Plant a tree from Rs. 500"
+- **"Tax-deductible receipt" → "Official donation receipt"** (false legal claim removed — NGO registration pending hai)
+- 500++ → 500+ (about.html bhi)
+- Duplicate impact-bar section removed (hero stats ka exact repeat tha)
+- **8 BROKEN gallery images FIXED** — greenseekers webp files asal mein HTML dumps thin (homepage par 8 broken images dikh rahi thin!) → 4 real photos (national-record, mission-50, green-scouts, mini-nursery)
+- 8 fake webp files deleted (shop/products ke no-space refs bhi 404 the → real photos)
+
+### 4. Miyawaki page
+- detail image: national-record-2018.jpg (galat context, alt="Miyawaki Forest") → mission-50-campaign.jpg + imandar alt
+- NOTE: asli Miyawaki forest ki photo owner se mangni hai (AI-generated image NGO site par NAHIN lagayenge)
+
+### 5. Cleanup
+- 6 pages par duplicate hidden interest field dedupe (v1.0.1 artifact)
+- green-scouts + mission-fifty ke 2 values JAAN-BOOJH KAR rakhe (alag-alag values hain)
+
+### Verification (ALL PASS)
+- 7 pages 200; index: 0× Rs.100, 0× 500++, 0× greenseekers; donate: Rate Chart + Rs.10,000 + slabs live, 0× Rs.200
+- All JSON-LD VALID (parse-tested); check-assets: 0 real missing (hero.jpg sirf purane script ka stale report)
+- /admin 200 + KV dashboard untouched; Option C intact (0 wa.me)
+- IndexNow: 6 URLs → HTTP 200
+
+### OWNER SE CONFIRM HONE HAIN (site par abhi proposed values live hain)
+1. Rate matrix ke 10 middle values (2 corners confirmed: 500 aur 10,000)
+2. Teesra pricing factor (owner ne "aur bhi kuch" kaha tha)
+3. Payment methods ki SACHI list (homepage: JazzCash/EasyPaisa/bank vs baqi site: JS Bank/Zindigi — CONTRADICTION abhi bhi hai)
+4. "86+ video pledge club" (mission-fifty) — asli hai ya hatao?
+5. "Ten Billion Trees Project" claim (products.html poora section + FAQ) — proof ya remove?
+6. DeraTalk chat account "StartNest.pk" branded hai — owner ko DeraTalk settings mein rename karna hai
+7. Miyawaki forest ki ASLI photo bhejein
+
+---
+
 **END OF MASTER CHANGELOG**
