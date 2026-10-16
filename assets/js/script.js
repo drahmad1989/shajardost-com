@@ -1,7 +1,6 @@
 /* ShajarDost.com - Main JS */
 (function(){
 'use strict';
-const WA='923360000597';
 const SITE_URL='https://shajardost.com';
 
 // Nav toggle
@@ -16,9 +15,18 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 if(backTop){backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));}
 
-// WhatsApp float
-const waFloat=document.getElementById('waFloat');
-if(waFloat){waFloat.addEventListener('click',()=>{window.open('https://wa.me/'+WA+'?text='+encodeURIComponent('Hello ShajarDost! I want to know more about your programs.'),'_blank');});}
+// Lead backup capture: har Web3Forms form submit par lead Cloudflare KV mein bhi save
+// hoti hai (fire-and-forget) — agar email fail ho jaye to lead phir bhi zaya nahi hogi.
+// Native form submission (email + redirect) bilkul normal chalti rehti hai.
+document.addEventListener('submit',function(e){
+  var f=e.target;
+  if(!f||!f.action||f.action.indexOf('api.web3forms.com')===-1)return;
+  try{
+    var fd=new FormData(f);
+    fd.append('_source',location.pathname);
+    fetch('/api/lead',{method:'POST',body:fd,keepalive:true}).catch(function(){});
+  }catch(err){}
+},true);
 
 // SW
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
