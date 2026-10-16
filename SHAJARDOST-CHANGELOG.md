@@ -286,4 +286,59 @@ Then verify Muhammad's email receives it with the correct `subject` line.
 
 ---
 
+## v1.0.3 — D1 LEAD DASHBOARD (2026-10-17, Asia/Karachi)
+
+**Deploy:** 790297b9.shajardost-com.pages.dev → production | **Commit:** 8e05ab5
+**Owner approval:** "D1 banao — dekh lo page agr ni bna hoa tu"
+
+### Kya bana (Lead Management System — "leads kabhi zaya nahi hongi")
+
+Har form submission ab **2 jagah** jaati hai:
+1. **Email** (Web3Forms — pehle jaisa hi, kuch nahi badla)
+2. **Cloudflare KV database** (naya backup — Pages Functions se)
+
+### Naye features
+
+- **admin.html — Leads Dashboard** (https://shajardost.com/admin):
+  - Password login (HMAC-signed HttpOnly cookie, 7 din valid)
+  - 5 stat cards: Total / Naye / Aaj / Is hafte / Spam
+  - Status pipeline: Naya → Rabta kiya → Chal raha → Muafaqiyat → Band / Spam
+  - Lead detail modal: full message + Direct Call + DeraTalk + Email buttons + notes
+  - CSV export (Excel-friendly UTF-8 BOM) + search + filters + 60s auto-refresh
+  - Roman Urdu UI, mobile responsive, noindex
+- **Pages Functions** (serverless APIs):
+  - `POST /api/lead` — public intake, honeypot spam filter (botcheck/website/_hp)
+  - `GET/PATCH/DELETE /api/leads` — admin CRUD (auth required)
+  - `GET /api/export` — CSV backup (auth required)
+  - `GET/POST/DELETE /api/auth` — login session
+- **script.js capture hook** — har Web3Forms submit par fire-and-forget KV backup
+  (native email flow bilkul untouched, keepalive:true)
+- **Newsletter fix** — email-only leads bhi ab store hoti hain (lead.js validation)
+- **robots.txt** — /admin + /api search engines se blocked
+- **Dead code cleanup** — script.js se WhatsApp float handler + WA constant removed (Option C)
+
+### Cloudflare config (pre-existing, verified intact)
+
+- KV namespace: `shajardost-leads` (96f60e9965314f9a87a8c3b909c2eec8)
+- Binding: `LEADS_KV` (production + preview)
+- Secret: `ADMIN_PASSWORD` — reset & documented in local credentials file (NOT in git)
+
+### Verification (ALL PASS)
+
+- /admin → 200; /api/auth → configured:true
+- E2E: POST lead → login → list → PATCH status+notes → CSV export → DELETE → 0 leads
+- Unauthorized API access without cookie → blocked (401)
+- 4 real leads seeded (Waqas/Mirha/Green Meadow = new, Daniel Wright = spam)
+- All 7 main pages → 200; web3forms key intact; 0 wa.me (Option C intact)
+- KV note: list 60s tak eventually-consistent rehti hai (delete turant na dikhe to 1 min wait)
+
+### Notes
+
+- Storage = Cloudflare KV (D1 SQL database ki zaroorat nahi pari — is use-case ke liye
+  KV simple, fast, free-tier friendly hai; kaam wahi: har lead permanent save)
+- Free tier limits: 1000 writes/day, 100k reads/day (is site ke liye bohat zyada hai)
+- Spam protection: honeypot fields (bots silently drop hote hain, owner ko nahi dikhte)
+
+---
+
 **END OF MASTER CHANGELOG**
