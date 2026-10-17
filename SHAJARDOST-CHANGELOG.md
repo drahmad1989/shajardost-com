@@ -480,4 +480,24 @@ Owner ne "shuru kro kam" kaha — teen no-owner-input builds ek saath. DeraTalk 
 
 ---
 
+## v1.0.7 — 2026-10-17: CALCULATOR SITE PAR LIVE (private URL) + FACEBOOK GROUP INTEGRATION
+
+Owner ne (1) calculator 404 report kiya (wo offline file thi — site par nahi thi), (2) FB group facebook.com/groups/shajardost ko content/volunteer hub banana propose kiya.
+
+### 1. /care-calculator — calculator ab site par (private)
+- Owner ne phone/browser par khud kholna tha → ab https://shajardost.com/care-calculator LIVE
+- PRIVATE: meta noindex,nofollow + robots.txt Disallow + sitemap mein NAHI + nav mein NAHI — sirf jise URL pata hai wo khol sakta hai
+- Tool wahi: 5 measurements → per-tree/year + minimum rate + M50 check + 10-price matrix (cost se neeche = RED) + Report Copy
+- Koi form/access_key nahi (sirf calculation, koi data collect nahi hota)
+
+### 2. Facebook Group (facebook.com/groups/shajardost)
+- Footer button 17 pages par (YouTube button ke neeche, same style)
+- /volunteer par "Join Facebook Group" strip (#shajardost content pitch — best posts website/YouTube par feature honge)
+- Legacy stubs + admin + calculator untouched
+
+- Commit: 8dec9f3 (static-live) | Deploy: a8c07804 → production
+- Verify ALL PASS: /care-calculator 200 + noindex + robots Disallow; / /volunteer /admin 200; FB links / =1, /volunteer =2; sitemap 17 (calculator nahi)
+
+---
+
 **END OF MASTER CHANGELOG**
