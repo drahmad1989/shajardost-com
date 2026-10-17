@@ -1,0 +1,25 @@
+name: nightly-tasks
+# ShajarDost v1.0.5 — nightly KV snapshot backup (+ Monday weekly report).
+# SIRF YE FILE main branch par hai — site code (static-live branch) se koi taluq nahi.
+# Deploys wrangler CLI se static-live se hote hain — ye workflow site ko touch nahi karta.
+on:
+  schedule:
+    - cron: "0 2 * * *"   # daily 07:00 PKT — backup
+  workflow_dispatch:       # manual run bhi possible
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Nightly backup (+ Monday report)
+        run: |
+          curl -sS -m 60 -X POST "${{ secrets.CRON_ENDPOINT }}" \
+            -H "Content-Type: application/json" \
+            -H "X-Cron-Secret: ${{ secrets.CRON_SECRET }}" \
+            -d '{"task":"backup"}'
+          if [ "$(date -u +%u)" = "1" ]; then
+            curl -sS -m 60 -X POST "${{ secrets.CRON_ENDPOINT }}" \
+              -H "Content-Type: application/json" \
+              -H "X-Cron-Secret: ${{ secrets.CRON_SECRET }}" \
+              -d '{"task":"report"}'
+          fi
