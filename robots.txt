@@ -4,5 +4,6 @@ Disallow: /404
 Disallow: /thank-you
 Disallow: /admin
 Disallow: /api
+Disallow: /care-calculator
 
 Sitemap: https://shajardost.com/sitemap.xml
