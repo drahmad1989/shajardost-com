@@ -4,7 +4,11 @@
 
 import { isAuthed, unauthorized, json } from '../lib/auth.js';
 
-const COLS = ['key', 'created_at', 'name', 'phone', 'email', 'subject', 'interest', 'message', 'source', 'status', 'notes', 'user_agent'];
+const COLS = ['key', 'created_at', 'name', 'phone', 'email', 'subject', 'interest', 'message', 'source', 'status', 'next_action_at', 'followup_count', 'notes', 'user_agent'];
+
+function pkt(ms) {
+  return new Date(ms + 5 * 3600000).toISOString().slice(0, 16).replace('T', ' ') + ' PKT';
+}
 
 function csvCell(v) {
   const s = String(v == null ? '' : v);
@@ -23,7 +27,13 @@ export async function onRequestGet({ request, env }) {
     const r = await env.LEADS_KV.list(opts);
     for (const e of r.keys) {
       const v = await env.LEADS_KV.get(e.name, 'json');
-      if (v) lines.push(COLS.map(c => csvCell(v[c])).join(','));
+      if (v) {
+        const row = {};
+        for (const c of COLS) row[c] = v[c];
+        row.next_action_at = v.next_action_at ? pkt(v.next_action_at) : '';
+        row.followup_count = v.followup_count || 0;
+        lines.push(COLS.map(c => csvCell(row[c])).join(','));
+      }
     }
     if (r.list_complete) break;
     cursor = r.cursor;

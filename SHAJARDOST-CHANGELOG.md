@@ -395,4 +395,48 @@ Har form submission ab **2 jagah** jaati hai:
 
 ---
 
+
+## v1.0.5 — 2026-10-17: AUTOMATION LAYER (ChatGPT review adopted: backup + follow-up engine + auto-ack)
+
+Dusre AI advisor (ChatGPT) ki strategic review se "no-brainer, no-owner-input" items implement kiye.
+Verdict pehle verify kiya: packages live par COHERENT hain (Sadqah 10×500-5%=4750 ✓, Community Forest 50×500-10%=22500 ✓ — uska M50=237/tree catch mere brief ki ghalat list par tha, live par apply nahi hota).
+
+### 1. Independent versioned BACKUP (advisor priority #1: protect data)
+- NEW KV namespace `shajardost-leads-backup` (dc8791f9) — LEADS_KV se ALAG, binding BACKUP_KV
+- NEW `/api/cron` (POST): `task=backup` → poora leads snapshot (JSON + count + SHA-256 checksum) versioned key `snap:YYYY-MM-DD-HH-MM` + `latest` pointer; 40 snapshots retention
+- Admin dashboard par 🗥 Backup button (admin cookie auth se manual snapshot)
+- GitHub Actions `nightly-tasks` (default branch `main` par SIRF workflow file — site code untouched): roz 07:00 PKT backup, Monday 09:00 PKT weekly report email. Repo secrets: CRON_SECRET + CRON_ENDPOINT (encrypted, values file mein nahi)
+- Restore test script: scripts/backup-restore-test.py (snapshot parse + count compare)
+
+### 2. Follow-up engine (Day 1/3/7 cadence — advisor CRM checklist)
+- Har nayi lead: next_action_at(+1d), followup_count, last_contact_at, history[] audit trail
+- `/api/leads` PATCH: `action=log_contact` (Day 3/7/7 auto-schedule + status new→contacted auto), `next_action_at` manual date, closed_reason — har change history me log
+- Dashboard: "Aaj ke follow-ups" stat card + DUE STRIP (chips: naam + due date; overdue RED + warning title)
+- Lead modal: follow-up panel (agla follow-up, rabta count, aakhri rabta, OVERDUE badge) + "✓ Rabta ho gaya" button + custom date setter + History list (aakhri 10)
+- List ab client-side filter (server se poora data — due-strip har tab me kaam karti hai); stats me due_today + overdue counters
+
+### 3. Auto-acknowledgment email (advisor A.1: Resend first)
+- `/api/lead` ab Resend se customer ko foran "Shukriya" email bhejta hai (ref number + 24hr window + call number) — fire-and-forget `waitUntil`, email fail ho to bhi lead intake KABHI fail nahi hota
+- GRACEFUL: RESEND_API_KEY secret set nahi to silently skip — owner Resend account banaye ga (SPF/DKIM DNS records main add karunga)
+- ACK_FROM env override possible (default no-reply@shajardost.com)
+
+### 4. Security hardening (advisor G.2 subset)
+- Soft rate limit `/api/lead`: 30 req/hour/IP (KV counter, fail-open — CGNAT safe)
+- CSV export me next_action_at + followup_count columns
+- OWNER_EMAIL env set (ahmad22mao@gmail.com) — weekly report ke liye
+- Weekly report: by-status counts, due/overdue + overdue table, backup status, "inquiry ≠ revenue" note (advisor ka verified-collections point) — KV `report:last` me bhi save
+
+### Config changes (Cloudflare)
+- Pages project: BACKUP_KV binding (prod), CRON_SECRET (secret), OWNER_EMAIL (plain)
+
+### OWNER ACTIONS PENDING (v1.0.5 ke liye sirf 1)
+- Resend.com account (free) → Domain add karein shajardost.com → mujhe DNS records bhejein (main add kar dunga) → API key dein (RESEND_API_KEY secret set ho jayegi) → auto-ack + report emails LIVE
+- Baqi 7 confirmations (matrix values, payment list, 86+, Ten Billion, DeraTalk rename, Miyawaki photo) pehle jaisi pending
+
+### Verification
+- node --check: saari 6 function files + admin script PASS
+- E2E live test deploy ke baad (neeche update hoga)
+
+---
+
 **END OF MASTER CHANGELOG**
