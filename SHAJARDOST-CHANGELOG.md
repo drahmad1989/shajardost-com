@@ -439,4 +439,45 @@ Verdict pehle verify kiya: packages live par COHERENT hain (Sadqah 10×500-5%=47
 
 ---
 
+## v1.0.6 — 2026-10-17: VOLUNTEER PAGE (Bug 5) + PRIVACY/TERMS (Bug 8) + SITEWIDE LINKS
+
+Owner ne "shuru kro kam" kaha — teen no-owner-input builds ek saath. DeraTalk site par live confirm hua (owner).
+
+### 1. NEW /volunteer — application page (Bug 5, URGENT tha: 2 real volunteer leads pending)
+- Structure green-scouts.html shell par (header/nav/footer/DeraTalk-float/call-float identical)
+- Content: "Why Volunteer" (1.2M legacy + certificate + training), 8 roles grid (planting, nursery, photo/video, writing, social, teaching, events, logistics — HANDOFF §6.4 confirmed list), 4-step process (Apply → Call 48hr → Orientation → Start)
+- FULL application form (HANDOFF §6.4 template): name/phone/email/city/age/availability/skills[12 checkboxes]/motivation — interest=Volunteer, subject "🤝 Volunteer Lead", redirect thank-you
+- Fallback Call 0333-3197977 + DeraTalk chat (WhatsApp template part SKIP — Option C rule)
+- KV capture automatic (script.js global Web3Forms hook, _source=/volunteer.html) — TESTED LIVE: POST /api/lead → ok:true, lead KV mein aayi, phir delete (4 real leads intact)
+- JSON-LD: WebPage + Breadcrumb + NGO; og:image national-record-2018.jpg; canonical /volunteer
+
+### 2. NEW /privacy + /terms (Bug 8 — trust pages)
+- Privacy: jo collect hota hai (sirf form data), kabhi sell nahi, Cloudflare-secured storage, Green Scouts parental consent (under-18), user rights (call/email par correct/delete), NGO community-initiative wording (koi false registration claim nahi)
+- Terms: services, rates-at-order-time, care schedule + certificate promise, plant order 48hr damage window, volunteer voluntary-unpaid + safety, PK governing law — dono noindex (search traffic target nahi)
+- Donation flows mein koi tax-deductible claim NAHI (v1.0.4 trust rule maintained)
+
+### 3. Sitewide links (idempotent linker: scripts/linker-v106.py)
+- 15 pages (14 + 404): nav mein "Volunteer" (About se pehle) + footer Get Involved mein Volunteer + footer-bottom mein Privacy · Terms
+- Legacy stubs (shop/blog/products) untouched — Bug 7 decision pending
+- Nav active-class logic preserved (about.html par About active rehta hai)
+
+### 4. Sitemap: 14 → 17 URLs (+/volunteer 0.8 weekly, /privacy, /terms 0.3 yearly)
+
+### NEW OFFLINE TOOL (site par nahi)
+- download/SHAJARDOST-CARE-COST-CALCULATOR.html — owner ka care-cost measurement tool: paani/chowkidar/bijli/khaad/replacement inputs → per-tree/year, total 3yr, minimum sustainable rate, M50 check (50 × min rate vs 11,875), 10 middle-price matrix auto-gen (cost se neeche = RED flag), Report-Copy button (chat mein paste karne ke liye). Owner numbers naap kar bhejega — isi par rate matrix FINAL hogi.
+
+### Files added/modified
+- ADDED: volunteer.html, privacy.html, terms.html
+- MODIFIED: 15 pages (nav/footer links) + sitemap.xml
+- Commit: 107b066 (static-live) | Deploy: 95092041.shajardost-com.pages.dev → production
+
+### Verification (ALL PASS)
+- HTTP 200: / /volunteer /privacy /terms /donate /contact /admin
+- /volunteer live: access_key ✓, form ✓, tel:+923333197977 ×3 ✓, DeraTalk ×2 ✓, wa.me=0 ✓, nav active ✓
+- /donate par 2 volunteer links ✓ | sitemap 17 URLs ✓
+- /api/lead capture (source=/volunteer.html) → KV ok → cleanup ok (4 real leads)
+- IndexNow: / + /volunteer + sitemap → 200
+
+---
+
 **END OF MASTER CHANGELOG**
