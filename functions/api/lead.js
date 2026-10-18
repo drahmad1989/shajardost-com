@@ -95,6 +95,37 @@ export async function onRequestPost({ request, env, context }) {
     return json({ ok: false, error: 'storage failed' }, 500);
   }
 
+  /* v1.0.9 Demand Wall: interest "Plant Demand" → wall queue (PENDING —
+   * admin approve karega tab public hoga; phone kabhi public nahi).
+   * Demand record fail ho to bhi lead intake fail nahi hota. */
+  if (/demand/i.test(lead.interest)) {
+    try {
+      const dMs = Date.now();
+      const dRnd = [...crypto.getRandomValues(new Uint8Array(4))].map(b => b.toString(16).padStart(2, '0')).join('');
+      const dKey = 'demand:' + dMs + ':' + dRnd;
+      const demand = {
+        key: dKey,
+        type: 'demand',
+        name: name || '(naam nahi)',
+        city: clean(d.city, 60),
+        phone: lead.phone,
+        plants: clean(d.plants, 150),
+        qty: clean(d.qty, 40),
+        detail: message,
+        public_detail: '',
+        status: 'pending',
+        ts: dMs,
+        created_at: new Date(dMs + 5 * 3600000).toISOString().slice(0, 19).replace('T', ' '),
+        approved_ts: null,
+        source: source,
+        history: [{ t: dMs, a: 'created', d: 'form: ' + (source || 'site') }]
+      };
+      await env.LEADS_KV.put(dKey, JSON.stringify(demand), {
+        metadata: { n: demand.name.slice(0, 60), ty: 'demand', s: 'pending', t: dMs, c: demand.city.slice(0, 40) }
+      });
+    } catch (e) { /* demand wall enqueue fail-open */ }
+  }
+
   /* v1.0.5 auto-acknowledgment email (Resend) — fire-and-forget.
    * RESEND_API_KEY secret set na ho to silently skip (lead phir bhi safe).
    * Email fail ho to bhi lead intake kabi fail nahi hota. */
