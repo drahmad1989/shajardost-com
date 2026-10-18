@@ -569,4 +569,29 @@ Owner ka idea: "jo demand create ho wo website par mention hoti jaye — number 
 
 ---
 
+## v1.0.10 — 2026-10-18: SEO TIER-1 ON-PAGE — keyword tuning (pending list item 6)
+
+Pending list ka item 6 (SEO plan → Tier 1 on-page). Pehle full-site SEO audit (scripts/seo-audit.py — 24 pages: title/meta/H1/canonical/JSON-LD/img-alt) — findings: base SEO pehle se solid (sab pages canonical ✓, 0 missing alts, FAQPage 10 Q&A ✓, NGO/Breadcrumb schema ✓). Tier-1 = 3 pages par keyword-intent tuning, body content ZERO change:
+
+- **donate.html**: title "Donate — Plant Trees in Pakistan" → **"Donate Trees in Pakistan — Tree Plantation Donation"** (exact intent keywords); desc mein "Sadaqah bundles" keyword add; og:title sync
+- **miyawaki-forest.html**: title → **"Miyawaki Forest Pakistan — Dense Forests 10x Faster"** ("Miyawaki Pakistan" keyword gap band); desc "Miyawaki method forests in Pakistan…"; og:title sync
+- **faq.html**: title "FAQ | ShajarDost" (16 chars, weak) → **"FAQ — Donations, Mission 50 & Miyawaki | ShajarDost"**
+- Jaan-boojh kar NAHI chheda: volunteer.html (already v1.0.6 mein SEO-strong), products/shop (Bug 7 pending, canonical=home se protected), blog (stub — real articles ke baad self-canonical hoga), admin/care-calculator (internal, noindex-type pages)
+
+- Commit: d4309fb (static-live) | Deploy: bf4d0298 → production
+- Scripts: scripts/seo-tier1-v1010.py (idempotent, 7/7 anchors, zero errors)
+
+### Verification (live, production)
+- [x] 3/3 naye titles LIVE; purane titles 0 occurrences
+- [x] donate rate matrix intact (Rs. 9,500 live) — koi aur content change nahi (diff: 3 files, 7 lines)
+- [x] IndexNow: donate + miyawaki-forest + faq + demand-wall → HTTP 200
+
+### SEO Tier-1 status
+- [x] Tier 1 on-page (donate/miyawaki/volunteer) — COMPLETE
+- [ ] Blog articles (2/week) — content owner ke proof-items ke sath start hoga
+- [ ] CSR landing page — zameen/Adopt-an-Acre ke sath
+- [ ] Cross-domain internal links — blog ke baad
+
+---
+
 **END OF MASTER CHANGELOG**
