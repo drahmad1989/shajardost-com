@@ -531,4 +531,42 @@ Owner ne CARE COST REPORT diya (500 pouday: paani 96k + chowkidar 240k + bijli 3
 
 ---
 
+## v1.0.9 — 2026-10-18: DEMAND WALL — public moderated board (owner idea, fully built)
+
+Owner ka idea: "jo demand create ho wo website par mention hoti jaye — number etc admin ke paas, name/city/demand public ho, wo b admin ki ijazat se." Poora feature banaya (PKR 0, existing KV stack par).
+
+### 1. NEW /demand-wall — public page
+- Live board: 🌱 Demand (mang) + 📦 Pouday Aaye (supply) cards — naam, shehar, pouday/tadaad, detail, date, status chip (Open/Matched/Poora Hua)
+- Filter chips (Sab / Demand / Received), empty-state, 3-step "How it works", donor CTA (Call + DeraTalk)
+- Submit form: name/city/phone/plants/qty/detail + REQUIRED consent checkbox ("naam+shehar public ho sakti hai, mobile kabhi nahi") — Web3Forms email + KV capture (interest=Plant Demand)
+- JSON-LD ×2, indexable, sitemap +1 (18 URLs)
+
+### 2. Backend (functions/api/demands.js — NEW)
+- KV keys `demand:{ms}:{hex}` (LEADS_KV same namespace, alag prefix)
+- GET ?public=1 → sirf approved/matched/fulfilled, phone/email KABHI nahi + phone-jaisi sequences detail se auto-scrub ("[number hidden]")
+- GET (admin) → full list + stats; POST (admin) manual add; PATCH approve/reject/match/fulfill/reopen/unpublish/edit; DELETE
+- GOLDEN RULES: (1) kuch bhi public nahi jab tak admin APPROVE na kare (2) phone kabhi public response mein nahi (3) public text auto-scrub
+
+### 3. functions/api/lead.js extend
+- interest "Plant Demand" → demand record auto-create (pending) — wall form se aane wali har demand seedha admin queue mein
+
+### 4. Admin dashboard (/admin) — "🌱 Demand Wall" tab
+- View switcher (Leads ↔ Demand Wall), pending RED badge, 4 stat cards
+- Actions: ✅ Approve | 🤝 Match | ✓ Fulfil | ↩ Reopen | 🙈 Unpublish | ✏️ Public-text edit (phone hatane ke liye) | 🚫 Reject | 🗑 Delete
+- Manual add form (aaye hue pouday / phone-par-aayi demand, "Foran publish" option)
+- Privacy/terms update: Demand Wall privacy paragraph + moderation terms line
+
+- Commit: be1e417 (static-live) | Deploy: 2a1c262b → production
+- Scripts: scripts/demand-wall-v109.py (linker, idempotent), scripts/test-demand-wall.py (E2E)
+
+### Verification (E2E 17/17 PASS)
+- [x] Submit → pending → public par NAHI (moderation enforced)
+- [x] Admin list: phone visible admin ko, status pending
+- [x] Approve → public: naam+city dikha, phone public response mein KABHI nahi, detail auto-scrub "Rabta: [number hidden]"
+- [x] Unpublish → public se gayab | bina login → 401 | cleanup → 4 real leads intact
+- [x] /demand-wall 200, nav+footer links live (index ×2), form key + consent live, sitemap 18, privacy para live
+- [x] IndexNow: /demand-wall + / → HTTP 200
+
+---
+
 **END OF MASTER CHANGELOG**
