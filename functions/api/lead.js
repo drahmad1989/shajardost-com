@@ -95,10 +95,13 @@ export async function onRequestPost({ request, env, context }) {
     return json({ ok: false, error: 'storage failed' }, 500);
   }
 
-  /* v1.0.9 Demand Wall: interest "Plant Demand" → wall queue (PENDING —
+  /* v1.0.9 Demand Wall → v1.0.11 Free Plants: interest "Plant Demand" YA subject
+   * mein "demand" YA source path /demand-wall|/free-plants → wall queue (PENDING —
    * admin approve karega tab public hoga; phone kabhi public nahi).
+   * v1.0.11 BUG FIX: form mein interest field nahi tha, isliye asli form se
+   * demand record nahi banta tha — ab subject + source path bhi check hote hain.
    * Demand record fail ho to bhi lead intake fail nahi hota. */
-  if (/demand/i.test(lead.interest)) {
+  if (/demand/i.test(lead.interest) || /demand/i.test(lead.subject) || /demand-wall|free-plants/i.test(lead.source)) {
     try {
       const dMs = Date.now();
       const dRnd = [...crypto.getRandomValues(new Uint8Array(4))].map(b => b.toString(16).padStart(2, '0')).join('');

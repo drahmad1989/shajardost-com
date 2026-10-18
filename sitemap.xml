@@ -17,5 +17,6 @@
   <url><loc>https://shajardost.com/terms</loc><priority>0.3</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://shajardost.com/thank-you</loc><priority>0.1</priority><changefreq>yearly</changefreq></url>
   <url><loc>https://shajardost.com/404</loc><priority>0.1</priority><changefreq>yearly</changefreq></url>
-  <url><loc>https://shajardost.com/demand-wall</loc><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://shajardost.com/free-plants</loc><priority>0.8</priority><changefreq>daily</changefreq></url>
+  <url><loc>https://shajardost.com/green-heroes</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
 </urlset>

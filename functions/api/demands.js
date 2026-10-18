@@ -20,7 +20,7 @@ import { json, isAuthed, unauthorized } from '../lib/auth.js';
 const KRE = /^demand:[0-9]+:[a-f0-9]+$/;
 const PUBLIC_STATUSES = ['approved', 'matched', 'fulfilled'];
 const STATUSES = ['pending', 'approved', 'matched', 'fulfilled', 'rejected'];
-const CAP = { name: 80, city: 60, phone: 40, plants: 150, qty: 40, detail: 1500, public_detail: 1500, source: 120 };
+const CAP = { name: 80, city: 60, phone: 40, plants: 150, qty: 40, detail: 1500, public_detail: 1500, source: 120, cost: 40, sponsor: 60 };
 
 function clean(v, cap) {
   return String(v == null ? '' : v).trim().slice(0, cap);
@@ -69,12 +69,15 @@ async function listAll(kv, cap) {
 function publicView(d) {
   return {
     key: d.key,
+    ref: 'FP-' + (d.key || '').slice(-4).toUpperCase(),
     type: d.type === 'supply' ? 'supply' : 'demand',
     name: clean(d.name, 80) || '(naam nahi)',
     city: clean(d.city, 60),
     plants: clean(d.plants, 150),
     qty: clean(d.qty, 40),
     detail: scrub(d.public_detail || d.detail || ''),
+    cost: clean(d.cost, 40),
+    sponsor: clean(d.sponsor, 60),
     status: d.status,
     ts: d.ts || 0,
     approved_ts: d.approved_ts || null
@@ -181,13 +184,18 @@ export async function onRequestPatch({ request, env }) {
       if (d.status !== 'rejected') { d.status = 'rejected'; hist('reject', 'Reject — public nahi hoga'); changed = true; }
       break;
     case 'match':
-      if (d.status === 'approved' || d.status === 'pending') { d.status = 'matched'; if (!d.approved_ts) d.approved_ts = nowMs; hist('match', 'Demand match ho gayi'); changed = true; }
+      if (d.status === 'approved' || d.status === 'pending') {
+        d.status = 'matched'; if (!d.approved_ts) d.approved_ts = nowMs;
+        const sp = clean(b.sponsor, CAP.sponsor);
+        if (sp) d.sponsor = sp;
+        hist('match', 'Sponser ban gaya' + (sp ? ': ' + sp : '')); changed = true;
+      }
       break;
     case 'fulfill':
       if (d.status !== 'fulfilled') { d.status = 'fulfilled'; if (!d.approved_ts) d.approved_ts = nowMs; hist('fulfill', 'Poora ho gaya'); changed = true; }
       break;
     case 'reopen':
-      if (d.status === 'matched' || d.status === 'fulfilled') { d.status = 'approved'; hist('reopen', 'Dobara open'); changed = true; }
+      if (d.status === 'matched' || d.status === 'fulfilled') { d.status = 'approved'; d.sponsor = ''; hist('reopen', 'Dobara open'); changed = true; }
       break;
     case 'unpublish':
       if (PUBLIC_STATUSES.includes(d.status)) { d.status = 'pending'; d.approved_ts = null; hist('unpublish', 'Wall se hataya — wapis pending'); changed = true; }
@@ -195,7 +203,7 @@ export async function onRequestPatch({ request, env }) {
   }
 
   /* Field edits (admin public text saaf karta hai — phone wagera) */
-  for (const f of ['name', 'city', 'plants', 'qty', 'detail', 'public_detail']) {
+  for (const f of ['name', 'city', 'plants', 'qty', 'detail', 'public_detail', 'cost', 'sponsor']) {
     if (b[f] !== undefined) {
       const v = clean(b[f], CAP[f] || 200);
       if ((d[f] || '') !== v) { d[f] = v; hist('edit', f + ' update'); changed = true; }

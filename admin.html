@@ -196,7 +196,7 @@ a.tel:hover{text-decoration:underline}
   </header>
 
   <main class="container">
-    <div class="view-switch"><button class="vbtn active" id="vLeads">📋 Leads</button><button class="vbtn" id="vDemands">🌱 Demand Wall <span id="dPendBadge" class="pend-badge hidden"></span></button></div>
+    <div class="view-switch"><button class="vbtn active" id="vLeads">📋 Leads</button><button class="vbtn" id="vDemands">🌿 Free Plants <span id="dPendBadge" class="pend-badge hidden"></span></button><button class="vbtn" id="vHeroes">⭐ Green Heroes <span id="hPendBadge" class="pend-badge hidden"></span></button></div>
     <div id="leadsView">
     <section class="stats" id="statsRow">
       <div class="stat-card accent"><div class="num" id="stTotal">—</div><div class="lbl">Total Leads</div></div>
@@ -289,6 +289,51 @@ a.tel:hover{text-decoration:underline}
         <div class="updated-note" id="dUpdated"></div>
       </div>
     </div>
+
+    <div id="heroesView" class="hidden">
+      <section class="stats">
+        <div class="stat-card warn"><div class="num" id="hPend">—</div><div class="lbl">Suggestions (faisla karein)</div></div>
+        <div class="stat-card accent"><div class="num" id="hAppr">—</div><div class="lbl">Wall par Live</div></div>
+        <div class="stat-card"><div class="num" id="hHide">—</div><div class="lbl">Hidden/Rejected</div></div>
+      </section>
+      <details class="dw-add">
+        <summary>➕ Manual add — koi hero khud add karein</summary>
+        <div class="dw-add-grid">
+          <input id="haName" placeholder="Hero ka naam *" maxlength="80">
+          <input id="haCity" placeholder="Shehar / ilaqa" maxlength="60">
+          <input id="haTrees" placeholder="Taqreeban pouday — e.g. 5,000+" maxlength="40">
+          <input id="haSince" placeholder="Kab se — e.g. 2008" maxlength="40">
+          <input id="haAward" placeholder="Award / pehchan (optional)" maxlength="120">
+          <input id="haPhoto" placeholder="Photo URL — e.g. /assets/images/heroes/naam.webp" maxlength="300">
+          <textarea id="haDetail" rows="2" placeholder="Kaam ki detail (2-4 lines)" maxlength="1500"></textarea>
+          <label class="dw-check"><input type="checkbox" id="haApprove"> Foran publish karein (approve)</label>
+          <button class="btn btn-green" id="haAddBtn" style="max-width:200px">Add karein</button>
+        </div>
+      </details>
+      <div class="toolbar">
+        <div class="tabs" id="hTabsRow">
+          <button class="tab active" data-st="">Sab</button>
+          <button class="tab" data-st="pending">Suggestions</button>
+          <button class="tab" data-st="approved">Live</button>
+          <button class="tab" data-st="hidden">Hidden</button>
+          <button class="tab" data-st="rejected">Rejected</button>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-scroll">
+          <table>
+            <thead><tr><th>Waqt (PKT)</th><th>Naam</th><th>Shehar</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="heroesBody"></tbody>
+          </table>
+        </div>
+        <div id="hEmpty" class="empty-state hidden">
+          <div class="big">⭐</div>
+          <p><b>Koi entry nahi</b> is filter mein.</p>
+          <p style="font-size:13px;margin-top:6px">Suggest form se aane wali suggestions yahan "Suggestions" mein aati hain — approve karte hi wall par.</p>
+        </div>
+        <div class="updated-note" id="hUpdated"></div>
+      </div>
+    </div>
   </main>
 </div>
 
@@ -377,7 +422,7 @@ function showApp(){
   authed=true;
   $('#loginView').classList.add('hidden');
   $('#appView').classList.remove('hidden');
-  loadLeads();loadDemands();demandsLoaded=true;
+  loadLeads();loadDemands();demandsLoaded=true;loadHeroes();heroesLoaded=true;
   if(!pollTimer)pollTimer=setInterval(function(){if(document.visibilityState==='visible')loadLeads()},60000);
 }
 function checkAuth(){
@@ -509,6 +554,7 @@ $('#searchInput').addEventListener('input',function(e){
 });
 $('#refreshBtn').addEventListener('click',loadLeads);
 $('#refreshBtn').addEventListener('click',function(){loadDemands()});
+$('#refreshBtn').addEventListener('click',function(){loadHeroes()});
 
 /* ---------- v1.0.9 Demand Wall ---------- */
 var demands=[],dStats={},dFilter='',demandsLoaded=false;
@@ -545,11 +591,12 @@ function renderDemands(){
       var acts='';
       if(D.status==='pending')acts+='<button data-a="approve" title="Wall par publish karein">✅</button>';
       if(D.status!=='rejected')acts+='<button data-a="reject" title="Reject (public nahi hoga)">🚫</button>';
-      if(D.status==='approved')acts+='<button data-a="match" title="Demand match ho gayi">🤝</button>';
+      if(D.status==='approved')acts+='<button data-a="match" title="Sponser ban gaya — naam poochein (optional)">🤝</button>';
       if(D.status==='approved'||D.status==='matched')acts+='<button data-a="fulfill" title="Poora ho gaya">✓</button>';
       if(D.status==='matched'||D.status==='fulfilled')acts+='<button data-a="reopen" title="Dobara open">↩</button>';
       if(['approved','matched','fulfilled'].indexOf(D.status)!==-1)acts+='<button data-a="unpublish" title="Wall se hatao">🙈</button>';
       acts+='<button data-a="edit" title="Public text edit karein">✏️</button>';
+      acts+='<button data-a="cost" title="Taqreeban kharcha set karein (sponser ko andaza milega)">💰</button>';
       acts+='<button data-a="delete" title="Delete">🗑</button>';
       tr.innerHTML=
         '<td class="td-date">'+esc(fmtTime(D.ts))+'</td>'+
@@ -575,6 +622,15 @@ function demandAction(D,a){
     .catch(function(){alert('Network masla — dobara koshish karein')});
     return;
   }
+  if(a==='cost'){
+    var cur=D.cost||'';
+    var v=prompt('Taqreeban kharcha (wall par public dikhega) — e.g. "Rs. 60,000 (50 plants)" — khali chhorein to hata jayega:',cur);
+    if(v===null)return;
+    fetch('/api/demands',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:D.key,cost:v})})
+    .then(function(r){return r.json()}).then(function(j){if(j.ok)loadDemands();else alert('Fail: '+(j.error||''))})
+    .catch(function(){alert('Network masla — dobara koshish karein')});
+    return;
+  }
   if(a==='edit'){
     var cur=D.public_detail||D.detail||'';
     var v=prompt('PUBLIC text — ye website par dikhega. Phone number ya private cheez yahan se hata dein (khali chhorein to original detail jaye gi):',cur);
@@ -584,7 +640,13 @@ function demandAction(D,a){
     .catch(function(){alert('Network masla — dobara koshish karein')});
     return;
   }
-  fetch('/api/demands',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:D.key,action:a})})
+  var body={key:D.key,action:a};
+  if(a==='match'){
+    var sp=prompt('Sponser ka naam (wall par "Sponser: [naam]" public dikhega — khali chhorein to sirf status):','');
+    if(sp===null)return;
+    if(sp.trim())body.sponsor=sp.trim();
+  }
+  fetch('/api/demands',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
   .then(function(r){return r.json()}).then(function(j){
     if(!j.ok){alert('Fail: '+(j.error||''));return}
     loadDemands();
@@ -613,13 +675,123 @@ $('#daAddBtn').addEventListener('click',function(){
 });
 $('#vLeads').addEventListener('click',function(){switchView('leads')});
 $('#vDemands').addEventListener('click',function(){switchView('demands')});
+$('#vHeroes').addEventListener('click',function(){switchView('heroes')});
 function switchView(v){
   $('#vLeads').classList.toggle('active',v==='leads');
   $('#vDemands').classList.toggle('active',v==='demands');
+  $('#vHeroes').classList.toggle('active',v==='heroes');
   $('#leadsView').classList.toggle('hidden',v!=='leads');
   $('#demandsView').classList.toggle('hidden',v!=='demands');
+  $('#heroesView').classList.toggle('hidden',v!=='heroes');
   if(v==='demands')loadDemands();
+  if(v==='heroes')loadHeroes();
 }
+
+/* ---------- v1.0.11 Green Heroes ---------- */
+var heroes=[],hFilter='',heroesLoaded=false;
+function loadHeroes(){
+  if(!authed)return;
+  fetch('/api/heroes').then(function(r){
+    if(r.status===401){showLogin();throw new Error('unauth')}
+    return r.json();
+  }).then(function(j){
+    if(!j.ok)return;
+    heroes=j.heroes||[];
+    var stats=j.stats||{};
+    $('#hPend').textContent=stats.pending!=null?stats.pending:'—';
+    $('#hAppr').textContent=stats.approved!=null?stats.approved:'—';
+    $('#hHide').textContent=(stats.hidden||0)+(stats.rejected?('+'+stats.rejected):'');
+    var pb=$('#hPendBadge');
+    if(stats.pending>0){pb.textContent=stats.pending;pb.classList.remove('hidden')}
+    else pb.classList.add('hidden');
+    renderHeroes();
+    $('#hUpdated').textContent='Last updated: '+new Date().toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }).catch(function(){});
+}
+function renderHeroes(){
+  var rows=heroes.filter(function(H){return !hFilter||H.status===hFilter});
+  var tb=$('#heroesBody');tb.innerHTML='';
+  $('#hEmpty').classList.toggle('hidden',rows.length>0);
+  for(var i=0;i<rows.length;i++){
+    (function(H){
+      var tr=document.createElement('tr');
+      var acts='';
+      if(H.status==='pending')acts+='<button data-a="approve" title="Wall par publish karein">✅</button>';
+      if(H.status==='pending')acts+='<button data-a="reject" title="Reject">🚫</button>';
+      if(H.status==='approved')acts+='<button data-a="unpublish" title="Wall se hatayein">🙈</button>';
+      if(H.status==='hidden'||H.status==='rejected')acts+='<button data-a="approve" title="Dobara publish">✅</button>';
+      acts+='<button data-a="edit" title="Naam/shehar/detail/photo edit">✏️</button>';
+      acts+='<button data-a="delete" title="Delete">🗑</button>';
+      tr.innerHTML=
+        '<td class="td-date">'+esc(fmtTime(H.ts))+'</td>'+
+        '<td class="td-name">'+esc(H.name)+(H.suggester_name?'<div style="font-size:11px;color:#a5a29b">suggest: '+esc(H.suggester_name)+(H.suggester_phone?' · '+esc(H.suggester_phone):'')+'</div>':'')+'</td>'+
+        '<td>'+esc(H.city||'—')+'</td>'+
+        '<td><span class="badge st-'+esc(H.status)+'">'+esc(H.status)+'</span></td>'+
+        '<td><div class="dact">'+acts+'</div></td>';
+      tr.querySelectorAll('.dact button').forEach(function(b){
+        b.addEventListener('click',function(ev){ev.stopPropagation();heroAction(H,b.getAttribute('data-a'))});
+      });
+      tb.appendChild(tr);
+    })(rows[i]);
+  }
+}
+function heroAction(H,a){
+  if(a==='delete'){
+    if(!confirm('Pakka delete? Ye hero hamesha ke liye remove ho jayega.'))return;
+    fetch('/api/heroes?key='+encodeURIComponent(H.key),{method:'DELETE'})
+    .then(function(r){return r.json()}).then(function(j){if(j.ok)loadHeroes();else alert('Fail: '+(j.error||''))})
+    .catch(function(){alert('Network masla — dobara koshish karein')});
+    return;
+  }
+  if(a==='edit'){
+    var v=prompt('Kaam ki PUBLIC detail (2-4 lines) — edit karein:',H.detail||'');
+    if(v===null)return;
+    var patch={key:H.key,detail:v};
+    var c=prompt('Shehar/ilaqa (public):',H.city||'');
+    if(c===null)c=H.city||'';
+    patch.city=c;
+    var p=prompt('Photo URL (public) — khali = initials avatar:',H.photo||'');
+    if(p===null)p=H.photo||'';
+    patch.photo=p;
+    var t=prompt('Taqreeban pouday (public, optional):',H.trees||'');
+    if(t===null)t=H.trees||'';
+    patch.trees=t;
+    var aw=prompt('Award/pehchan (public, optional):',H.award||'');
+    if(aw===null)aw=H.award||'';
+    patch.award=aw;
+    fetch('/api/heroes',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(patch)})
+    .then(function(r){return r.json()}).then(function(j){if(j.ok)loadHeroes();else alert('Fail: '+(j.error||''))})
+    .catch(function(){alert('Network masla — dobara koshish karein')});
+    return;
+  }
+  fetch('/api/heroes',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:H.key,action:a})})
+  .then(function(r){return r.json()}).then(function(j){
+    if(!j.ok){alert('Fail: '+(j.error||''));return}
+    loadHeroes();
+    if(a==='approve')alert('⭐ Green Heroes wall par publish ho gaya!');
+  }).catch(function(){alert('Network masla — dobara koshish karein')});
+}
+$('#hTabsRow').addEventListener('click',function(e){
+  var b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('#hTabsRow .tab').forEach(function(t){t.classList.remove('active')});
+  b.classList.add('active');hFilter=b.getAttribute('data-st')||'';
+  renderHeroes();
+});
+$('#haAddBtn').addEventListener('click',function(){
+  var name=$('#haName').value.trim();
+  if(!name){alert('Naam zaroori hai');return}
+  var btn=$('#haAddBtn');btn.disabled=true;
+  fetch('/api/heroes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    name:name,city:$('#haCity').value.trim(),detail:$('#haDetail').value.trim(),
+    photo:$('#haPhoto').value.trim(),trees:$('#haTrees').value.trim(),
+    since:$('#haSince').value.trim(),award:$('#haAward').value.trim(),
+    approve:$('#haApprove').checked
+  })}).then(function(r){return r.json()}).then(function(j){
+    if(j.ok){['haName','haCity','haDetail','haPhoto','haTrees','haSince','haAward'].forEach(function(id){$('#'+id).value=''});$('#haApprove').checked=false;loadHeroes()}
+    else alert('Fail: '+(j.error||''));
+  }).catch(function(){alert('Network masla — dobara koshish karein')})
+  .finally(function(){btn.disabled=false});
+});
 
 /* ---------- detail modal ---------- */
 function openDetail(key){
