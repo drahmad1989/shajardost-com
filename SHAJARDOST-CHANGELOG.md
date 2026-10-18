@@ -500,4 +500,35 @@ Owner ne (1) calculator 404 report kiya (wo offline file thi — site par nahi t
 
 ---
 
+## v1.0.8 — 2026-10-18: RATE MATRIX FINAL — owner ke measured CARE COST REPORT par
+
+Owner ne CARE COST REPORT diya (500 pouday: paani 96k + chowkidar 240k + bijli 30k + khaad 15k + misc 10k + replacement 10k = Rs.4,01,000/saal → Rs.802/pouday/saal + one-time Rs.150) aur approval di: "han sahi h ap thek kah rhay hain, jsy dil krey bnaen ab". Minimum sustainable rate = cost ÷ (1 − 20% margin).
+
+### Rate changes (sirf proven-loss items fix — minimal shock)
+- **Rate Chart 2–3 ft row** (donate.html): Rs.500/1,000/1,500/2,500 → **Rs.1,200/2,200/3,200/5,200** (cost 952/1,754/2,556/4,160 + 20% margin)
+- **Starter Plant Rs.500 stays** — honest re-label: "6-month establishment care" (cost Rs.551; pehle "1-year care" likha tha = Rs.452/sale nuqsan)
+- **Sadqah Jariyah Bundle: Rs.4,750 → Rs.9,500** — 10 plants + 1-year care, cost Rs.9,520 = **at-cost, no margin** (Sadaqah framing; pehle -4,770/sale nuqsan)
+- **Community Forest: Rs.22,500 → Rs.45,000** — 50 plants ek site par batch + 1-year care (pehle -25,100/sale nuqsan)
+- **Mission 50 Sponsor (index): Rs.11,875 → Rs.28,500** — 25 × 1,200 × 0.95 = chart-consistent 5% bulk discount (pehle -11,925/sale nuqsan)
+- 3–5 ft + 5–7 ft chart rows UNCHANGED (already cost-covered: 3yr 4,000 vs cost 3,570; 5yr 10,000 vs 6,263)
+- DeraTalk prefill msg prices sab affected cards mein update
+- Quantity Discounts section (5%/10%/15%/20% off list rate) unchanged
+
+### Zameen plan context (owner discussion)
+- Partner-site planting (schools/hospitals/madrasas) = zameen free — ye bachat measured Rs.802 mein PEHLE SE shamil
+- 1 acre Miyawaki (2,000–2,500 pouday) par per-tree cost GIRTI hai (chowkidar Rs.480→Rs.96/pouday) — rates zameen aane par dobara naap kar revise honge
+- Nursery engine + CSR "Adopt-an-Acre" = agle acre ka funding route (10-saal cut-and-sell plan par agent ne nursery model recommend kiya)
+
+- Commit: 386da5e (static-live) | Deploy: 40982f7f → production
+- Script: scripts/rate-matrix-v108.py (idempotent, pattern-anchored, post-condition checks)
+
+### Verification (ALL PASS)
+- [x] /donate HTTP 200 — Rs.9,500 ✓, Rs.45,000 ✓, Rs.1,200 ✓, "6-month establishment care" ×2 ✓; 4,750/22,500/"with 1-year care" = 0 ✓
+- [x] / HTTP 200 — Rs.28,500 ✓, Rs.9,500 ✓; 11,875/4,750 = 0 ✓
+- [x] Form access_key intact (/donate) ✓ | /admin HTTP 200 (functions OK) ✓
+- [x] IndexNow: /donate + / → HTTP 200
+- [x] DeraTalk msg prefills: 9500/45000/28500 live ✓
+
+---
+
 **END OF MASTER CHANGELOG**
