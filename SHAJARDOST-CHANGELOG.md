@@ -594,4 +594,41 @@ Pending list ka item 6 (SEO plan → Tier 1 on-page). Pehle full-site SEO audit 
 
 ---
 
+## v1.0.11 — 2026-10-18: FREE PLANTS WALL + GREEN HEROES (owner ke 2 faislay)
+
+Owner ke faislay: (1) Demand Wall ka naam "Free Plants" — koi bhi mang banaye, koi bhi sponser ban jaye, LEKIN plants team khud khareed kar khud lagaye (team ka fund yun jama hota rahega); (2) Green Heroes — Pakistan ke shajar doston ki neutral honor wall (Sirf promotion, ShajarDost affiliation NAHI). 9 seed names + 8 photos (Google Drive se download kar ke webp banaye).
+
+### 1. Demand Wall → FREE PLANTS (/free-plants — naya slug)
+- demand-wall.html DELETE, free-plants.html NEW, _redirects: /demand-wall → /free-plants 301
+- Card par: ref (FP-XXXX), 💰 taqreeban kharcha (admin set), 🌿 sponser ka naam (admin set), per-card "Sponser Banein" CTA (Call + DeraTalk ref prefill)
+- Status chips: Open / Sponser Ban Gaya (matched) / Poora Hua; 4-step how-it-works
+- Form mein hidden interest=Plant Demand + naya subject; nav/footer sitewide rename
+- demands.js: publicView +ref/+cost/+sponsor; PATCH match sponsor naam leta hai; reopen sponsor clear
+
+### 2. GREEN HEROES (/green-heroes — neutral honor wall)
+- functions/api/heroes.js NEW: KV `hero:{ms}:{hex}`, GET ?public=1 (sirf approved; suggester naam/phone KABHI public nahi; detail phone-scrub), admin GET/POST/PATCH(approve|reject|unpublish|edit)/DELETE; public ?mode=suggest (consent ZAROORI + honeypot + rate limit 10/hr)
+- green-heroes.html NEW: cards (photo webp / initials fallback, naam, shehar, pouday, award, detail), DISCLAIMER (neutral — members/partners nahi), suggest form (hero + suggester private), JSON-LD ItemList 9 naam
+- 9 heroes seeded approved: Muhammad Ahmad Baloch (Pattoki), Ghulam Rasool Pakistani, Mazhar Hashmi, Khizar Wali Chishti, Rafiq Ahmed Soomro, Javed Hussain, Shahrooz, Abdul Basit Baloch, Khawaja Mazhar Iqbal — details owner ✏️ se bharega; Waqas Ch photo saved (confirm ka intezar)
+- assets/images/heroes/ 8 webp (480px square, 14–68KB)
+- admin.html: "⭐ Green Heroes" tab (suggestions queue + manual add + edit + hide/delete) + Free Plants tab 💰 cost + 🤝 sponsor-prompt
+
+### 3. lead.js BUG FIX (v1.0.9 ka chupa hua masla)
+- Form mein interest field nahi tha → asli form se demand record KABHI nahi banta tha (E2E direct API post karta tha isliye bach gaya tha)
+- Ab trigger: interest YA subject "demand" YA source /demand-wall|/free-plants — teeno paths E2E me test
+
+- Commit: 29a2f2f (static-live) | Deploy: 72dd27ec → production
+- Scripts: free-plants-v1011.py (linker), test-free-plants-heroes.py (E2E)
+
+### Verification (E2E 32/33 — ek "fail" test ki ghalat ummeed thi, neeche wajah)
+- [x] 9 heroes public | suggestion pending→public NAHI | approve→public (suggester phone kabhi nahi, detail scrub)
+- [x] bina consent → 400 | honeypot pretend-ok | unauth → 401 dono APIs
+- [x] Form-flow 3 variants: interest ✓ / source ✓ / (subject sirf "demand" likhe to ✓ — naya subject "Nayi Mang" hai isliye us ka path NAHI chalta, lekin form interest+source dono se covered hai — test ka fail expectation thi, system theek)
+- [x] approve→cost public→sponsor public→phone kabhi nahi | cleanup: 4 real leads intact, 0 test bakhiya
+- [x] /free-plants 200 | /green-heroes 200 | /demand-wall → 301 | sitemap 19 URLs | 3 hero images 200
+- [x] IndexNow: free-plants + green-heroes + home → 200
+
+### Open items
+- Owner: har hero ki 2-4 line detail + shehar (admin ✏️ se) | "Waqas Ch" photo kis ka hai? | pehli asli mang/supply entries (➕ se)
+
+
 **END OF MASTER CHANGELOG**
