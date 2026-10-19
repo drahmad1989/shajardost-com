@@ -928,4 +928,29 @@ Owner "next kam" endorsement → winter-care seasonal article November se pehle 
 - District-wise demand lists (har zila ki demand list) — ChatGPT brief owner ko deliver ho gaya; uske feedback ke baad build decision
 - Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup (products/shop canonical clones)
 
+## v1.0.22 — 2026-10-20: DISTRICT DEMAND SYSTEM (FILTER + SNAPSHOT) — OPTION C+B BUILD
+
+Owner ChatGPT se mashwara kar ke relay kiya — recommendation: Option C (existing wall extend) + B-style aggregate summary, 41 alag pages NAHI. Yehi build hua. Zero new pages, zero cost, same moderation flow.
+
+### Changes
+- **Backend (functions/api/demands.js):** optional `district` field (CAP 40) — POST manual-add, PATCH editable fields, publicView mein public. Purane records bina district ke poora chalte hain (public `district:""`). Phone scrub / auth / approval / history — sab untouched
+- **Public wall (free-plants.html):** (1) "District Demand Snapshot" — district cards (Open / Sponsored / Planted + plant totals) jo SAME public wall data se client-side calculate hote hain — ONE source of truth, koi alag totals nahi; (2) district dropdown filter (data se populate, pilot-first order); (3) form mein District select (41 Punjab zile + Other, required); (4) cards par city · district line; (5) honesty footnote — "Planted" sirf tab jab team planting complete kar ke photo post kare; qty na ho to card count hota hai, plant total nahi
+- **Admin (admin.html):** table mein Zila column; 📍 button → modal dropdown (41 zile + Other) se district assign (typing errors impossible); manual-add form mein zila dropdown; purani entries ke liye yahi safe process
+- Counting rules: approved=Open, matched=Sponsored, fulfilled=Planted — ek card sirf apne status bucket mein gintaa hai (no double-count); supply records summary se bahar; qty parser comma-safe, 100k cap
+
+### Files
+- MODIFIED: free-plants.html (213→309), admin.html (914→955), functions/api/demands.js (225→230)
+- Scripts: scripts/test-demands-v1022.mjs (backend harness), scripts/mock-server-v1022.py (frontend mock), scripts/postcheck-v1022.py (static checks)
+
+### Verification
+- [x] Backend harness 36/36 PASS (public view, auth 401, admin stats, PATCH old-record district + history, 40-char cap, bad key 400, POST district, KV_NOT_BOUND 503, qty parse edges, phone hidden + scrubbed)
+- [x] Browser UI tests (mock API): snapshot numbers exact (150 needed · 1000 sponsored · 75 planted), pilot-first + Other-last order, XSS payload neutralized, card-click → filter + dropdown sync + highlight, combined type×district filter, district-specific empty state, API-500 → empty state, empty data → summary hidden
+- [x] Admin flow tests: Zila column renders, 📍 modal opens (preselect existing district), PATCH body exact {key, district}, cancel/close working, existing actions intact
+- [x] Static checks 44/44: div balance, JSON-LD ×2, 41 districts, Roman-Urdu leak 0, forbidden (wa.me/Zakat/tax) 0, web3forms/access_key/consent/tel/DeraTalk intact, admin inline JS node --check clean
+
+### Open items
+- Owner: admin panel se purani entries ko 📍 se zila assign kare (Kasur/Lahore/Sheikhupura pilot pehle) — phir wall par snapshot khud populate ho jayega
+- 3-month review: 5 metrics (ChatGPT brief) — planting outcomes vs admin time
+- Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
+
 **END OF MASTER CHANGELOG**

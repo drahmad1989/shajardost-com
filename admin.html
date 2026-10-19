@@ -256,6 +256,7 @@ a.tel:hover{text-decoration:underline}
           <select id="daType"><option value="demand">🌱 Demand (mang)</option><option value="supply">📦 Pouday Aaye (supply)</option></select>
           <input id="daName" placeholder="Naam *" maxlength="80">
           <input id="daCity" placeholder="Shehar" maxlength="60">
+          <select id="daDistrict"><option value="">— Zila (district) —</option></select>
           <input id="daPhone" placeholder="Phone (sirf admin dekhega)" maxlength="20">
           <input id="daPlants" placeholder="Pouday — e.g. Kikar, Safeda" maxlength="150">
           <input id="daQty" placeholder="Tadaad — e.g. 50 plants" maxlength="40">
@@ -277,7 +278,7 @@ a.tel:hover{text-decoration:underline}
       <div class="table-card">
         <div class="table-scroll">
           <table>
-            <thead><tr><th>Waqt (PKT)</th><th></th><th>Naam</th><th>Shehar</th><th>Phone</th><th>Mang / Supply</th><th>Status</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Waqt (PKT)</th><th></th><th>Naam</th><th>Shehar</th><th>Zila</th><th>Phone</th><th>Mang / Supply</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody id="demandsBody"></tbody>
           </table>
         </div>
@@ -287,6 +288,19 @@ a.tel:hover{text-decoration:underline}
           <p style="font-size:13px;margin-top:6px">Demand Wall form se aane wali demands yahan "Pending" mein aati hain — Approve karte hi wall par public ho jati hain.</p>
         </div>
         <div class="updated-note" id="dUpdated"></div>
+      </div>
+    </div>
+
+    <div id="dzModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;padding:16px">
+      <div style="background:#fff;border-radius:14px;max-width:340px;width:100%;padding:20px;box-shadow:var(--shadow)">
+        <h3 style="margin-bottom:2px">Zila set karein</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:10px" id="dzWho"></p>
+        <select id="dzSelect" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:14px;margin-bottom:12px"></select>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Zila set hone par demand public wall par us zile ke filter mein nazar aayegi. Purani entries ke liye yahi safe tareeqa hai.</p>
+        <div style="display:flex;gap:8px;justify-content:flex-end">
+          <button class="vbtn" id="dzCancel">Cancel</button>
+          <button class="vbtn active" id="dzSave">Save</button>
+        </div>
       </div>
     </div>
 
@@ -559,6 +573,31 @@ $('#refreshBtn').addEventListener('click',function(){loadHeroes()});
 /* ---------- v1.0.9 Demand Wall ---------- */
 var demands=[],dStats={},dFilter='',demandsLoaded=false;
 var DSTATUS_LABEL={pending:'Pending',approved:'Live',matched:'Matched',fulfilled:'Poora Hua',rejected:'Rejected'};
+/* v1.0.22 — Punjab ke 41 zile (wall filter + summary isi se chalte hain) */
+var PUNJAB_DISTRICTS=['Attock','Bahawalnagar','Bahawalpur','Bhakkar','Chakwal','Chiniot','Dera Ghazi Khan','Faisalabad','Gujranwala','Gujrat','Hafizabad','Jhang','Jhelum','Kasur','Khanewal','Khushab','Kot Addu','Lahore','Layyah','Lodhran','Mandi Bahauddin','Mianwali','Multan','Muzaffargarh','Murree','Nankana Sahib','Narowal','Okara','Pakpattan','Rahim Yar Khan','Rajanpur','Rawalpindi','Sahiwal','Sargodha','Sheikhupura','Sialkot','Talagang','Taunsa','Toba Tek Singh','Vehari','Wazirabad'];
+(function(){
+  var opts='<option value="">— Zila (district) —</option><option value="Other">Other / Punjab se bahar</option>';
+  for(var i=0;i<PUNJAB_DISTRICTS.length;i++)opts+='<option value="'+PUNJAB_DISTRICTS[i]+'">'+PUNJAB_DISTRICTS[i]+'</option>';
+  var da=$('#daDistrict'),dz=$('#dzSelect');
+  if(da)da.innerHTML=opts;
+  if(dz)dz.innerHTML=opts;
+})();
+var dzKey='';
+function dzOpen(D){
+  dzKey=D.key;$('#dzWho').textContent=D.name+(D.city?' — '+D.city:'')+' | '+(DSTATUS_LABEL[D.status]||D.status);
+  $('#dzSelect').value=D.district||'';$('#dzModal').classList.remove('hidden');
+}
+function dzClose(){dzKey='';$('#dzModal').classList.add('hidden')}
+$('#dzCancel').addEventListener('click',dzClose);
+$('#dzModal').addEventListener('click',function(e){if(e.target===$('#dzModal'))dzClose()});
+$('#dzSave').addEventListener('click',function(){
+  if(!dzKey)return;
+  var v=$('#dzSelect').value;
+  fetch('/api/demands',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:dzKey,district:v})})
+  .then(function(r){return r.json()}).then(function(j){
+    if(j.ok){dzClose();loadDemands()}else alert('Fail: '+(j.error||''));
+  }).catch(function(){alert('Network masla — dobara koshish karein')});
+});
 function loadDemands(){
   if(!authed)return;
   fetch('/api/demands').then(function(r){
@@ -597,12 +636,14 @@ function renderDemands(){
       if(['approved','matched','fulfilled'].indexOf(D.status)!==-1)acts+='<button data-a="unpublish" title="Wall se hatao">🙈</button>';
       acts+='<button data-a="edit" title="Public text edit karein">✏️</button>';
       acts+='<button data-a="cost" title="Taqreeban kharcha set karein (sponser ko andaza milega)">💰</button>';
+      acts+='<button data-a="district" title="Zila set karein (district filter + summary ke liye)">📍</button>';
       acts+='<button data-a="delete" title="Delete">🗑</button>';
       tr.innerHTML=
         '<td class="td-date">'+esc(fmtTime(D.ts))+'</td>'+
         '<td>'+(D.type==='supply'?'📦':'🌱')+'</td>'+
         '<td class="td-name">'+esc(D.name)+'</td>'+
         '<td>'+esc(D.city||'—')+'</td>'+
+        '<td>'+esc(D.district||'—')+'</td>'+
         '<td>'+(D.phone?'<a class="tel" href="'+telHref(D.phone)+'" data-stop="1">'+esc(D.phone)+'</a>':'—')+'</td>'+
         '<td>'+mang+'</td>'+
         '<td><span class="badge st-'+esc(D.status)+'">'+esc(DSTATUS_LABEL[D.status]||D.status)+'</span></td>'+
@@ -640,6 +681,7 @@ function demandAction(D,a){
     .catch(function(){alert('Network masla — dobara koshish karein')});
     return;
   }
+  if(a==='district'){dzOpen(D);return;}
   var body={key:D.key,action:a};
   if(a==='match'){
     var sp=prompt('Sponser ka naam (wall par "Sponser: [naam]" public dikhega — khali chhorein to sirf status):','');
@@ -664,11 +706,11 @@ $('#daAddBtn').addEventListener('click',function(){
   if(!name){alert('Naam zaroori hai');return}
   var btn=$('#daAddBtn');btn.disabled=true;
   fetch('/api/demands',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-    type:$('#daType').value,name:name,city:$('#daCity').value.trim(),phone:$('#daPhone').value.trim(),
+    type:$('#daType').value,name:name,city:$('#daCity').value.trim(),district:$('#daDistrict').value,phone:$('#daPhone').value.trim(),
     plants:$('#daPlants').value.trim(),qty:$('#daQty').value.trim(),detail:$('#daDetail').value.trim(),
     approve:$('#daApprove').checked
   })}).then(function(r){return r.json()}).then(function(j){
-    if(j.ok){['daName','daCity','daPhone','daPlants','daQty','daDetail'].forEach(function(id){$('#'+id).value=''});$('#daApprove').checked=false;loadDemands()}
+    if(j.ok){['daName','daCity','daPhone','daPlants','daQty','daDetail'].forEach(function(id){$('#'+id).value=''});$('#daDistrict').value='';$('#daApprove').checked=false;loadDemands()}
     else alert('Fail: '+(j.error||''));
   }).catch(function(){alert('Network masla — dobara koshish karein')})
   .finally(function(){btn.disabled=false});

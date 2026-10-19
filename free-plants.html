@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#2d6a4f">
 <title>Free Plants — Pakistan's Plant Request Wall | ShajarDost</title>
-<meta name="description" content="Free plants for schools, farmers and communities in Pakistan. Post a plant request, or sponsor one — the ShajarDost team buys and plants the trees itself. 100% free for requesters.">
+<meta name="description" content="Free plants for schools, farmers and communities in Pakistan. Post a request, sponsor one, or browse district-wise demand — the team buys and plants the trees itself.">
 <meta name="keywords" content="free plants Pakistan, free saplings, free plants for schools, tree request Pakistan, plant donation Pakistan, free trees">
 <meta name="author" content="ShajarDost"><meta name="geo.region" content="PK-PB">
 <link rel="canonical" href="https://shajardost.com/free-plants">
@@ -51,10 +51,30 @@
 .fp-step p{color:#7a7872;font-size:0.88rem}
 .fp-consent{display:flex;gap:10px;align-items:flex-start;font-size:0.85rem;color:#7a7872;margin:4px 0 16px;text-align:left}
 .fp-consent input{margin-top:3px;width:auto}
-@media(max-width:640px){.fp-board{grid-template-columns:1fr}}
+/* v1.0.22 — district filter + demand snapshot */
+.fp-filters select{background:#fff;border:1px solid #e8e5e0;border-radius:50px;padding:9px 16px;font-size:0.9rem;font-weight:600;color:#404040;cursor:pointer;font-family:inherit;max-width:230px}
+.fp-filters select:focus{outline:none;border-color:#2d6a4f}
+.fp-sum{max-width:1100px;margin:0 auto 26px;background:#fff;border:1px solid #e8e5e0;border-radius:14px;padding:18px 20px;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.fp-sum-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.fp-sum-head .t{font-weight:800;color:#1b4332;font-size:1.05rem}
+.fp-sum-head .t i{color:#2d6a4f}
+.fp-sum-date{font-size:0.78rem;color:#a5a29b;font-weight:600}
+.fp-sumgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px}
+.fp-sumcard{background:#faf9f6;border:1px solid #e8e5e0;border-radius:12px;padding:12px 14px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:5px;font-family:inherit;transition:all .2s}
+.fp-sumcard:hover{border-color:#2d6a4f}
+.fp-sumcard.on{border-color:#2d6a4f;background:#e7f4ec;box-shadow:0 0 0 1px #2d6a4f inset}
+.fp-sumcard .sc-name{font-weight:800;color:#1b4332;font-size:0.95rem}
+.fp-sumcard .sc-row{display:flex;align-items:center;gap:7px;font-size:0.82rem;color:#404040}
+.fp-sumcard .sc-row b{margin-left:auto;color:#1b4332}
+.fp-sumcard .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.dot.o{background:#2d6a4f}.dot.s{background:#2563eb}.dot.f{background:#a5a29b}
+.fp-sumcard .sc-plants{font-size:0.76rem;color:#7a7872;line-height:1.45}
+.fp-sum-note{max-width:1100px;margin:12px auto 0;font-size:0.8rem;color:#7a7872;line-height:1.55}
+@media(max-width:640px){.fp-board{grid-template-columns:1fr}.fp-sum{padding:14px 14px}.fp-sumgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.fp-sumgrid{grid-template-columns:1fr}}
 </style>
 
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Free Plants — Pakistan's Plant Request Wall", "url": "https://shajardost.com/free-plants", "description": "Free plants for schools, farmers and communities in Pakistan. Anyone can post a plant request, anyone can sponsor it — the ShajarDost team buys and plants the trees itself.", "inLanguage": "en-PK", "isPartOf": {"@type": "WebSite", "name": "ShajarDost", "url": "https://shajardost.com"}, "publisher": {"@type": "NGO", "name": "ShajarDost", "url": "https://shajardost.com", "logo": "https://shajardost.com/assets/images/Shajardost-logo.svg"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Free Plants — Pakistan's Plant Request Wall", "url": "https://shajardost.com/free-plants", "description": "Free plants for schools, farmers and communities in Pakistan. Post a request, sponsor one, or browse district-wise demand — the team buys and plants the trees itself.", "inLanguage": "en-PK", "isPartOf": {"@type": "WebSite", "name": "ShajarDost", "url": "https://shajardost.com"}, "publisher": {"@type": "NGO", "name": "ShajarDost", "url": "https://shajardost.com", "logo": "https://shajardost.com/assets/images/Shajardost-logo.svg"}}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://shajardost.com/"}, {"@type": "ListItem", "position": 2, "name": "Free Plants", "item": "https://shajardost.com/free-plants"}]}</script>
 </head><body><header class="site-header" id="siteHeader"><div class="container nav-inner">
 <a href="/" class="brand"><img loading="lazy" src="/assets/images/Shajardost-logo.svg" alt="ShajarDost" height="44" width="44"><span>Shajar<span class="gold">Dost</span></span></a>
@@ -69,14 +89,16 @@
 
 <section style="padding:72px 0 30px;">
 <div class="container">
-<div class="section-head"><span class="tag">Live Wall</span><h2>Today's Requests & Donated Plants</h2><p>Every card is a real request. Sponsor one and help a school or a farmer — our team buys the plants, plants them, and posts the photo on this wall.</p></div>
+<div class="section-head"><span class="tag">Live Wall</span><h2>Today's Requests & Donated Plants</h2><p>Every card is a real request. Sponsor one and help a school or a farmer — our team buys the plants, plants them, and posts the photo on this wall. Use the district snapshot and filter below to find requests near you.</p></div>
+<div class="fp-sum" id="fpSummary" style="display:none"></div>
 <div class="fp-filters" id="fpFilters">
 <button class="on" data-f="all">All</button>
 <button data-f="demand">🌱 Requests</button>
 <button data-f="supply">📦 Plants Donated</button>
+<select id="fpDistrict" aria-label="Filter by district"><option value="">All Districts</option></select>
 </div>
 <div class="fp-board" id="fpBoard"></div>
-<div class="fp-empty hidden" id="fpEmpty"><div class="big">🌱</div><p><b>No requests on the wall right now.</b></p><p style="font-size:0.9rem;margin-top:6px;">Be the first — send yours using the form below!</p></div>
+<div class="fp-empty hidden" id="fpEmpty"><div class="big">🌱</div><p><b id="fpEmptyTitle">No requests on the wall right now.</b></p><p style="font-size:0.9rem;margin-top:6px;">Be the first — send your request using the form below!</p></div>
 <div class="fp-note"><i class="ri-shield-check-line"></i> <b>Our promise:</b> requesters receive their plants <b>completely free</b>. Sponsor money goes straight to the team — plants are bought as per the rate list and <b>planted by us</b>, and once done the photo is posted on this wall. Mobile numbers are <b>never published</b> on the website.</div>
 </div></section>
 
@@ -114,7 +136,8 @@
 <input type="checkbox" name="botcheck" class="hidden" style="display:none" tabindex="-1" autocomplete="off">
 
 <div class="form-row"><div class="form-field"><label>Your Name *</label><input type="text" name="name" required placeholder="Full name" maxlength="80"></div>
-<div class="form-field"><label>City *</label><input type="text" name="city" required placeholder="e.g. Pattoki, Kasur" maxlength="60"></div></div>
+<div class="form-field"><label>City / Area *</label><input type="text" name="city" required placeholder="e.g. Pattoki, Chunian" maxlength="60"></div></div>
+<div class="form-field"><label>District (zila) *</label><select name="district" required><option value="" selected disabled>Select your district</option><option value="Attock">Attock</option><option value="Bahawalnagar">Bahawalnagar</option><option value="Bahawalpur">Bahawalpur</option><option value="Bhakkar">Bhakkar</option><option value="Chakwal">Chakwal</option><option value="Chiniot">Chiniot</option><option value="Dera Ghazi Khan">Dera Ghazi Khan</option><option value="Faisalabad">Faisalabad</option><option value="Gujranwala">Gujranwala</option><option value="Gujrat">Gujrat</option><option value="Hafizabad">Hafizabad</option><option value="Jhang">Jhang</option><option value="Jhelum">Jhelum</option><option value="Kasur">Kasur</option><option value="Khanewal">Khanewal</option><option value="Khushab">Khushab</option><option value="Kot Addu">Kot Addu</option><option value="Lahore">Lahore</option><option value="Layyah">Layyah</option><option value="Lodhran">Lodhran</option><option value="Mandi Bahauddin">Mandi Bahauddin</option><option value="Mianwali">Mianwali</option><option value="Multan">Multan</option><option value="Muzaffargarh">Muzaffargarh</option><option value="Murree">Murree</option><option value="Nankana Sahib">Nankana Sahib</option><option value="Narowal">Narowal</option><option value="Okara">Okara</option><option value="Pakpattan">Pakpattan</option><option value="Rahim Yar Khan">Rahim Yar Khan</option><option value="Rajanpur">Rajanpur</option><option value="Rawalpindi">Rawalpindi</option><option value="Sahiwal">Sahiwal</option><option value="Sargodha">Sargodha</option><option value="Sheikhupura">Sheikhupura</option><option value="Sialkot">Sialkot</option><option value="Talagang">Talagang</option><option value="Taunsa">Taunsa</option><option value="Toba Tek Singh">Toba Tek Singh</option><option value="Vehari">Vehari</option><option value="Wazirabad">Wazirabad</option><option value="Other">Other / outside Punjab</option></select><small style="color:#7a7872;font-size:0.78rem;">Your request will be listed under this district on the wall.</small></div>
 <div class="form-field"><label>Mobile Number * <small style="color:#7a7872;">(only the team sees it — never shown on the website)</small></label><input type="tel" name="phone" required placeholder="03XX-XXXXXXX" maxlength="20"></div>
 <div class="form-row"><div class="form-field"><label>Which plants do you need? *</label><input type="text" name="plants" required placeholder="e.g. Kikar, Safeda, Neem, fruit plants" maxlength="150"></div>
 <div class="form-field"><label>How many? (quantity)</label><input type="text" name="qty" placeholder="e.g. 50 plants" maxlength="40"></div></div>
@@ -149,36 +172,88 @@
 <button class="back-top" id="backTop" aria-label="Back to top">↑</button>
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/script.js?v=2"></script>
 <script>
-/* Free Plants — public board renderer (v1.0.11) */
+/* Free Plants — public board renderer (v1.0.22 — district filter + demand snapshot)
+   Summary figures are computed client-side from the SAME public wall data — one source of truth. */
 (function(){
 'use strict';
-var WALL=[],curF='all';
+var WALL=[],curF='all',curD='',GEN=0;
+var PILOT=['Kasur','Lahore','Sheikhupura'];
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function fmtDate(ts){if(!ts)return'';var d=new Date(ts+5*3600000);return d.getUTCDate()+' '+MON[d.getUTCMonth()]+' '+d.getUTCFullYear()}
+function fmtDate(ts){if(!ts)return'—';var d=new Date(ts+5*3600000);return d.getUTCDate()+' '+MON[d.getUTCMonth()]+' '+d.getUTCFullYear()}
 function statusChip(s){
   if(s==='matched')return'<span class="fp-status fp-matched">🌿 Sponsored</span>';
   if(s==='fulfilled')return'<span class="fp-status fp-fulfilled">Fulfilled ✓</span>';
   return'<span class="fp-status fp-open">Open</span>';
 }
+function dName(d){var x=String(d==null?'':d).trim();return x||'Other'}
+function qtyNum(q){var m=String(q==null?'':q).replace(/,/g,'').match(/\d+/);if(!m)return 0;var n=parseInt(m[0],10);return(isFinite(n)&&n>0)?Math.min(n,100000):0}
+function distOrder(a,b){
+  if(a==='Other')return 1;if(b==='Other')return -1;
+  var ia=PILOT.indexOf(a),ib=PILOT.indexOf(b);
+  if(ia!==-1&&ib!==-1)return ia-ib;
+  if(ia!==-1)return -1;if(ib!==-1)return 1;
+  return a<b?-1:a>b?1:0;
+}
+function newBucket(){return{open:0,openP:0,spon:0,sponP:0,planted:0,plantedP:0}}
+function bucketAcc(b,d){
+  var q=qtyNum(d.qty);
+  if(d.status==='approved'){b.open++;b.openP+=q}
+  else if(d.status==='matched'){b.spon++;b.sponP+=q}
+  else if(d.status==='fulfilled'){b.planted++;b.plantedP+=q}
+}
+function sumCard(name,b){
+  var key=(name==='All Districts')?'':name;
+  var on=(curD===key)?' on':'';
+  var plants=(b.openP||b.sponP||b.plantedP)?('Plants: <b>'+b.openP+'</b> needed · <b>'+b.sponP+'</b> sponsored · <b>'+b.plantedP+'</b> planted'):'Plant totals appear as quantities are confirmed';
+  return'<button type="button" class="fp-sumcard'+on+'" data-d="'+esc(key)+'">'+
+    '<span class="sc-name">'+esc(name)+'</span>'+
+    '<span class="sc-row"><i class="dot o"></i>Open requests<b>'+b.open+'</b></span>'+
+    '<span class="sc-row"><i class="dot s"></i>Sponsored<b>'+b.spon+'</b></span>'+
+    '<span class="sc-row"><i class="dot f"></i>Planted<b>'+b.planted+'</b></span>'+
+    '<span class="sc-plants">'+plants+'</span></button>';
+}
+function buildSummary(){
+  var el=document.getElementById('fpSummary');if(!el)return;
+  var by={},order=[];
+  for(var i=0;i<WALL.length;i++){
+    var d=WALL[i];if(d.type!=='demand')continue;
+    var n=dName(d.district);
+    if(!by[n]){by[n]=newBucket();order.push(n)}
+    bucketAcc(by[n],d);
+  }
+  if(!order.length){el.style.display='none';el.innerHTML='';return}
+  var T=newBucket();
+  for(var k=0;k<order.length;k++){var b=by[order[k]];T.open+=b.open;T.openP+=b.openP;T.spon+=b.spon;T.sponP+=b.sponP;T.planted+=b.planted;T.plantedP+=b.plantedP}
+  order.sort(distOrder);
+  var h='<div class="fp-sum-head"><span class="t"><i class="ri-map-pin-line"></i> District Demand Snapshot</span><span class="fp-sum-date">Last updated: '+fmtDate(GEN)+' (PKT)</span></div>';
+  h+='<div class="fp-sumgrid">'+sumCard('All Districts',T);
+  for(var j=0;j<order.length;j++)h+=sumCard(order[j],by[order[j]]);
+  h+='</div>';
+  h+='<p class="fp-sum-note">Figures are generated automatically from the approved request cards below — one source of data, no separate totals. A request counts as “Sponsored” only when a sponsor commits, and as “Planted” only after our team completes the planting and posts the photo on this wall. Requests without a stated quantity count as one request but add nothing to the plant totals.</p>';
+  el.style.display='';el.innerHTML=h;
+}
 function render(){
   var b=document.getElementById('fpBoard');b.innerHTML='';
-  var rows=WALL.filter(function(d){return curF==='all'||d.type===curF});
-  document.getElementById('fpEmpty').classList.toggle('hidden',rows.length>0);
+  var rows=WALL.filter(function(d){return(curF==='all'||d.type===curF)&&(!curD||dName(d.district)===curD)});
+  var em=document.getElementById('fpEmpty');
+  em.classList.toggle('hidden',rows.length>0);
+  if(!rows.length)document.getElementById('fpEmptyTitle').textContent=curD?('No requests from '+curD+' on the wall yet.'):'No requests on the wall right now.';
   for(var i=0;i<rows.length;i++){
     (function(d){
       var el=document.createElement('div');el.className='fp-card';
       var isSup=d.type==='supply';
-      var chatMsg='Hello! I want to sponsor request '+(d.ref||'')+' ('+((d.name||'')+' — '+(d.city||''))+') from the Free Plants Wall.';
+      var chatMsg='Hello! I want to sponsor request '+(d.ref||'')+' ('+((d.name||'')+' — '+(d.city||d.district||''))+') from the Free Plants Wall.';
       var cta=(isSup||d.status==='fulfilled')?'':
         '<div class="fp-act">'+
         '<a class="a-call" href="tel:+923333197977">📞 Sponsor This — Call</a>'+
         '<a class="a-chat" target="_blank" rel="noopener" href="https://app.deratalk.com/b/ahmad?src=shajardost&msg='+encodeURIComponent(chatMsg)+'">💬 DeraTalk</a>'+
         '</div>';
+      var loc=[d.city,d.district].filter(Boolean).join(' · ');
       el.innerHTML=
         '<div class="fp-top">'+(isSup?'<span class="fp-badge fp-supply">📦 Plants Donated</span>':'<span class="fp-badge fp-demand">🌱 Request</span>')+statusChip(d.status)+'</div>'+
         '<div class="fp-ref">'+esc(d.ref||'')+'</div>'+
-        '<div class="fp-name">'+esc(d.name)+(d.city?' <span class="fp-city">📍 '+esc(d.city)+'</span>':'')+'</div>'+
+        '<div class="fp-name">'+esc(d.name)+(loc?' <span class="fp-city">📍 '+esc(loc)+'</span>':'')+'</div>'+
         ((d.plants||d.qty)?'<div class="fp-plants">'+esc([d.plants,d.qty?d.qty+' plants':''].filter(Boolean).join(' — '))+'</div>':'')+
         (d.cost?'<div class="fp-cost">💰 Estimated cost: '+esc(d.cost)+'</div>':'')+
         (d.sponsor?'<div class="fp-sponsor">🌿 Sponsor: '+esc(d.sponsor)+'</div>':'')+
@@ -189,14 +264,36 @@ function render(){
     })(rows[i]);
   }
 }
+function fillDistrictSelect(){
+  var sel=document.getElementById('fpDistrict');if(!sel)return;
+  var seen={},list=[];
+  for(var i=0;i<WALL.length;i++){var n=dName(WALL[i].district);if(!seen[n]){seen[n]=1;list.push(n)}}
+  list.sort(distOrder);
+  sel.innerHTML='<option value="">All Districts</option>';
+  for(var k=0;k<list.length;k++){var o=document.createElement('option');o.value=list[k];o.textContent=list[k];sel.appendChild(o)}
+  sel.value=curD;
+}
+function applyAll(){fillDistrictSelect();buildSummary();render()}
 document.getElementById('fpFilters').addEventListener('click',function(e){
   var btn=e.target.closest('button');if(!btn)return;
   document.querySelectorAll('#fpFilters button').forEach(function(x){x.classList.remove('on')});
   btn.classList.add('on');curF=btn.getAttribute('data-f');render();
 });
+document.getElementById('fpDistrict').addEventListener('change',function(){
+  curD=this.value;render();buildSummary();
+});
+document.getElementById('fpSummary').addEventListener('click',function(e){
+  var c=e.target.closest('.fp-sumcard');if(!c)return;
+  curD=c.getAttribute('data-d')||'';
+  var sel=document.getElementById('fpDistrict');if(sel)sel.value=curD;
+  render();buildSummary();
+});
+function wallFail(){document.getElementById('fpEmpty').classList.remove('hidden')}
 fetch('/api/demands?public=1').then(function(r){return r.json()}).then(function(j){
-  if(!j.ok)return;WALL=j.demands||[];render();
-}).catch(function(){document.getElementById('fpEmpty').classList.remove('hidden')});
+  if(!j.ok){wallFail();return}
+  WALL=j.demands||[];GEN=j.generated_at||0;
+  applyAll();
+}).catch(wallFail);
 })();
 </script>
 <!-- DeraTalk Floating Button (bottom-left) -->

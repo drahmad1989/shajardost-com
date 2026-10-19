@@ -1,4 +1,4 @@
-/* ShajarDost — /api/demands  (v1.0.9 — Demand Wall)
+/* ShajarDost — /api/demands  (v1.0.22 — Demand Wall + district)
  *
  * Public board: plant demands (mang) + received plants (supply).
  * GOLDEN RULES:
@@ -6,12 +6,16 @@
  *   2. Mobile number / email PUBLIC response mein KABHI nahi jata (defence-in-depth scrub bhi hai).
  *   3. Public text par phone-jaisi sequences auto-scrub hoti hain.
  *
+ * v1.0.22: optional `district` field (admin-assigned, Punjab zila).
+ *   - Old records bina district ke bhi poora chalte hain (public: district='').
+ *   - Public summary figures client-side same public data se banti hain — ONE source of truth.
+ *
  * GET  ?public=1            → sirf approved/matched/fulfilled (public fields only)
  * GET   (admin)             → sab demands (phone included) + stats
  * GET  ?key=demand:...      → single (admin)
- * POST  (admin)             → manual add {type:'demand'|'supply', name, city, phone, plants, qty, detail, approve}
+ * POST  (admin)             → manual add {type:'demand'|'supply', name, city, district, phone, plants, qty, detail, approve}
  * PATCH (admin)             → {key, action:'approve'|'reject'|'match'|'fulfill'|'reopen'|'unpublish',
- *                              name?, city?, plants?, qty?, detail?, public_detail?}
+ *                              name?, city?, district?, plants?, qty?, detail?, public_detail?}
  * DELETE ?key=demand:...    → remove (admin)
  */
 
@@ -20,7 +24,7 @@ import { json, isAuthed, unauthorized } from '../lib/auth.js';
 const KRE = /^demand:[0-9]+:[a-f0-9]+$/;
 const PUBLIC_STATUSES = ['approved', 'matched', 'fulfilled'];
 const STATUSES = ['pending', 'approved', 'matched', 'fulfilled', 'rejected'];
-const CAP = { name: 80, city: 60, phone: 40, plants: 150, qty: 40, detail: 1500, public_detail: 1500, source: 120, cost: 40, sponsor: 60 };
+const CAP = { name: 80, city: 60, district: 40, phone: 40, plants: 150, qty: 40, detail: 1500, public_detail: 1500, source: 120, cost: 40, sponsor: 60 };
 
 function clean(v, cap) {
   return String(v == null ? '' : v).trim().slice(0, cap);
@@ -73,6 +77,7 @@ function publicView(d) {
     type: d.type === 'supply' ? 'supply' : 'demand',
     name: clean(d.name, 80) || '(naam nahi)',
     city: clean(d.city, 60),
+    district: clean(d.district, 40),
     plants: clean(d.plants, 150),
     qty: clean(d.qty, 40),
     detail: scrub(d.public_detail || d.detail || ''),
@@ -135,6 +140,7 @@ export async function onRequestPost({ request, env }) {
     type: b.type === 'supply' ? 'supply' : 'demand',
     name,
     city: clean(b.city, CAP.city),
+    district: clean(b.district, CAP.district),
     phone: clean(b.phone, CAP.phone),
     plants: clean(b.plants, CAP.plants),
     qty: clean(b.qty, CAP.qty),
@@ -203,7 +209,7 @@ export async function onRequestPatch({ request, env }) {
   }
 
   /* Field edits (admin public text saaf karta hai — phone wagera) */
-  for (const f of ['name', 'city', 'plants', 'qty', 'detail', 'public_detail', 'cost', 'sponsor']) {
+  for (const f of ['name', 'city', 'district', 'plants', 'qty', 'detail', 'public_detail', 'cost', 'sponsor']) {
     if (b[f] !== undefined) {
       const v = clean(b[f], CAP[f] || 200);
       if ((d[f] || '') !== v) { d[f] = v; hist('edit', f + ' update'); changed = true; }
