@@ -900,4 +900,32 @@ Owner feedback: Roman Urdu UI strings page par awkward lag rahe the ("Mang Wall 
 - Winter-care seasonal article — abhi deploy ho rahi hai (v1.0.21)
 - Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup (products/shop canonical clones)
 
+## v1.0.21 — 2026-10-20: WINTER TREE CARE ARTICLE (13TH GREEN JOURNAL POST)
+
+Owner "next kam" endorsement → winter-care seasonal article November se pehle live (SEO: log sardi se pehle search karte hain). Saari recommendations named sources se — koi fabricated number nahi.
+
+### New article
+- blog/winter-tree-care-pakistan.html — "The First Cold Spell Is Coming: Winter Care for Young Trees" (7 min): winter ke 3 quiet killers (dryness/frost/rot), midday watering rule, bori wrap (RHS hessian ~2°C buffer + UF/IFAS young mango -2 se -1°C), species cold-reality table (mango/neem/amaltas/sukh chain/hardy natives — neem first-2-winters rule reuse), mulch blanket (UMN 7-10 cm), frost-night checklist, what-NOT-to-do, honesty box (70-80% survival + Rs.10,000 replacement + Rs.802), Roman Urdu quote, sources ×6 (UF/IFAS, RHS, Arbor Day ×2, CSFS 2026, UMN) + internal ledger
+- Established claims reuse only: 79% vs 47% UK trial, Rs.802/tree/yr, Rs.10,000 replacement line, 70-80% survival, neem 2-winter bori, sukh chain light-frost tolerance (Winrock)
+
+### Site integration
+- blog/index.html: winter card TOP par (c-care chip), ItemList 12→13 (winter pos 1, baqi shift), meta description mein "winter tree care" added
+- sitemap.xml: 33→34 URLs
+- Related links ×4: tree-care-guide, neem, grow-mango, best-trees → winter article (Continue Reading first position)
+
+### Files
+- NEW: blog/winter-tree-care-pakistan.html
+- MODIFIED: blog/index.html, sitemap.xml, blog/tree-care-guide-pakistan.html, blog/neem-tree-pakistan.html, blog/grow-mango-tree-from-seed.html, blog/best-trees-punjab-pakistan.html
+- Script: scripts/blog-winter-v1021.py (idempotent; sitemap slug-guard fix run ke doran)
+
+### Verification
+- [x] All checks pass: 13 cards + ItemList JSON 13 valid (pos 1 winter) + sitemap 34 + related ×4; article div 36/36, JSON-LD ×2 valid, 15 key strings, canonical self
+- [x] Forbidden terms 0 | "Sponser" misspelling 0 | broken /blog/ links 0
+- [x] Commit (static-live) → push → deploy → live verify 200 + key strings live
+- [x] IndexNow ping
+
+### Open items
+- District-wise demand lists (har zila ki demand list) — ChatGPT brief owner ko deliver ho gaya; uske feedback ke baad build decision
+- Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup (products/shop canonical clones)
+
 **END OF MASTER CHANGELOG**
