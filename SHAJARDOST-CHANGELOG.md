@@ -690,4 +690,62 @@ Owner ka mandate: "articles mazed lgaen? agr han tu shuru kren" → 3 naye engag
 ### Open items
 - Agla SEO step: CSR landing page | Owner: article ideas (blog page par "Suggest a Topic" DeraTalk button)
 
+
+## v1.0.14 — 2026-10-19: CSR LANDING PAGE (/csr) — CORPORATE PROGRAMME DEEP-PAGE
+
+Owner "next" → SEO roadmap ka declared agla step. /sponsorship (97 lines, quick lead form) patla tha isliye /csr alag poora programme page bana — duplicate NAHI: /sponsorship = quick form, /csr = deep page. Sirf established claims use kiye (1.2M+, 630,000, National Record).
+
+### 1. csr.html NEW (~250 lines)
+- Stats band: 1.2M+ trees / Rs.802 per-tree care / 3 Years care / 79% vs 47% survival (UK trial)
+- 4 why-cards + GOLD HONESTY BOX: no fake counts, no 100% survival promise, NO tax-benefit claims (receipt/documentation only), event-without-care warning
+- 3 packages LEDGER-ANCHORED (Rs.3,200/tree 3-yr = donate page rate): Grove 50 = Rs.160,000 | Forest 200 = Rs.640,000 (featured) | Landmark 500 = Rs.1,600,000; >500 = custom quote
+- Employee-drive 4-step (Before/Day/After/Follow-ups) + company-transport honesty note; reporting timeline (Day 0 / 6mo / 12mo / 36mo); FAQ 6 (land/scope/reporting/drives/branding/one-off)
+- Form: Web3Forms, subject "CSR Partnership Lead", interest "CSR Partnership" + Direct Call + DeraTalk fallback — ZERO WhatsApp
+- JSON-LD ×3: Service (provider NGO, +923333197977, Phool Nagar) / FAQPage (6, visible-match) / BreadcrumbList — teeno json.loads-verified
+
+### 2. Linking (scripts/csr-v1014-linker.py — idempotent)
+- Footer "CSR Programme" li ×25 pages (products/shop/404/thank-you/admin skip — Bug 7 pattern)
+- sitemap.xml: 27 → 28 URLs; sponsorship.html cross-link box (gold-left-border) → /csr
+- Post-checks: sab clean
+
+### Files
+- ADDED: csr.html | MODIFIED: sitemap.xml, sponsorship.html, 24 pages footer
+
+### Verification
+- [x] /csr 200; packages live (160,000 / 640,000 / 1,600,000 / 3,200 ×6); web3forms ×1; 3197977 ×9; wa.me/WhatsApp = 0
+- [x] Home footer /csr ✓ | sitemap 28 live | sponsorship cross-link ×2 live | donate intact (9,500)
+- [x] Commit 8c7657c (static-live) | Deploy 811fc8a6 → production | IndexNow 4 URLs → 200
+
+
+## v1.0.15 — 2026-10-19: OFFICIAL PAYMENT DETAILS LIVE + 7 FALSE TAX CLAIMS REMOVED
+
+Owner ne payment details di: "JS bank / zindagi app 03333197977 M Ahmad — yahi h hmara aik hi account is kam k ly e" → donate flow ka sab se bara blocker (Bug 6) clear. Isi audit mein homepage par 7 FALSE tax/registration claims mile (legacy content) — sab remove. Site rule: koi tax/registration claim nahi.
+
+### 1. Official payment details ab 5 pages par (scripts/payments-v1015.py — idempotent, 14 edits)
+- **donate.html**: Step 3 update + NAYA "Official Payment Account" box — JS Bank · Zindigi App, Account Title: M Ahmad, Number: 0333 3197977, "bank transfer or Zindigi app", receipt-confirm 24h line + GOLD anti-fraud note: "ONE & ONLY official account — no other account/wallet/person authorized; suspicious? call 0333-3197977"
+- **index.html**: Step 2 "Make Payment" ab JS Bank/Zindigi + M Ahmad + 0333-3197977 ("instant confirmation" → 24h standard); FAQ Q/A reframe "Is my donation tax-deductible?" → "Do you provide a receipt for my donation?" (visible + JSON-LD dono, matching); CSR card list "Tax-deductible (Section 61)" → "Bank transfer to our official account"; gold note → official receipt + account
+- **faq.html**: "How can I donate?" answer ab account details ke sath (visible + FAQPage JSON-LD, dono match)
+- **products.html + shop.html**: footer pay note "(JS Bank / Zindigi App — M Ahmad)" + spelling fix Zindagi → Zindigi (official JS Bank brand)
+
+### 2. FALSE CLAIMS REMOVED (index.html ×7 — compliance fix)
+- "Yes, ShajarDost is a registered NGO... tax-deductible under Section 61 of the Income Tax Ordinance... tax certificates above Rs. 5,000" (visible FAQ + FAQPage JSON-LD)
+- "Transparent, impactful, and tax-deductible" (steps subtitle)
+- "Receive instant confirmation and tax-deductible receipt" (Step 2 + JazzCash/EasyPaisa stale methods)
+- "Tax-deductible (Section 61)" (CSR card) + "All donations are tax-deductible under Section 61" (gold note)
+- FORBIDDEN_AFTER site-wide: tax-deductible / Section 61 / registered NGO / JazzCash / EasyPaisa = 0 across *.html
+
+### Files
+- MODIFIED: index.html, donate.html, faq.html, products.html, shop.html
+
+### Verification
+- [x] 5 pages 200; donate box live (5 payment-string hits), Rs. 9,500 bundle intact
+- [x] Home: tax-deductible = 0, JazzCash = 0, M Ahmad = 4 | faq: M Ahmad ×2 | shop: "Zindigi App — M Ahmad" live
+- [x] JSON-LD json.loads-valid (index/faq/donate) | div-balance clean (donate 60/60, index 150/150)
+- [x] Commit 6d5fa98 (static-live) | Deploy 58a013c5 → production | IndexNow 5 URLs → 200
+
+### Open items
+- Owner-blocked (baqi): Resend DNS records, Waqas/Mirha/Green Meadow calls, hero details via admin ✏️
+- Bug 7: products/shop duplicate clones de-dup (canonical-protected)
+- NOTE: Zindigi app se number-par-transfer hota hai; agar owner chahe to IBAN bhi add ho sakta hai (owner input)
+
 **END OF MASTER CHANGELOG**
