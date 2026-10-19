@@ -781,4 +781,45 @@ Owner "kr do jo krna h iban wgera" → IBAN owner ke number ka intezar hai (fabr
 - IBAN: owner ko Zindigi app se copy karke bhejna hai (agent fabricate NAHI karega) — milne par payment box mein add
 - Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
 
+## v1.0.17 — 2026-10-20: BLOG EXPANSION — SCHOOL DRIVE GUIDE + NEEM SPECIES GUIDE
+
+Owner "next blogs ki trf jaen" → Green Journal ko 8 se 10 articles tak expand kiya (2 naye researched articles + linking + sitemap). IBAN abhi bhi owner-input pending (v1.0.16 note).
+
+### 1. Naya Article — /blog/school-tree-plantation-drive (Schools & Drives, 8 min)
+- "How to Run a School Tree Plantation Drive That Actually Survives" — teachers/organizers ke liye poora playbook
+- Sourced research: 2021 Washington State 450-school study (~250 m tree buffer = academic achievement), 2016 Illinois high-schools (green window views → attention/stress), 2017/2019 tree-cover ↔ math/reading/college-readiness, 2005 survey (childhood planting → adult green values), Green Schoolyards America (heat shade protection)
+- ShajarDost established claims sirf: 79% vs 47% UK trial, 630,000 one-day national record, Rs.802 ledger, Rs.10k replacement, Green Scouts features (ages 8-18, certification, YouTube)
+- Sections: research "why" / species rules (no thorns near play, 10-15 ft buildings se, shade west-south) / pre-drive prep (pits 2-3 din pehle, numbered map, guards) / drive-day method (nursery soil-line, loose stake) / after-plan table (5 rows — summer vacation gap solution) / Green Scouts program box / HONESTY box (70-80% survival normal) / Roman Urdu quote / sources ×4
+- Funnel: green-scouts.html (btn-gold CTA) + Mission 50 + CSR + DeraTalk + 0333-3197977; zero WhatsApp
+- Nayi chip category: "Schools & Drives" (c-school terracotta)
+
+### 2. Naya Article — /blog/neem-tree-pakistan (Species Guide, 7 min)
+- "Neem: Pakistan's Village Pharmacy — and How to Plant It Right"
+- Sourced: Winrock International factsheet (7-8 mah dry-season survival; 150 mm min rainfall w/ groundwater; pH 5.0-8.0; saline/waterlogged/hardpan NO; 15-25 m height; azadirachtin; spacing 2.5×2.5→5×5 m fuelwood, wide for fruit; timber insect/fungi resistant), NIH NCBI Bookshelf (fruiting 3-5 yr, full 10 yr, 50 kg/yr, kernels 40-50% oil), Wageningen Sacandé 2000 (seed viability ~6 months @20°C/75% RH — sow fresh)
+- HONEST angles: frost warning (9.5-37°C, pehle 2 sardian bori wrap — Kasur nursery losses), "What Neem Is NOT" list (5 items — incl. medicine disclaimer: azadirachtin pest-control science hai, home-remedy health claims humara scope nahi)
+- Sections: reputation (village pharmacy) / soil limits (go/no-go) / planting (monsoon window + spacing table-referenced) / frost warning / seed fresh-only / what-neem-is-not / HONESTY box (Rs.802 ledger applies to neem) / Roman Urdu quote / sources ×5
+- Funnel: donate (sponsor CTA) + best-trees + care guide + mango + cost; zero WhatsApp
+
+### 3. Linking & SEO
+- blog/index.html: 2 naye cards TOP par + c-school CSS + ItemList 8→10 (school pos 1, neem pos 2) + meta description (school drives + neem)
+- sitemap.xml: 29 → 31 URLs
+- Related links ×4: care-guide→school, mango→school, best-trees→neem, lahore→school
+- Both articles: BlogPosting + BreadcrumbList JSON-LD (json.loads-verified), self-canonical, og/twitter, datePublished 2026-10-20
+- Heroes: school=green-scouts-school.jpg, neem=mini-nursery-project.jpg
+
+### Files
+- ADDED: blog/school-tree-plantation-drive.html, blog/neem-tree-pakistan.html
+- MODIFIED: blog/index.html, sitemap.xml, blog/tree-care-guide-pakistan.html, blog/grow-mango-tree-from-seed.html, blog/best-trees-punjab-pakistan.html, blog/lahore-air-pollution-trees.html
+- Script: scripts/blog-v1017.py (idempotent; ek expectation miscount fix — care slug 3→2)
+
+### Verification
+- [x] Both articles 200 + self-canonical | school 18 key strings live, neem 20 live (Winrock/azadirachtin/Sacandé)
+- [x] Index: c-school + 2 slugs + position 10 live | sitemap 31 live | related links ×4 live
+- [x] Donate intact (M Ahmad, 0333 3197977, 9,500) | forbidden (wa.me/WhatsApp/Zakat/tax) = 0 on both live pages
+- [x] Commit 9972756 (static-live) | Deploy 77f3c898 → production | IndexNow 7 URLs → 200
+
+### Open items
+- IBAN: owner ko Zindigi app se copy karke bhejna hai (agent fabricate NAHI karega) — milne par payment box mein add
+- Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
+
 **END OF MASTER CHANGELOG**
