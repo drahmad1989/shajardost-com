@@ -822,4 +822,30 @@ Owner "next blogs ki trf jaen" → Green Journal ko 8 se 10 articles tak expand 
 - IBAN: owner ko Zindigi app se copy karke bhejna hai (agent fabricate NAHI karega) — milne par payment box mein add
 - Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
 
+## v1.0.18 — 2026-10-20: IBAN LIVE (OWNER-PROVIDED, CHECKSUM-VALIDATED)
+
+Owner ne IBAN bheja: PK08JSBL9999903333197977 → publish se pehle validate kiya, phir 3 pages par add.
+
+### Validation (publish se pehle)
+- MOD-97 checksum = 1 → mathematically VALID
+- Length 24 (PK + 2 + JSBL + 16 digits) ✓ | Bank code JSBL = JS Bank ✓
+- Account part embeds mobile 03333197977 ✓ (Zindigi mobile-linked account — owner ke pehle bheje hue details se match)
+
+### Changes
+- donate.html: "Official Payment Account" box mein IBAN row (formatted: PK08 JSBL 9999 9033 3319 7977) + doosra Copy button (copyIban function — clipboard + execCommand fallback, "Copied!" 2s feedback)
+- index.html: Step 2 — "Account: M Ahmad, 0333-3197977, IBAN PK08 JSBL 9999 9033 3319 7977 (our one and only official account)"
+- faq.html: "How can I donate?" answer — visible + FAQPage JSON-LD dono mein IBAN added (matching text)
+
+### Files
+- MODIFIED: donate.html, index.html, faq.html | Script: scripts/iban-v1018.py (idempotent + publish se pehle checksum re-validation)
+
+### Verification
+- [x] All checks pass: IBAN formatted donate ×1 / home ×1 / faq ×2; raw sirf donate script ×1; products/shop par IBAN absent (by design)
+- [x] FAQ JSON-LD valid ×2 | donate div 61/61 | copyAcc + copyIban dono intact | Rs.9,500 + M Ahmad + ONE & ONLY intact
+- [x] Commit 94a5a67 (static-live) | Deploy c707cf8c → production | Live: donate/home/faq 200 + IBAN live | IndexNow 3 URLs → 200
+
+### Open items
+- Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
+- Payment info ab COMPLETE: Title + Number + IBAN + bank + anti-fraud note
+
 **END OF MASTER CHANGELOG**
