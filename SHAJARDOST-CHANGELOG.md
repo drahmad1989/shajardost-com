@@ -668,4 +668,26 @@ Owner ka mandate: "kch research kch blogs" → SEO roadmap ka agla in-court item
 - Owner: article topics suggest kar sakta hai (DeraTalk se blog page par "Suggest a Topic") — ya admin/WhatsApp se
 
 
+## v1.0.13 — 2026-10-19: GREEN JOURNAL EXPANSION — 3 NAYE ARTICLES ("Mazaydar" Series)
+
+Owner ka mandate: "articles mazed lgaen? agr han tu shuru kren" → 3 naye engaging articles, har number research-verified (IQAir newsroom, France24/Reuters Nov 2024, Lancet/ISGlobal 2023, London ERL 2024, mango horticulture guidance). Koi fabricated figure nahi.
+
+### Naye Articles (blog/ — BlogPosting + BreadcrumbList JSON-LD, self-canonical, og/twitter complete)
+- **/blog/tree-plantation-myths-pakistan** — "7 Tree Plantation Myths in Pakistan — Busted" (Myth Busters, 8 min): planted=done myth (UK trial 79% vs 47% survival), Rs.100 myth (real 3-yr Rs.2,556 — ledger-anchored), Eucalyptus caution (natives first), rows≠forest (Miyawaki layers), deewar myth (right tree right place — sohanjna/amaltas near homes), sarkar myth (community plots win), climate-silver-bullet myth (Lancet 39.5% heat deaths, lekin source-control bhi zaroori)
+- **/blog/lahore-air-pollution-trees** — "Lahore's Air Is Breaking Records — Can Trees Help?" (City & Air, 8 min): AQI 1,067 (2 Nov 2024 — France24/AFP, pehli dafa 1,000+), schools shut across Punjab (Reuters/NBC), PM2.5 ~74 µg/m³ = ~15x WHO guideline (IQAir 2024 annual), 2025 report: 8th globally; trees CAN (Lancet 93 cities: 30% canopy → ~39.5% heat deaths preventable, 0.4°C avg/5.9°C local cooling; London: 153 heat deaths avoided 2015–2022, night 2.0°C cooler in leafy deciles); HONESTY BOX: smog ka ilaaj source-control hai, trees greenwashing license nahi
+- **/blog/grow-mango-tree-from-seed** — "Grow a Mango Tree From the Mango You Already Ate" (Weekend Project, 6 min): Rs.0 project, 8 steps (husk crack, 2–3cm deep, sprout 1–4 weeks), polyembryonic twins surprise, 3-year care (ledger-anchored, protection>paani), HONEST FRUIT BOX (Chaunsa/Sindhri grafted hain; seed 5–8+ saal + parent-copy lottery), Green Scouts/class project angle
+
+### Linking (scripts/blog-v1013-linker.py — idempotent, post-checks clean)
+- blog/index.html: 3 naye cards grid ke TOP par (chips: Myth Busters / City & Air / Weekend Project), ItemList JSON-LD 4→7 items (naye pehle), meta description + hero lead mein naye topics add
+- sitemap.xml: 24 → 27 URLs (+3 articles)
+- 4 purane articles ke "Continue Reading": +7 links total (myths ×4 — miyawaki/best-trees/sadaqah/cost; mango ×2 — best-trees/cost), har list ab 4–5 links
+- Post-checks: index cards 2x each slug, sitemap 27 URLs, myths-link exactly 1x in each old article, mango-link exactly 1x in 2 articles, SITEWIDE broken-/blog/-link scan = 0, teeno naye files JSON-LD json.loads-valid
+
+### Files
+- ADDED: blog/tree-plantation-myths-pakistan.html, blog/lahore-air-pollution-trees.html, blog/grow-mango-tree-from-seed.html
+- MODIFIED: blog/index.html, sitemap.xml, blog/miyawaki-forest-pakistan.html, blog/best-trees-punjab-pakistan.html, blog/sadaqah-jariyah-tree-plantation.html, blog/tree-plantation-cost-pakistan.html
+
+### Open items
+- Agla SEO step: CSR landing page | Owner: article ideas (blog page par "Suggest a Topic" DeraTalk button)
+
 **END OF MASTER CHANGELOG**
