@@ -848,4 +848,34 @@ Owner ne IBAN bheja: PK08JSBL9999903333197977 → publish se pehle validate kiya
 - Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
 - Payment info ab COMPLETE: Title + Number + IBAN + bank + anti-fraud note
 
+## v1.0.19 — 2026-10-20: 2 NEW SPECIES GUIDES (AMALTAS + SUKH CHAIN) + WHATSAPP-BRAND HYGIENE
+
+Owner "next" → species guides (Sukh Chain / Amaltas dono) chosen; winter-care article November ke liye defer.
+
+### New articles (research-sourced, zero fabricated numbers)
+- blog/amaltas-tree-pakistan.html — "Amaltas: Punjab's Golden Shower — and How to Plant It for Decades of Blooms" (8 min): leafless-bloom botany, full-sun + well-drained-soil rule, monsoon planting method, POISONOUS-PODS school warning ("amaltas ka phool dekho, daana nahi khao"), What-Amaltas-Is-NOT ×5, honesty box Rs.802. Sources: UF/IFAS ST127 (Gilman 2019), Wikipedia Cassia fistula, Ugaoo flowering window
+- blog/sukh-chain-tree-pakistan.html — "Sukh Chain: The Tree That Laughs at Salt, Floods and Bad Soil" (7 min): Pongamia pinnata nitrogen-fixing, salinity + waterlogging + heavy-metal tolerance, dry-sand failure, non-edible oil (20–25% yield, 4600 kcal/kg fuelwood), volunteer/sucker management (Florida prohibited note), What-Sukh-Chain-Is-NOT ×5, honesty box Rs.802. Sources: Winrock NFTA 97-03, Degani et al. 2022 (J. Environmental Management), UF/IFAS AE590, eFlora of India (Urdu name سکھ چین)
+
+### Site integration
+- blog/index.html: 2 new cards at TOP (c-species chip), ItemList 10→12 (amaltas pos 1, sukh-chain pos 2), meta description mentions amaltas/sukh chain
+- sitemap.xml: 31→33 URLs
+- Related links ×4: best-trees→amaltas, neem→sukh-chain, care-guide→amaltas, school-drive→amaltas
+- products.html + shop.html: DeraTalk buttons par Font Awesome WhatsApp BRAND ICON (fab fa-whatsapp) → neutral chat icon (fas fa-comment-dots) — links pehle se DeraTalk par the, sirf branding theek hui
+
+### Files
+- NEW: blog/amaltas-tree-pakistan.html, blog/sukh-chain-tree-pakistan.html
+- MODIFIED: blog/index.html, sitemap.xml, blog/best-trees-punjab-pakistan.html, blog/neem-tree-pakistan.html, blog/tree-care-guide-pakistan.html, blog/school-tree-plantation-drive.html, products.html, shop.html
+- Script: scripts/blog-v1019.py (idempotent; forbidden-scan ab FUNCTIONAL WhatsApp use par — CSS class names + myths article ka editorial "WhatsApp forwards" allowlisted)
+
+### Verification
+- [x] All checks pass: index slugs ×2/×2 + ItemList JSON 12 items valid + 12 cards; sitemap 33; related ×4 live; dono articles div 35/35, JSON-LD ×2 valid each, key strings live
+- [x] Blog-wide broken /blog/ links 0; forbidden terms + functional WhatsApp scan clean; contact strings (0333-3197977 + DeraTalk) present
+- [x] Commit 8d4f6db (static-live) → push ✓ | Deploy fd6102b4 → production
+- [x] Live: dono articles 200 + self-canonical + 8-8 key strings live; index 2/2/pos-12; sitemap 33; related ×4; products/shop fab-whatsapp=0 + comment-dots=2; donate IBAN intact (2 rows, copyIban, M Ahmad, 9,500); forbidden live 0
+- [x] IndexNow 9 URLs → 200
+
+### Open items
+- Winter-care seasonal article — November shuru hote hi (timing-perfect: pehli sardian + frost-wrap season)
+- Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup (products/shop canonical clones)
+
 **END OF MASTER CHANGELOG**
