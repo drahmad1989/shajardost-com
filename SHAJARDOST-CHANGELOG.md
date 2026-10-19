@@ -878,4 +878,26 @@ Owner "next" → species guides (Sukh Chain / Amaltas dono) chosen; winter-care 
 - Winter-care seasonal article — November shuru hote hi (timing-perfect: pehli sardian + frost-wrap season)
 - Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup (products/shop canonical clones)
 
+## v1.0.20 — 2026-10-20: FREE PLANTS WALL PAGE FULLY IN ENGLISH (OWNER REQUEST)
+
+Owner feedback: Roman Urdu UI strings page par awkward lag rahe the ("Mang Wall Par Bhejein" wagaira) → poora free-plants.html natural English mein rewrite. Concept rename: "Mang Wall" → "Request Wall". Sirf copy badla — koi logic/data/form/layout change nahi.
+
+### Changes
+- 41 strings translated: title/meta/og/JSON-LD, hero, filters (Sab→All, Mang→Requests, Pouday Aaye→Plants Donated), 4 steps, promise note, sponsor section, form labels + consent + submit button ("Post My Request"), disclaimer, textarea placeholder, JS-rendered chips (Sponser Ban Gaya→Sponsored, Poora Hua→Fulfilled ✓), badges, cost/sponsor labels, dono DeraTalk prefill messages
+- Privacy promises unchanged aur ab English mein clear: mobile numbers kabhi publish nahi hote; approval sirf admin ke through
+- Backend (functions/api/demands.js), Web3Forms key, KV flow, admin approval — sab untouched
+
+### Files
+- MODIFIED: free-plants.html | Script: scripts/fp-english-v1020.py (idempotent, atomic — checks pass hone ke baad hi write)
+
+### Verification
+- [x] Roman-Urdu leak scan (word-boundary regex, 40+ words): 0 hits | "sponser" misspelling: 0
+- [x] div balance 55/55 unchanged | tel: links 5 unchanged | JSON-LD ×2 valid | Web3Forms key/action + /api/demands endpoint + consent required intact
+- [x] Commit (static-live) → push → deploy → live verify 200 + English strings live
+
+### Open items
+- District-wise demand lists (har zila ki demand list) — mashwara phase: owner ChatGPT brief le kar review karega, phir build decision
+- Winter-care seasonal article — abhi deploy ho rahi hai (v1.0.21)
+- Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup (products/shop canonical clones)
+
 **END OF MASTER CHANGELOG**
