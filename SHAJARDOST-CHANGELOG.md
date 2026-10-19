@@ -748,4 +748,37 @@ Owner ne payment details di: "JS bank / zindagi app 03333197977 M Ahmad — yahi
 - Bug 7: products/shop duplicate clones de-dup (canonical-protected)
 - NOTE: Zindigi app se number-par-transfer hota hai; agar owner chahe to IBAN bhi add ho sakta hai (owner input)
 
+## v1.0.16 — 2026-10-19: TREE CARE GUIDE ARTICLE + DONATE COPY BUTTON
+
+Owner "kr do jo krna h iban wgera" → IBAN owner ke number ka intezar hai (fabricate nahi kar sakte — ghalat IBAN = paisa kisi aur ke account mein), isliye baqi autonomous kaam: blog expansion (declared next) + donor UX.
+
+### 1. Naya Article — /blog/tree-care-guide-pakistan (Care & Calendar, 8 min)
+- "You Planted a Tree. Now What?" — first-year care guide, Pakistan climate + real ledger
+- Sourced: Arbor Day Foundation (daily 2 weeks → ~weekly deep watering; trowel finger-test; overwatering common killer), K-State Extension (mulch ring 3-6 ft ≈ double growth rate; donut-not-volcano; grass competition; mulch > fertilizer for young trees), NC Urban Forest Council (2-4 inch layer off trunk), Punjab Forest & Wildlife Dept (July-Aug monsoon plantation window + soil-moisture reasoning), June heatwave caution
+- Ledger-anchored: Rs.802/tree/yr, watchman Rs.240k (protection-first), paani Rs.96k, replacement Rs.10k budget
+- Sections: Water (deep>rare) / Mulch ring / Protection (4-legs & blades) / Monsoon timing / 4-season care calendar table / Kill List 6 / HONESTY box (70-80% survival normal, replacement budget) / sources box / CTA (sponsor with 3-yr care) + related ×4
+- Full SEO: BlogPosting + BreadcrumbList JSON-LD (json.loads-verified), self-canonical, og/twitter, title 60 chars
+- Hero: mission-50-campaign.jpg; nayi chip "Care & Calendar" (c-care teal)
+
+### 2. donate.html — Copy button
+- Account number "0333 3197977" ke sath Copy button (clipboard API + execCommand fallback, "Copied!" feedback 2s) — payment box untouched otherwise
+
+### 3. Linking (scripts/care-v1016.py — idempotent, pehli run mein 1 check-count fix)
+- blog/index.html: care card TOP + c-care CSS + ItemList 7→8 (care pos 1) + meta desc "first-year care"
+- sitemap.xml: 28 → 29 URLs
+- Related links +3: mango (gutthi project care), cost (Rs.802 kahan jata hai), myths (Myth #1 practice)
+- Post-checks: sitewide broken /blog/ scan = 0; FORBIDDEN (wa.me/Zakat/tax-deductible/Section 61) = 0; div-balance sab 0; donate M Ahmad + Rs.9,500 intact
+
+### Files
+- ADDED: blog/tree-care-guide-pakistan.html
+- MODIFIED: blog/index.html, sitemap.xml, donate.html, blog/grow-mango-tree-from-seed.html, blog/tree-plantation-cost-pakistan.html, blog/tree-plantation-myths-pakistan.html
+
+### Verification
+- [x] Article 200 + self-canonical + 29 key strings live | index card ×2 live | sitemap 29 live | copyAcc ×2 live
+- [x] Commit 17d7b37 (static-live) | Deploy 73abaae6 → production | IndexNow 4 URLs → 200
+
+### Open items
+- IBAN: owner ko Zindigi app se copy karke bhejna hai (agent fabricate NAHI karega) — milne par payment box mein add
+- Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
+
 **END OF MASTER CHANGELOG**
