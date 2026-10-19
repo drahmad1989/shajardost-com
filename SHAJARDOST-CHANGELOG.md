@@ -630,5 +630,42 @@ Owner ke faislay: (1) Demand Wall ka naam "Free Plants" — koi bhi mang banaye,
 ### Open items
 - Owner: har hero ki 2-4 line detail + shehar (admin ✏️ se) | "Waqas Ch" photo kis ka hai? | pehli asli mang/supply entries (➕ se)
 
+---
+
+## v1.0.12 — 2026-10-19: THE GREEN JOURNAL — BLOG LAUNCH (SEO Tier-2)
+
+Owner ka mandate: "kch research kch blogs" → SEO roadmap ka agla in-court item (v1.0.10 ke Tier-1 on-page ke baad). Stub blog.html ("Articles Coming Soon", canonical=home) hataya, asli research-backed blog banaya. Har article mein real sources — koi fabricated claim nahi.
+
+### 1. /blog/ — The Green Journal (blog/index.html NEW)
+- Design: site ke naye tokens (site-header/page-hero/site-footer + Remixicon), 4 article cards (category chips: Method / Islam & Trees / Species Guide / Costs & Care), date + read-time meta
+- JSON-LD: Blog schema + ItemList (4 posts); "Suggest a Topic" DeraTalk CTA; "Behind the Numbers" section
+- Purana blog.html DELETE — Cloudflare Pages /blog → 308 → /blog/ (verified)
+
+### 2. Char Articles (blog/ folder, sab indexable, BlogPosting + BreadcrumbList JSON-LD, titles 55–60 chars)
+- **/blog/miyawaki-forest-pakistan** — Miyawaki method guide: 4-layer system table, UK Trees Outside Woodlands trial (£4.8M, 16 plots, 3.5 saal): 79% vs 47% survival, £10 vs £50 per surviving tree, 2022 drought-tested; honest limitations box (timber nahi, 2–3 saal care, upfront cost); Pakistan context (dialogue.earth 2021, IQAir Lahore PM2.5)
+- **/blog/sadaqah-jariyah-tree-plantation** — Sadaqah Jariyah guide: Sahih al-Bukhari 2320 + Sahih Muslim 1553 (sunnah.com cross-check), Muslim ka "deeds end except three" narration, Musnad Ahmad ka palm-shoot hadith; hadith-box styling (gold); koi Zakat claim nahi (site rule)
+- **/blog/best-trees-punjab-pakistan** — 10 species guide: Kikar, Shisham, Amaltas, Neem, Sohanjna, Mulberry, Sukh Chain, Chanar, Semal, Jamun — Punjab Forest Department (Changa Manga) + Afforestation Lahore lists se; quick-comparison table + honest cautions (Eucalyptus water-draw, planting season, nursery quality)
+- **/blog/tree-plantation-cost-pakistan** — REAL measured data (E-E-A-T): 500 trees ki 1-saal ledger = Rs.401,000 (watchman 240k > paani 96k > bijli 30k > khaad 15k > misc 10k > replacement 10k) → Rs.802/tree/yr care + Rs.150 one-time; 3-yr Rs.2,556; donate page ke retail packages isi ledger se anchored
+
+### 3. Sitewide + SEO plumbing
+- Footer "Get Involved" column: +Green Journal link — 19 pages (idempotent scripts/blog-v1012.py; products/shop old-footer untouched = Bug 7 waise hi)
+- sitemap.xml: 19 → 24 URLs (+blog/ +4 articles)
+- FORBIDDEN_AFTER checks: self-canonical ✓, koi relative ../ path nahi, koi relative asset path nahi (sab /assets absolute)
+
+- Commit: 4781dfc (static-live) | Deploy: 45ce3781 → production
+- Script: scripts/blog-v1012.py (footer linker + sitemap + post-checks)
+
+### Verification
+- [x] /blog/ 200, title "The Green Journal — Tree Plantation Guides | ShajarDost", canonical self
+- [x] /blog → 308 → /blog/ (CF Pages auto)
+- [x] 4 articles 200; cost article mein Rs.802/Rs.2,556/401,000 live; miyawaki mein "79% vs 47%" live
+- [x] Home footer: Green Journal link ✓ | /donate rate matrix intact (Rs. 9,500) ✓
+- [x] Sitemap live: 24 URLs | IndexNow: 6 URLs (5 blog + sitemap) → HTTP 200
+- [x] Blog pages structure: 2× JSON-LD, 1× canonical, 1× H1, footer link — 5/5 clean
+
+### Open items
+- Agla SEO step: CSR landing page (sponsorship ke sath cross-link) + blog expansion (care guide article)
+- Owner: article topics suggest kar sakta hai (DeraTalk se blog page par "Suggest a Topic") — ya admin/WhatsApp se
+
 
 **END OF MASTER CHANGELOG**
