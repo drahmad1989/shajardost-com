@@ -112,6 +112,10 @@ export async function onRequestPost({ request, env, context }) {
         name: name || '(naam nahi)',
         city: clean(d.city, 60),
         phone: lead.phone,
+        /* v1.0.23: email bhi store (sirf admin contact ke liye — publicView whitelist se public kabhi nahi jata) */
+        email: lead.email,
+        /* v1.0.23 fix: form ka district ab demand record mein bhi save hota hai (v1.0.22 mein drop ho raha tha) */
+        district: clean(d.district, 40),
         plants: clean(d.plants, 150),
         qty: clean(d.qty, 40),
         detail: message,

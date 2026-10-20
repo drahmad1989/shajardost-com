@@ -644,7 +644,7 @@ function renderDemands(){
         '<td class="td-name">'+esc(D.name)+'</td>'+
         '<td>'+esc(D.city||'—')+'</td>'+
         '<td>'+esc(D.district||'—')+'</td>'+
-        '<td>'+(D.phone?'<a class="tel" href="'+telHref(D.phone)+'" data-stop="1">'+esc(D.phone)+'</a>':'—')+'</td>'+
+        '<td>'+(D.phone?'<a class="tel" href="'+telHref(D.phone)+'" data-stop="1">'+esc(D.phone)+'</a>':'—')+(D.email?'<div style="font-size:11.5px;margin-top:3px"><a href="mailto:'+esc(D.email)+'" data-stop="1" style="color:var(--muted);text-decoration:none">&#9993; '+esc(D.email)+'</a></div>':'')+'</td>'+
         '<td>'+mang+'</td>'+
         '<td><span class="badge st-'+esc(D.status)+'">'+esc(DSTATUS_LABEL[D.status]||D.status)+'</span></td>'+
         '<td><div class="dact">'+acts+'</div></td>';
