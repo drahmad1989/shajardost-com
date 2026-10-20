@@ -953,4 +953,31 @@ Owner ChatGPT se mashwara kar ke relay kiya — recommendation: Option C (existi
 - 3-month review: 5 metrics (ChatGPT brief) — planting outcomes vs admin time
 - Baqi owner-blocked: Resend DNS, Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
 
+## v1.0.23 — 2026-10-21: AUTO-EMAIL TO FORM FILLERS (PLUMBING) + v1.0.22 DISTRICT GAP FIX
+
+Owner sawal: "form fill karne walon ko hamari taraf se Gmail automatic jaye?" — Jawab: HAAN. Auto-ack email system ka code v1.0.5 se lead.js mein tha (Resend, no-reply@shajardost.com) lekin dormant: form mein email field hi nahi + RESEND_API_KEY secret nahi + domain DNS verify nahi. Web3Forms ka auto-reply sirf PAID plan par hai — eliminated (PKR 0 rule). Is version ne sending ke ilawa saari plumbing live kar di.
+
+### Changes
+- **free-plants.html:** optional "Email" field (type=email, CAP 200) mobile ke neeche — label "(optional — only for updates, never shown on the website)"; privacy bullet mein email line; consent text ab mobile + email dono cover karta hai. Page 100% English maintained
+- **functions/api/lead.js:** (1) demand record mein `email` capture — admin requester se email se bhi rabta kar sakega (publicView whitelist email ko public kabhi nahi banata — phone jaisa); (2) **v1.0.22 GAP FIX:** form ka District select demand record tak pohanchta hi nahi tha (sirf Web3Forms email mein jata tha) — ab `district` bhi store hota hai (CAP 40), admin table mein pending entry par sahi zila nazar aata hai, 📍 modal preselect karega
+- **admin.html:** demand table mein phone ke neeche ✉ email (mailto link) — XSS-safe esc()
+- Auto-ack email (RESend) ka template/chalana UNCHANGED — fire-and-forget, RESEND_API_KEY na ho to silently skip, email fail ho to bhi intake kabhi fail nahi hota
+
+### Files
+- MODIFIED: free-plants.html (309→310), functions/api/lead.js (165→168), admin.html (955→955)
+- Scripts: scripts/email-v1023.py (idempotent edits + static checks), scripts/test-lead-v1023.mjs (offline harness — stubbed KV + fetch)
+
+### Verification
+- [x] Static checks ALL PASS: div 60/60, JSON-LD ×2 valid, Roman-Urdu leak 0 (page English-only), forbidden (wa.me/Zakat/tax) 0, web3forms/consent/district intact, lead.js + admin inline JS node --check clean
+- [x] lead.js harness 18/18: intake 200, demand email+district capture, ack fired (from no-reply@shajardost.com, to submitter, SD-ref subject), ack skipped without key/context, honeypot, 400, email CAP 200, rate limit 429
+- [x] demands.js regression (v1.0.22 harness): 36/36 PASS
+- [x] Commit 3f8e2aa → push → deploy 0797ae9b → live: free-plants 200 + email field/consent/bullet live, admin ✉ email live, public API ok:true, donate IBAN intact
+- [x] IndexNow free-plants → 200
+
+### Open items (sending side — owner-blocked)
+- Owner: resend.com signup (free) → Add Domain shajardost.com → DNS values + API key agent ko bhejein → agent DNS records + secret set kar ke end-to-end test karega (DNS token already configured)
+- Us ke baad: form bharne wale ko foran "Shukriya! Request mil gayi [SD-XXXXXX]" email + owner ko weekly report email (cron.js) — dono ek hi setup se khul jayenge
+- Free limits: Resend 100 email/din, 3,000/month — current volume ke liye kaafi
+- Baqi owner-blocked: Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
+
 **END OF MASTER CHANGELOG**
