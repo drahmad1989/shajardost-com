@@ -980,4 +980,36 @@ Owner sawal: "form fill karne walon ko hamari taraf se Gmail automatic jaye?" �
 - Free limits: Resend 100 email/din, 3,000/month — current volume ke liye kaafi
 - Baqi owner-blocked: Waqas/Mirha/Green Meadow calls, hero details ✏️ | Bug 7 de-dup
 
+## v1.0.24 — 2026-10-21: VOLUNTEER SYSTEM + MISSION FIFTY (ChatGPT-approved design)
+
+Owner ne ChatGPT se volunteer-topic ka full mashwara karaya aur dono replies relay kiye. Governing spec: **Option B+D** (admin tracking + 3-level ladder), **contribution-based** (pehle chhota task, phir verified kaam, phir pehchan), certificate sirf verified contribution par, safeguarding under-18 consent, Mission Fifty ko **alag flagship movement** banana (volunteer programme se juda), koi public verification page/leaderboard/task board NAHI. Playbook (Phase 1 document) + minimal admin tracking (Phase 2) + Mission Fifty form — teeno ek release mein.
+
+### Changes
+- **functions/api/volunteers.js (NEW):** admin-only volunteer API — vol: records (koi public endpoint NAHI). GET list+stats (verified hours sirf verified log entries ka sum), GET ?certs=1 certificate register, POST manual add (phone par aaya applicant), PATCH actions: status (new/contacted/active/waitlist/inactive), task+deadline assign, activity log (task+hours 0-24 clamp+verified flag+outcome), level (supporter/active/team-lead), cert-eligible, **cert issue → auto-ID SD-VOL-YYYY-NNN / SD-AL-YYYY-NNN (re-issue blocked)**, consent (n/a/pending/received), field edits, DELETE. Har change history[] audit. Cert register cert: KV records (recipient, contribution summary, authority)
+- **functions/api/mission50.js (NEW):** Mission Fifty submissions admin API — m50: records, status flow submitted→review→verified→milestone50 (+rejected). PATCH: status, **verify (verifiedPlants CAP 100k)**, cert (sirf 50+ verified par → SD-M50-YYYY-NNN, contribution wording mein "survival claim nahi"), field edits, DELETE. Planting count != surviving trees — backend par enforce. Public endpoint nahi (featuring manual FB/YouTube)
+- **functions/api/lead.js:** (1) **skills[] multi-value fix** — formData ab arrays jama karta hai (pehle sirf aakhri skill bachti thi); (2) volunteer form (source /volunteer ya interest Volunteer) → vol record auto-create (status new, ageGroup 14-17/18+, consent pending/received/n/a, skills joined) — fail-open; (3) mission-fifty form (source /mission-fifty ya interest "Mission 50 Update") → m50 record auto-create — fail-open
+- **volunteer.html:** imandar wording — "Certificate for verified contributions — earned by completing tasks, not just by signing up"; student line factual; step 3/4 ab "Your First Task" + "Grow With Us" (Orientation hata di — owner ke limited waqt ke mutabiq); "Not near an active project?" remote-tasks line; **Preferred work select (role)** pehla task assignment ke liye; **under-18 guardian consent checkbox** + privacy note; disclaimer mein verified-contributions line. Page English-only
+- **mission-fifty.html:** poora movement framing — hero "Plant 50. Care for 50. Document your journey." + hashtags; 6-step How It Works; milestones 1-5/10/25/50; **Honest counting box** (planting record != surviving trees; certificate never claims survival); video guide (3 types) + Privacy first box; purana generic pledge form replace with **progress submission form** (qty/period/locCat/plant_type/video/permission) + duplicate hidden interest bug fix (2x interest → 1x "Mission 50 Update"); "86+ video pledge club" jaisa unverified claim removed
+- **admin.html (955→~1421):** 3 naye views — 🤝 Volunteers (stats/tabs/manual-add/table: age-group badge, consent chip, level+suggestion tooltip, verified hours, cert chip; actions: 📞✅⏸💤📋📒🎓🔒✏️🗑), 🌳 Mission 50 (stats incl. plants_verified, table claim vs verified, video link, actions: 🔍✅🚫🏁✏️🗑), 📜 Certificates (read-only register). 4 naye modals (task/log/cert/verify), pending badges, esc() everywhere, sab fetch patterns demands.js jaise
+- **Playbook PDF (Roman Urdu, 14 pages):** download/SHAJARDOST-VOLUNTEER-PLAYBOOK.pdf — 12 sections (callback script, 12-task menu, no-project policy, certificate levels, safeguarding, retention, workload, recognition, 10 risks, metrics+roadmap, Mission Fifty policy) + cover; HTML source bhi delivered
+
+### Files
+- NEW: functions/api/volunteers.js, functions/api/mission50.js, download/SHAJARDOST-VOLUNTEER-PLAYBOOK.pdf (+cover HTML)
+- MODIFIED: functions/api/lead.js (168→238), volunteer.html (179→199), mission-fifty.html (111→183), admin.html (955→1421)
+- Scripts: scripts/test-volunteers-v1024.mjs, scripts/postcheck-v1024.py, scripts/mock-server-v1024.py, scripts/playbook-v1024.py (+content)
+
+### Verification
+- [x] Offline harness 66/66 PASS: vol record (skills array/ageGroup/consent), fail-open, m50 record, volunteers API (401/list/PATCH task-log-cert/ID format SD-VOL-2026-001/re-issue blocked/register), mission50 (verify/cert guard <50/milestone/CAP 100k/direct-status blocked), bad keys, manual add, hours clamp, demand regression + rate limit 429
+- [x] Regressions: v1.0.23 lead harness 18/18, v1.0.22 demands harness 36/36
+- [x] Static postcheck 80/80: div balance, JSON-LD ×3 per page, Roman-Urdu leak 0 (public pages), forbidden 0, node --check (3 APIs + admin inline), sitemap intact
+- [x] Browser UI smoke (mock server + agent-browser): Volunteers/M50/Certs views render, XSS payload escaped, task/log/cert/verify modals PATCH bodies exact, 🏁 sirf 50+ par, manual add end-to-end, no console errors
+- [x] Playbook PDF: pdf_qa 0 errors (1 by-design left-anchor cover note), toc.check pass, font.check 0, blank pages 0
+- [x] Commit → push → deploy → live verify (volunteer/mission-fifty strings, admin new tabs, APIs 401 unauth) → IndexNow
+
+### Open items
+- Owner: playbook print kar ke roz kaam par layein; pehle 3-5 applicants par 48h callback script test karein (Volunteers tab se)
+- Resend DNS + API key owner ke paas (v1.0.23 se pending) — auto-ack email plumbing code-complete hai
+- 90 din baad: Section 11 ke 5 metrics review — tab Phase 3 ka faisla
+- Baqi owner-blocked: Waqas/Mirha/Green Meadow calls, hero details ✏️, Bug 7 de-dup
+
 **END OF MASTER CHANGELOG**

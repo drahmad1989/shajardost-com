@@ -37,7 +37,17 @@ export async function onRequestPost({ request, env, context }) {
   } else {
     try {
       const fd = await request.formData();
-      for (const [k, v] of fd.entries()) d[k] = v;
+      /* v1.0.24: skills[] jaise multi-value fields ab array mein jama hote hain
+       * (pehle loop overwrite karta tha — sirf aakhri skill bachti thi) */
+      for (const [k, v] of fd.entries()) {
+        if (k.length > 2 && k.slice(-2) === '[]') {
+          const bk = k.slice(0, -2);
+          if (!Array.isArray(d[bk])) d[bk] = [];
+          d[bk].push(v);
+        } else {
+          d[k] = v;
+        }
+      }
     } catch (e) { return json({ ok: false, error: 'bad form' }, 400); }
   }
 
@@ -131,6 +141,90 @@ export async function onRequestPost({ request, env, context }) {
         metadata: { n: demand.name.slice(0, 60), ty: 'demand', s: 'pending', t: dMs, c: demand.city.slice(0, 40) }
       });
     } catch (e) { /* demand wall enqueue fail-open */ }
+  }
+
+  /* v1.0.24 Volunteer record — volunteer form (source /volunteer ya interest Volunteer).
+   * GOLDEN RULE: volunteer records KABHI public nahi hote — sirf /api/volunteers (admin) par.
+   * Under-18 applicant → guardian consent 'pending' (48h call par verbal consent lena hai).
+   * Fail-open — volunteer enqueue fail ho to bhi lead intake fail nahi hota. */
+  if (/volunteer/i.test(lead.source) || /volunteer/i.test(lead.interest)) {
+    try {
+      const vMs = Date.now();
+      const vRnd = [...crypto.getRandomValues(new Uint8Array(4))].map(b => b.toString(16).padStart(2, '0')).join('');
+      const vKey = 'vol:' + vMs + ':' + vRnd;
+      const ageNum = parseInt(clean(d.age, 10), 10);
+      const under18 = ageNum ? ageNum < 18 : false;
+      const skillsStr = Array.isArray(d.skills)
+        ? d.skills.map(function (s) { return clean(s, 60); }).filter(Boolean).join(', ').slice(0, 400)
+        : clean(d.skills, 400);
+      const vol = {
+        key: vKey,
+        name: name || '(naam nahi)',
+        phone: lead.phone,
+        email: lead.email,
+        city: clean(d.city, 60),
+        age: clean(d.age, 10),
+        ageGroup: under18 ? '14-17' : (ageNum ? '18+' : ''),
+        availability: clean(d.availability, 60),
+        role: clean(d.role, 60),
+        skills: skillsStr,
+        message: message,
+        status: 'new',
+        level: 'supporter',
+        task: '',
+        taskDeadline: '',
+        log: [],
+        certStatus: 'none',
+        certType: '',
+        certId: '',
+        guardian: '',
+        consent: under18 ? (clean(d.guardian_ok, 10) ? 'received' : 'pending') : 'n/a',
+        notes: '',
+        source: source,
+        ts: vMs,
+        created_at: new Date(vMs + 5 * 3600000).toISOString().slice(0, 19).replace('T', ' '),
+        history: [{ t: vMs, a: 'created', d: 'form: ' + (source || 'site') }]
+      };
+      await env.LEADS_KV.put(vKey, JSON.stringify(vol), {
+        metadata: { n: vol.name.slice(0, 60), s: 'new', t: vMs, c: vol.city.slice(0, 40) }
+      });
+    } catch (e) { /* volunteer enqueue fail-open */ }
+  }
+
+  /* v1.0.24 Mission Fifty submission — mission-fifty page ka progress form.
+   * Planting count != surviving trees (dono alag); sirf admin verification ke baad
+   * aage barhta hai. Public wall NAHI — featuring manual hai (FB/YouTube). Fail-open. */
+  if (/mission-fifty/i.test(lead.source) || /mission ?50 (update|progress)/i.test(lead.interest)) {
+    try {
+      const mMs = Date.now();
+      const mRnd = [...crypto.getRandomValues(new Uint8Array(4))].map(b => b.toString(16).padStart(2, '0')).join('');
+      const mKey = 'm50:' + mMs + ':' + mRnd;
+      const m50 = {
+        key: mKey,
+        name: name || '(naam nahi)',
+        phone: lead.phone,
+        email: lead.email,
+        city: clean(d.city, 60),
+        qty: clean(d.qty, 20),
+        period: clean(d.period, 60),
+        locCat: clean(d.locCat, 60),
+        video: clean(d.video, 300),
+        plantType: /historical|earlier/i.test(clean(d.plant_type, 20)) ? 'historical' : 'new',
+        permission: /^(yes|on|true|1)$/i.test(clean(d.permission, 10)),
+        message: message,
+        status: 'submitted',
+        verifiedPlants: 0,
+        certId: '',
+        notes: '',
+        source: source,
+        ts: mMs,
+        created_at: new Date(mMs + 5 * 3600000).toISOString().slice(0, 19).replace('T', ' '),
+        history: [{ t: mMs, a: 'created', d: 'form: ' + (source || 'site') }]
+      };
+      await env.LEADS_KV.put(mKey, JSON.stringify(m50), {
+        metadata: { n: m50.name.slice(0, 60), s: 'submitted', t: mMs, c: m50.city.slice(0, 40) }
+      });
+    } catch (e) { /* mission50 enqueue fail-open */ }
   }
 
   /* v1.0.5 auto-acknowledgment email (Resend) — fire-and-forget.

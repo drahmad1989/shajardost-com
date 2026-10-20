@@ -40,6 +40,25 @@ button{font-family:inherit;cursor:pointer}
 .dact button{border:1px solid var(--border);background:#fff;border-radius:8px;padding:4px 9px;font-size:12.5px;cursor:pointer;transition:border .2s}
 .dact button:hover{border-color:var(--green)}
 
+/* ---------- v1.0.24 Volunteers + Mission 50 ---------- */
+.badge.st-contacted{background:#e8effb;color:var(--blue)}
+.badge.st-active{background:var(--green-soft);color:var(--green-dark)}
+.badge.st-waitlist{background:var(--gold-soft);color:#8a6200}
+.badge.st-inactive{background:#e0e0dc;color:var(--text-soft)}
+.badge.st-submitted{background:var(--gold-soft);color:#8a6200}
+.badge.st-review{background:#e8effb;color:var(--blue)}
+.badge.st-verified{background:var(--green-soft);color:var(--green-dark)}
+.badge.st-milestone50{background:#f3e8fb;color:#7c3aed}
+.vmodal{background:var(--surface);border-radius:16px;padding:22px;width:100%;max-width:430px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.vmodal h3{font-size:17px;color:var(--green-dark);margin-bottom:4px}
+.vmodal .vm-sub{font-size:13px;color:var(--muted);margin-bottom:14px}
+.vmodal label{display:block;font-size:12.5px;font-weight:600;color:var(--text-soft);margin:10px 0 4px}
+.vmodal input,.vmodal select,.vmodal textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:9px;font-size:14px;font-family:inherit;outline:none}
+.vmodal input:focus,.vmodal select:focus,.vmodal textarea:focus{border-color:var(--green)}
+.vm-foot{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+.hrs{font-size:11.5px;background:var(--green-soft);color:var(--green-dark);border-radius:50px;padding:1px 8px;font-weight:700;white-space:nowrap}
+.lvl{font-size:11px;color:var(--muted)}
+
 /* ---------- LOGIN ---------- */
 .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(135deg,var(--green-dark) 0%,var(--green) 100%)}
 .login-card{background:var(--surface);border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:44px 38px;width:100%;max-width:400px;text-align:center}
@@ -196,7 +215,7 @@ a.tel:hover{text-decoration:underline}
   </header>
 
   <main class="container">
-    <div class="view-switch"><button class="vbtn active" id="vLeads">📋 Leads</button><button class="vbtn" id="vDemands">🌿 Free Plants <span id="dPendBadge" class="pend-badge hidden"></span></button><button class="vbtn" id="vHeroes">⭐ Green Heroes <span id="hPendBadge" class="pend-badge hidden"></span></button></div>
+    <div class="view-switch"><button class="vbtn active" id="vLeads">📋 Leads</button><button class="vbtn" id="vDemands">🌿 Free Plants <span id="dPendBadge" class="pend-badge hidden"></span></button><button class="vbtn" id="vHeroes">⭐ Green Heroes <span id="hPendBadge" class="pend-badge hidden"></span></button><button class="vbtn" id="vVols">🤝 Volunteers <span id="vPendBadge" class="pend-badge hidden"></span></button><button class="vbtn" id="vM50">🌳 Mission 50 <span id="mPendBadge" class="pend-badge hidden"></span></button><button class="vbtn" id="vCerts">📜 Certificates</button></div>
     <div id="leadsView">
     <section class="stats" id="statsRow">
       <div class="stat-card accent"><div class="num" id="stTotal">—</div><div class="lbl">Total Leads</div></div>
@@ -348,6 +367,96 @@ a.tel:hover{text-decoration:underline}
         <div class="updated-note" id="hUpdated"></div>
       </div>
     </div>
+
+    <div id="volunteersView" class="hidden">
+      <section class="stats">
+        <div class="stat-card accent"><div class="num" id="vTotal">—</div><div class="lbl">Total Volunteers</div></div>
+        <div class="stat-card warn"><div class="num" id="vNew">—</div><div class="lbl">Naye (48h call)</div></div>
+        <div class="stat-card"><div class="num" id="vActive">—</div><div class="lbl">Active</div></div>
+        <div class="stat-card"><div class="num" id="vWait">—</div><div class="lbl">Waitlist</div></div>
+        <div class="stat-card"><div class="num" id="vHours">—</div><div class="lbl">Verified hours</div></div>
+      </section>
+      <details class="dw-add"><summary>➕ Manual add — phone par aaya applicant (48h callback flow)</summary>
+        <div class="dw-add-grid">
+          <input id="vaName" placeholder="Naam *" maxlength="80">
+          <input id="vaPhone" placeholder="Phone" maxlength="20">
+          <input id="vaCity" placeholder="Shehar" maxlength="60">
+          <input id="vaAge" placeholder="Age — e.g. 16" maxlength="10">
+          <select id="vaAvail"><option value="">— Availability —</option><option>Weekly 2 hours</option><option>Weekly 5 hours</option><option>Monthly 1 day</option><option>One-time event only</option><option>Weekends only</option><option>Flexible</option></select>
+          <select id="vaRole"><option value="">— Pasandeeda kaam —</option><option>Tree Planting (field)</option><option>Nursery Care</option><option>Photography / Video</option><option>Content Writing</option><option>Social Media</option><option>Teaching (Green Scouts)</option><option>Event Management</option><option>Research / Online Tasks</option><option>Local Outreach in My Area</option><option>Anywhere Needed</option></select>
+          <button class="btn btn-green" id="vaAddBtn" style="max-width:200px">Add karein</button>
+        </div>
+      </details>
+      <div class="tabs" id="vTabsRow">
+        <button class="tab active" data-st="">Sab</button>
+        <button class="tab" data-st="new">Naye</button>
+        <button class="tab" data-st="contacted">Rabta kiya</button>
+        <button class="tab" data-st="active">Active</button>
+        <button class="tab" data-st="waitlist">Waitlist</button>
+        <button class="tab" data-st="inactive">Inactive</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Naam</th><th>Shehar</th><th>Availability</th><th>Level</th><th>Hours ✓</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="volsBody"></tbody>
+        </table>
+      </div>
+      <div id="vEmpty" class="empty-state hidden">
+        <div class="big">🤝</div>
+        <p><b>Koi volunteer nahi</b> is filter mein.</p>
+        <p style="font-size:13px;margin-top:6px">Volunteer form se applications khud yahan aati hain — pehle 48h call (playbook script), phir ek chhota task assign karein.</p>
+      </div>
+      <div class="updated-note" id="vUpdated"></div>
+    </div>
+
+    <div id="m50View" class="hidden">
+      <section class="stats">
+        <div class="stat-card accent"><div class="num" id="mTotal">—</div><div class="lbl">Total Submissions</div></div>
+        <div class="stat-card warn"><div class="num" id="mSub">—</div><div class="lbl">Submitted (faisla karein)</div></div>
+        <div class="stat-card"><div class="num" id="mRev">—</div><div class="lbl">Review</div></div>
+        <div class="stat-card"><div class="num" id="mVer">—</div><div class="lbl">Verified</div></div>
+        <div class="stat-card"><div class="num" id="mM50">—</div><div class="lbl">50 Milestone</div></div>
+        <div class="stat-card"><div class="num" id="mPlants">—</div><div class="lbl">Verified plants</div></div>
+      </section>
+      <div class="tabs" id="mTabsRow">
+        <button class="tab active" data-st="">Sab</button>
+        <button class="tab" data-st="submitted">Submitted</button>
+        <button class="tab" data-st="review">Review</button>
+        <button class="tab" data-st="verified">Verified</button>
+        <button class="tab" data-st="milestone50">50 Milestone</button>
+        <button class="tab" data-st="rejected">Rejected</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date</th><th>Naam</th><th>Shehar</th><th>Claim</th><th>Verified</th><th>Video</th><th>Type</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="m50Body"></tbody>
+        </table>
+      </div>
+      <div id="mEmpty" class="empty-state hidden">
+        <div class="big">🌳</div>
+        <p><b>Koi submission nahi</b> is filter mein.</p>
+        <p style="font-size:13px;margin-top:6px">Mission Fifty page (/mission-fifty) ke progress form se submissions yahan aati hain — evidence (video/photos) dekh kar ✅ verify karein.</p>
+      </div>
+      <div class="updated-note" id="mUpdated"></div>
+    </div>
+
+    <div id="certsView" class="hidden">
+      <section class="stats">
+        <div class="stat-card accent"><div class="num" id="cTotal">—</div><div class="lbl">Total Certificates</div></div>
+      </section>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>ID</th><th>Type</th><th>Recipient</th><th>Shehar</th><th>Contribution</th><th>Issued</th></tr></thead>
+          <tbody id="certsBody"></tbody>
+        </table>
+      </div>
+      <div id="cEmpty" class="empty-state hidden">
+        <div class="big">📜</div>
+        <p><b>Abhi tak koi certificate issue nahi hua.</b></p>
+        <p style="font-size:13px;margin-top:6px">Volunteers tab mein 🎓 se certificate issue karein — ID (SD-VOL/SD-AL) khud ban jayegi aur register yahan record hoga. Mission 50 wale 🏁 se (SD-M50).</p>
+      </div>
+      <div class="updated-note" id="cUpdated"></div>
+    </div>
   </main>
 </div>
 
@@ -413,6 +522,57 @@ a.tel:hover{text-decoration:underline}
   </div>
 </div>
 
+<!-- ============ v1.0.24 VOLUNTEER / M50 SMALL MODALS ============ -->
+<div id="vmTaskModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;padding:16px">
+  <div class="vmodal">
+    <h3>📋 Task assign karein</h3>
+    <p class="vm-sub" id="vmTaskWho"></p>
+    <label>Task kya hai? (kya karna hai + kaise report karna hai)</label>
+    <input id="vmTaskInput" maxlength="200" placeholder="e.g. Nursery inventory — ginti + photos, kal raat tak report karein">
+    <label>Deadline (optional)</label>
+    <input type="date" id="vmTaskDeadline">
+    <div class="vm-foot"><button class="vbtn" id="vmTaskCancel">Cancel</button><button class="vbtn active" id="vmTaskSave">Save</button></div>
+  </div>
+</div>
+<div id="vmLogModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;padding:16px">
+  <div class="vmodal">
+    <h3>📒 Activity log entry</h3>
+    <p class="vm-sub" id="vmLogWho"></p>
+    <label>Task / activity</label>
+    <input id="vmLogTask" maxlength="200" placeholder="e.g. Sapling care check — Kasur site">
+    <label>Kitnay ghantay?</label>
+    <input type="number" id="vmLogHours" min="0" max="24" step="0.5" placeholder="e.g. 2">
+    <label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" id="vmLogVerified" style="width:auto"> Verified (evidence dekh liya)</label>
+    <label>Natija / output (optional)</label>
+    <input id="vmLogOutcome" maxlength="500" placeholder="e.g. 12 paudon ko pani ki zaroorat — report mil gayi">
+    <div class="vm-foot"><button class="vbtn" id="vmLogCancel">Cancel</button><button class="vbtn active" id="vmLogSave">Save</button></div>
+  </div>
+</div>
+<div id="vmCertModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;padding:16px">
+  <div class="vmodal">
+    <h3>🎓 Certificate issue karein</h3>
+    <p class="vm-sub" id="vmCertWho"></p>
+    <p style="font-size:13px;background:var(--gold-soft);border:1px solid #f0dc9a;border-radius:9px;padding:8px 12px" id="vmCertInfo"></p>
+    <label>Certificate type</label>
+    <select id="vmCertType">
+      <option value="volunteer">Volunteer certificate (verified contribution)</option>
+      <option value="activity-letter">Student activity letter (factual — verified hours)</option>
+    </select>
+    <p style="font-size:12px;color:var(--muted);margin-top:8px">ID khud ban jayegi (SD-VOL… / SD-AL…) aur register mein record hoga. Dobara issue nahi hota.</p>
+    <div class="vm-foot"><button class="vbtn" id="vmCertCancel">Cancel</button><button class="vbtn active" id="vmCertSave">Issue karein</button></div>
+  </div>
+</div>
+<div id="vmVerifyModal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;padding:16px">
+  <div class="vmodal">
+    <h3>✅ Plants verify karein</h3>
+    <p class="vm-sub" id="vmVerifyWho"></p>
+    <label>Evidence (video/photos) dekh kar — kitne plants verified?</label>
+    <input type="number" id="vmVerifyQty" min="0" max="100000" step="1" placeholder="e.g. 12">
+    <p style="font-size:12px;color:var(--muted);margin-top:8px">Planting count aur surviving trees alag cheezein hain. Mission 50 certificate 50+ verified plants par hi issue hoga.</p>
+    <div class="vm-foot"><button class="vbtn" id="vmVerifyCancel">Cancel</button><button class="vbtn active" id="vmVerifySave">Verify</button></div>
+  </div>
+</div>
+
 <script>
 (function(){
 'use strict';
@@ -436,7 +596,7 @@ function showApp(){
   authed=true;
   $('#loginView').classList.add('hidden');
   $('#appView').classList.remove('hidden');
-  loadLeads();loadDemands();demandsLoaded=true;loadHeroes();heroesLoaded=true;
+  loadLeads();loadDemands();demandsLoaded=true;loadHeroes();heroesLoaded=true;loadVols();volsLoaded=true;loadM50();m50Loaded=true;
   if(!pollTimer)pollTimer=setInterval(function(){if(document.visibilityState==='visible')loadLeads()},60000);
 }
 function checkAuth(){
@@ -569,6 +729,9 @@ $('#searchInput').addEventListener('input',function(e){
 $('#refreshBtn').addEventListener('click',loadLeads);
 $('#refreshBtn').addEventListener('click',function(){loadDemands()});
 $('#refreshBtn').addEventListener('click',function(){loadHeroes()});
+$('#refreshBtn').addEventListener('click',function(){loadVols()});
+$('#refreshBtn').addEventListener('click',function(){loadM50()});
+$('#refreshBtn').addEventListener('click',function(){loadCerts()});
 
 /* ---------- v1.0.9 Demand Wall ---------- */
 var demands=[],dStats={},dFilter='',demandsLoaded=false;
@@ -718,15 +881,27 @@ $('#daAddBtn').addEventListener('click',function(){
 $('#vLeads').addEventListener('click',function(){switchView('leads')});
 $('#vDemands').addEventListener('click',function(){switchView('demands')});
 $('#vHeroes').addEventListener('click',function(){switchView('heroes')});
+$('#vVols').addEventListener('click',function(){switchView('vols')});
+$('#vM50').addEventListener('click',function(){switchView('m50')});
+$('#vCerts').addEventListener('click',function(){switchView('certs')});
 function switchView(v){
   $('#vLeads').classList.toggle('active',v==='leads');
   $('#vDemands').classList.toggle('active',v==='demands');
   $('#vHeroes').classList.toggle('active',v==='heroes');
+  $('#vVols').classList.toggle('active',v==='vols');
+  $('#vM50').classList.toggle('active',v==='m50');
+  $('#vCerts').classList.toggle('active',v==='certs');
   $('#leadsView').classList.toggle('hidden',v!=='leads');
   $('#demandsView').classList.toggle('hidden',v!=='demands');
   $('#heroesView').classList.toggle('hidden',v!=='heroes');
+  $('#volunteersView').classList.toggle('hidden',v!=='vols');
+  $('#m50View').classList.toggle('hidden',v!=='m50');
+  $('#certsView').classList.toggle('hidden',v!=='certs');
   if(v==='demands')loadDemands();
   if(v==='heroes')loadHeroes();
+  if(v==='vols')loadVols();
+  if(v==='m50')loadM50();
+  if(v==='certs')loadCerts();
 }
 
 /* ---------- v1.0.11 Green Heroes ---------- */
@@ -946,6 +1121,296 @@ $('#backupBtn').addEventListener('click',function(){
   }).catch(function(){btn.textContent='\u{1F5E5} Fail';setTimeout(function(){btn.textContent=old},4000)})
   .finally(function(){btn.disabled=false});
 });
+
+/* ---------- v1.0.24 Volunteers ---------- */
+var vols=[],vStats={},vFilter='',volsLoaded=false;
+var VSTATUS_LABEL={new:'Naya',contacted:'Rabta kiya',active:'Active',waitlist:'Waitlist',inactive:'Inactive'};
+var LEVEL_LABEL={supporter:'L1 Supporter',active:'L2 Active','team-lead':'L3 Team Lead'};
+function vHours(V){var h=0,i,e,n;for(i=0;i<(V.log||[]).length;i++){e=V.log[i];n=parseFloat(e.hours);if(e.verified&&isFinite(n))h+=n;}return Math.round(h*10)/10;}
+function vSuggest(V){var h=vHours(V),n=(V.log||[]).length;if(n>=3&&h>=30)return 'L3';if(n>=3&&h>=10)return 'L2';if(h>0)return 'L1';return '—';}
+function loadVols(){
+  if(!authed)return;
+  fetch('/api/volunteers').then(function(r){
+    if(r.status===401){showLogin();throw new Error('unauth')}
+    return r.json();
+  }).then(function(j){
+    if(!j.ok)return;
+    vols=j.volunteers||[];vStats=j.stats||{};
+    renderVolStats();renderVols();
+    $('#vUpdated').textContent='Last updated: '+new Date().toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }).catch(function(){});
+}
+function renderVolStats(){
+  $('#vTotal').textContent=vStats.total!=null?vStats.total:'—';
+  $('#vNew').textContent=vStats.new!=null?vStats.new:'—';
+  $('#vActive').textContent=vStats.active!=null?vStats.active:'—';
+  $('#vWait').textContent=vStats.waitlist!=null?vStats.waitlist:'—';
+  $('#vHours').textContent=vStats.hours_verified!=null?vStats.hours_verified:'—';
+  var pb=$('#vPendBadge');
+  if(vStats.new>0){pb.textContent=vStats.new;pb.classList.remove('hidden')}
+  else pb.classList.add('hidden');
+}
+function renderVols(){
+  var rows=vols.filter(function(V){return !vFilter||V.status===vFilter});
+  var tb=$('#volsBody');tb.innerHTML='';
+  $('#vEmpty').classList.toggle('hidden',rows.length>0);
+  for(var i=0;i<rows.length;i++){
+    (function(V){
+      var tr=document.createElement('tr');
+      var acts='';
+      if(V.status==='new')acts+='<button data-a="contacted" title="Call ho gayi — rabta record karein">📞</button>';
+      if(V.status!=='active')acts+='<button data-a="active" title="Active volunteer banao">✅</button>';
+      if(V.status!=='waitlist')acts+='<button data-a="waitlist" title="Waitlist (abhi koi task available nahi)">⏸</button>';
+      if(V.status!=='inactive')acts+='<button data-a="inactive" title="Inactive (response nahi aa raha)">💤</button>';
+      acts+='<button data-a="task" title="Task assign karein (task + deadline)">📋</button>';
+      acts+='<button data-a="log" title="Activity log entry (ghantay + verified)">📒</button>';
+      if(V.certStatus!=='issued')acts+='<button data-a="cert" title="Certificate issue karein">🎓</button>';
+      acts+='<button data-a="consent" title="Guardian consent status (under-18)">🔒</button>';
+      acts+='<button data-a="notes" title="Notes edit">✏️</button>';
+      acts+='<button data-a="delete" title="Delete">🗑</button>';
+      var certChip=V.certStatus==='issued'?'<div style="font-size:11px;color:#7c3aed;font-weight:700;margin-top:3px">🎓 '+esc(V.certId)+(V.certType==='activity-letter'?' (letter)':'')+'</div>':'';
+      var consentChip=V.consent==='pending'?'<div style="font-size:11px;color:#8a6200;margin-top:3px">🔒 consent pending</div>':'';
+      tr.innerHTML=
+        '<td class="td-date">'+esc(fmtTime(V.ts))+'</td>'+
+        '<td class="td-name">'+esc(V.name)+(V.ageGroup?' <span class="lvl">('+esc(V.ageGroup)+')</span>':'')+consentChip+'</td>'+
+        '<td>'+esc(V.city||'—')+'</td>'+
+        '<td style="font-size:12px">'+esc(V.availability||'—')+'</td>'+
+        '<td><span class="lvl" title="Suggested level: '+vSuggest(V)+' (10h+3 activities = L2, 30h = L3)">'+esc(LEVEL_LABEL[V.level]||V.level||'—')+'</span></td>'+
+        '<td><span class="hrs">'+vHours(V)+'h</span></td>'+
+        '<td><span class="badge st-'+esc(V.status)+'">'+esc(VSTATUS_LABEL[V.status]||V.status)+'</span>'+certChip+'</td>'+
+        '<td><div class="dact">'+acts+'</div></td>';
+      tr.querySelectorAll('.dact button').forEach(function(b){
+        b.addEventListener('click',function(ev){ev.stopPropagation();volAction(V,b.getAttribute('data-a'))});
+      });
+      tb.appendChild(tr);
+    })(rows[i]);
+  }
+}
+function patchVol(V,body){
+  body.key=V.key;
+  fetch('/api/volunteers',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+  .then(function(r){return r.json()}).then(function(j){
+    if(!j.ok){alert('Fail: '+(j.error||''));return}
+    loadVols();
+    if(body.action==='cert')alert('🎓 Certificate issue ho gaya — ID: '+j.volunteer.certId);
+  }).catch(function(){alert('Network masla — dobara koshish karein')});
+}
+function volAction(V,a){
+  if(a==='delete'){
+    if(!confirm('Pakka delete? Ye volunteer record hamesha ke liye remove ho jayega.'))return;
+    fetch('/api/volunteers?key='+encodeURIComponent(V.key),{method:'DELETE'})
+    .then(function(r){return r.json()}).then(function(j){if(j.ok)loadVols();else alert('Fail: '+(j.error||''))})
+    .catch(function(){alert('Network masla — dobara koshish karein')});
+    return;
+  }
+  if(a==='notes'){
+    var v=prompt('Notes (internal — call ki baatein, task details):',V.notes||'');
+    if(v===null)return;
+    patchVol(V,{notes:v});return;
+  }
+  if(a==='consent'){
+    var c=prompt('Guardian consent status — n/a / pending / received:',V.consent||'n/a');
+    if(c===null)return;
+    c=c.trim().toLowerCase();
+    if(['n/a','pending','received'].indexOf(c)===-1){alert('n/a, pending ya received likhein');return}
+    patchVol(V,{consent:c});return;
+  }
+  if(a==='task'){vmTaskKey=V.key;$('#vmTaskWho').textContent=V.name+(V.city?' — '+V.city:'');$('#vmTaskInput').value=V.task||'';$('#vmTaskDeadline').value=/^\d{4}-\d{2}-\d{2}$/.test(V.taskDeadline||'')?V.taskDeadline:'';$('#vmTaskModal').classList.remove('hidden');return}
+  if(a==='log'){vmLogKey=V.key;$('#vmLogWho').textContent=V.name+(V.city?' — '+V.city:'');$('#vmLogTask').value='';$('#vmLogHours').value='';$('#vmLogVerified').checked=false;$('#vmLogOutcome').value='';$('#vmLogModal').classList.remove('hidden');return}
+  if(a==='cert'){
+    if(V.certStatus==='issued'){alert('Certificate pehle se issue ho chuka: '+V.certId);return}
+    vmCertKey=V.key;
+    $('#vmCertWho').textContent=V.name+(V.city?' — '+V.city:'');
+    $('#vmCertInfo').textContent='Record: '+(V.log||[]).length+' logged activities, '+vHours(V)+' verified hours. Suggested level: '+vSuggest(V)+'. Yaad rahe: certificate sirf verified kaam par — sirf form bharne par nahi.';
+    $('#vmCertType').value='volunteer';
+    $('#vmCertModal').classList.remove('hidden');return;
+  }
+  patchVol(V,{action:'status',status:a});
+}
+var vmTaskKey='',vmLogKey='',vmCertKey='',vmVerifyKey='';
+$('#vmTaskCancel').addEventListener('click',function(){$('#vmTaskModal').classList.add('hidden')});
+$('#vmLogCancel').addEventListener('click',function(){$('#vmLogModal').classList.add('hidden')});
+$('#vmCertCancel').addEventListener('click',function(){$('#vmCertModal').classList.add('hidden')});
+$('#vmVerifyCancel').addEventListener('click',function(){$('#vmVerifyModal').classList.add('hidden')});
+['vmTaskModal','vmLogModal','vmCertModal','vmVerifyModal'].forEach(function(id){
+  var el=$('#'+id);
+  el.addEventListener('click',function(e){if(e.target===el)el.classList.add('hidden')});
+});
+$('#vmTaskSave').addEventListener('click',function(){
+  if(!vmTaskKey)return;
+  var t=$('#vmTaskInput').value.trim();
+  if(!t){alert('Task likhna zaroori hai');return}
+  patchVol({key:vmTaskKey},{action:'task',task:t,deadline:$('#vmTaskDeadline').value});
+  $('#vmTaskModal').classList.add('hidden');
+});
+$('#vmLogSave').addEventListener('click',function(){
+  if(!vmLogKey)return;
+  var t=$('#vmLogTask').value.trim();
+  if(!t){alert('Task likhna zaroori hai');return}
+  patchVol({key:vmLogKey},{action:'log',logTask:t,logHours:$('#vmLogHours').value||0,logVerified:$('#vmLogVerified').checked,logOutcome:$('#vmLogOutcome').value.trim()});
+  $('#vmLogModal').classList.add('hidden');
+});
+$('#vmCertSave').addEventListener('click',function(){
+  if(!vmCertKey)return;
+  patchVol({key:vmCertKey},{action:'cert',certType:$('#vmCertType').value});
+  $('#vmCertModal').classList.add('hidden');
+});
+$('#vTabsRow').addEventListener('click',function(e){
+  var b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('#vTabsRow .tab').forEach(function(t){t.classList.remove('active')});
+  b.classList.add('active');vFilter=b.getAttribute('data-st')||'';
+  renderVols();
+});
+$('#vaAddBtn').addEventListener('click',function(){
+  var name=$('#vaName').value.trim();
+  if(!name){alert('Naam zaroori hai');return}
+  var btn=$('#vaAddBtn');btn.disabled=true;
+  fetch('/api/volunteers',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
+    name:name,phone:$('#vaPhone').value.trim(),city:$('#vaCity').value.trim(),age:$('#vaAge').value.trim(),
+    availability:$('#vaAvail').value,role:$('#vaRole').value
+  })}).then(function(r){return r.json()}).then(function(j){
+    if(j.ok){['vaName','vaPhone','vaCity','vaAge'].forEach(function(id){$('#'+id).value=''});$('#vaAvail').value='';$('#vaRole').value='';loadVols()}
+    else alert('Fail: '+(j.error||''));
+  }).catch(function(){alert('Network masla — dobara koshish karein')})
+  .finally(function(){btn.disabled=false});
+});
+
+/* ---------- v1.0.24 Mission 50 ---------- */
+var m50s=[],mStats={},mFilter='',m50Loaded=false;
+var MSTATUS_LABEL={submitted:'Submitted',review:'Review',verified:'Verified',milestone50:'50 Milestone',rejected:'Rejected'};
+function loadM50(){
+  if(!authed)return;
+  fetch('/api/mission50').then(function(r){
+    if(r.status===401){showLogin();throw new Error('unauth')}
+    return r.json();
+  }).then(function(j){
+    if(!j.ok)return;
+    m50s=j.subs||[];mStats=j.stats||{};
+    renderM50Stats();renderM50();
+    $('#mUpdated').textContent='Last updated: '+new Date().toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }).catch(function(){});
+}
+function renderM50Stats(){
+  $('#mTotal').textContent=mStats.total!=null?mStats.total:'—';
+  $('#mSub').textContent=mStats.submitted!=null?mStats.submitted:'—';
+  $('#mRev').textContent=mStats.review!=null?mStats.review:'—';
+  $('#mVer').textContent=mStats.verified!=null?mStats.verified:'—';
+  $('#mM50').textContent=mStats.milestone50!=null?mStats.milestone50:'—';
+  $('#mPlants').textContent=mStats.plants_verified!=null?mStats.plants_verified:'—';
+  var pb=$('#mPendBadge');
+  if(mStats.submitted>0){pb.textContent=mStats.submitted;pb.classList.remove('hidden')}
+  else pb.classList.add('hidden');
+}
+function renderM50(){
+  var rows=m50s.filter(function(M){return !mFilter||M.status===mFilter});
+  var tb=$('#m50Body');tb.innerHTML='';
+  $('#mEmpty').classList.toggle('hidden',rows.length>0);
+  for(var i=0;i<rows.length;i++){
+    (function(M){
+      var tr=document.createElement('tr');
+      var acts='';
+      if(M.status==='submitted')acts+='<button data-a="review" title="Review shuru — evidence dekhein">🔍</button>';
+      if(M.status==='review'||M.status==='submitted')acts+='<button data-a="verify" title="Verified plants set karein (evidence dekh kar)">✅</button>';
+      if(M.status!=='rejected'&&M.status!=='milestone50')acts+='<button data-a="rejected" title="Reject (spam / ghalat entry)">🚫</button>';
+      if((M.verifiedPlants||0)>=50&&!M.certId)acts+='<button data-a="cert" title="Mission 50 completion certificate">🏁</button>';
+      acts+='<button data-a="notes" title="Notes edit">✏️</button>';
+      acts+='<button data-a="delete" title="Delete">🗑</button>';
+      var certChip=M.certId?'<div style="font-size:11px;color:#7c3aed;font-weight:700;margin-top:3px">🎓 '+esc(M.certId)+'</div>':'';
+      tr.innerHTML=
+        '<td class="td-date">'+esc(fmtTime(M.ts))+'</td>'+
+        '<td class="td-name">'+esc(M.name)+'</td>'+
+        '<td>'+esc(M.city||'—')+'</td>'+
+        '<td>'+(M.qty?esc(M.qty)+' 🌱':'—')+'</td>'+
+        '<td><span class="hrs">'+(M.verifiedPlants||0)+'</span></td>'+
+        '<td>'+(M.video?'<a class="tel" href="'+esc(M.video)+'" target="_blank" rel="noopener" data-stop="1">🔗 Video</a>':'—')+'</td>'+
+        '<td style="font-size:12px">'+(M.plantType==='historical'?'Historical':'Naya')+'</td>'+
+        '<td><span class="badge st-'+esc(M.status)+'">'+esc(MSTATUS_LABEL[M.status]||M.status)+'</span>'+certChip+'</td>'+
+        '<td><div class="dact">'+acts+'</div></td>';
+      tr.querySelectorAll('.dact button').forEach(function(b){
+        b.addEventListener('click',function(ev){ev.stopPropagation();m50Action(M,b.getAttribute('data-a'))});
+      });
+      tb.appendChild(tr);
+    })(rows[i]);
+  }
+}
+function patchM50(M,body){
+  body.key=M.key;
+  fetch('/api/mission50',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+  .then(function(r){return r.json()}).then(function(j){
+    if(!j.ok){alert('Fail: '+(j.error||''));return}
+    loadM50();
+    if(body.action==='cert')alert('🏁 Mission 50 certificate issue ho gaya — ID: '+j.sub.certId);
+  }).catch(function(){alert('Network masla — dobara koshish karein')});
+}
+function m50Action(M,a){
+  if(a==='delete'){
+    if(!confirm('Pakka delete? Ye Mission 50 submission hamesha ke liye remove ho jayegi.'))return;
+    fetch('/api/mission50?key='+encodeURIComponent(M.key),{method:'DELETE'})
+    .then(function(r){return r.json()}).then(function(j){if(j.ok)loadM50();else alert('Fail: '+(j.error||''))})
+    .catch(function(){alert('Network masla — dobara koshish karein')});
+    return;
+  }
+  if(a==='notes'){
+    var v=prompt('Notes (evidence kya dekha, kya missing hai):',M.notes||'');
+    if(v===null)return;
+    patchM50(M,{notes:v});return;
+  }
+  if(a==='verify'){
+    vmVerifyKey=M.key;
+    $('#vmVerifyWho').textContent=M.name+(M.city?' — '+M.city:'')+' | Claim: '+(M.qty||'—');
+    $('#vmVerifyQty').value=M.verifiedPlants||'';
+    $('#vmVerifyModal').classList.remove('hidden');return;
+  }
+  if(a==='cert'){
+    if((M.verifiedPlants||0)<50){alert('Mission 50 certificate sirf 50+ verified plants par milta hai. Pehle ✅ se verify karein.');return}
+    if(!confirm('Mission 50 completion certificate issue karein — '+M.name+' ('+(M.verifiedPlants||0)+' verified plants)? ID khud ban jayegi.'))return;
+    patchM50(M,{action:'cert'});return;
+  }
+  patchM50(M,{action:'status',status:a});
+}
+$('#vmVerifySave').addEventListener('click',function(){
+  if(!vmVerifyKey)return;
+  var q=parseInt($('#vmVerifyQty').value,10);
+  if(!isFinite(q)||q<0){alert('Sahi number likhein');return}
+  patchM50({key:vmVerifyKey},{action:'verify',qty:q});
+  $('#vmVerifyModal').classList.add('hidden');
+});
+$('#mTabsRow').addEventListener('click',function(e){
+  var b=e.target.closest('.tab');if(!b)return;
+  document.querySelectorAll('#mTabsRow .tab').forEach(function(t){t.classList.remove('active')});
+  b.classList.add('active');mFilter=b.getAttribute('data-st')||'';
+  renderM50();
+});
+
+/* ---------- v1.0.24 Certificate register ---------- */
+function loadCerts(){
+  if(!authed)return;
+  fetch('/api/volunteers?certs=1').then(function(r){
+    if(r.status===401){showLogin();throw new Error('unauth')}
+    return r.json();
+  }).then(function(j){
+    if(!j.ok)return;
+    var certs=j.certs||[];
+    $('#cTotal').textContent=certs.length;
+    var tb=$('#certsBody');tb.innerHTML='';
+    $('#cEmpty').classList.toggle('hidden',certs.length>0);
+    var TYPE_LABEL={volunteer:'Volunteer cert','activity-letter':'Activity letter',mission50:'Mission 50'};
+    for(var i=0;i<certs.length;i++){
+      (function(C){
+        var tr=document.createElement('tr');
+        tr.innerHTML=
+          '<td class="td-name" style="font-weight:700;color:#7c3aed">'+esc(C.id)+'</td>'+
+          '<td>'+esc(TYPE_LABEL[C.type]||C.type)+'</td>'+
+          '<td>'+esc(C.recipient)+'</td>'+
+          '<td>'+esc(C.city||'—')+'</td>'+
+          '<td style="font-size:12px">'+esc(C.contribution||'—')+'</td>'+
+          '<td class="td-date">'+esc(C.issued||'')+'</td>';
+        tb.appendChild(tr);
+      })(certs[i]);
+    }
+    $('#cUpdated').textContent='Last updated: '+new Date().toLocaleTimeString('en-PK',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }).catch(function(){});
+}
 
 /* ---------- init ---------- */
 checkAuth();
