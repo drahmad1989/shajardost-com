@@ -1013,3 +1013,28 @@ Owner ne ChatGPT se volunteer-topic ka full mashwara karaya aur dono replies rel
 - Baqi owner-blocked: Waqas/Mirha/Green Meadow calls, hero details ✏️, Bug 7 de-dup
 
 **END OF MASTER CHANGELOG**
+
+## v1.0.25 — 2026-10-22: AUTO-ACK EMAIL ENRICHMENT — PROJECTS LIST + FIRST-TASK ENGINE
+
+Owner sawal: "saray projects ki list bna len, aur un ke lye task assigned b tarteeb dey len — wohi ham use kren gy email main automatic replies main." Is version ne auto-ack email ko plain confirmation se proper onboarding bana diya: har form filler ko foran (1) ShajarDost ke tamam projects ki list, (2) apne interest ka "agla qadam" block, aur (3) volunteer ho to EK tay-shuda pehla task (playbook Section 3 menu se) milta hai.
+
+### Changes
+- **functions/lib/catalog.js (NEW):** SINGLE SOURCE OF TRUTH — 7 projects (Mission Fifty, Green Scouts, Mini Nursery, Miyawaki Forest, Free Plants Wall, Volunteer Program, Green Heroes — sab site ke apne meta alfaz se) + 12-task menu (playbook verbatim: title/what/proof/where/hours) + role→task mapping (volunteer.html ke 10 role options; default T5 proofreading — sab se aasan remote starter) + interestBlock() (10 interest families). 100% static content — koi user input nahi, XSS-safe by construction. Owner playbook badle to yahan badle — email khud update
+- **functions/api/lead.js:** (1) sendAck ab extra {role} leta hai aur email mein blocks render karta hai — volunteer: task box (title + kya + saboot + 7-din soft deadline + "call par confirm ya adjust hoga") + on-site tasks par Kasur/Pattoki/Phool Nagar condition + door hone par remote fallback note (no-project policy) + 2 golden rules (no money collection, no admin password); mission-fifty: honest counting + hashtags + certificate-at-50; free-plants: wall approve flow + email/phone privacy promise; scouts: under-18 parent/guardian route; donate: IBAN pointer; sponsorship/hero/miyawaki/nursery: apne blocks; (2) HAR email mein "ShajarDost ke Projects" section (7 projects, 1-line each, full URLs); (3) volunteer record ab intake par hi pre-suggested task rakhta hai (task: title + history 'task-suggested') — owner ka 📋 modal pehle se bhari milti hai, sirf deadline add karni hai
+- Email phir bhi dormant hai (RESEND_API_KEY owner-blocked) — jab tak Resend activate nahi, koi email nahi jata; intake/leads/demands/volunteers/m50 sab qabel-e-mutabiq unchanged
+
+### Files
+- NEW: functions/lib/catalog.js
+- MODIFIED: functions/api/lead.js (306 lines)
+- Scripts: scripts/test-catalog-v1025.mjs (NEW harness)
+
+### Verification
+- [x] node --check: lead.js + catalog.js clean
+- [x] NEW harness 70/70: role→task mapping (14 cases incl. whitespace normalize), interest blocks (12 families + default null), volunteer email (task box/rules/projects/vol record), on-site condition + fallback note, m50 honest line, wall privacy line, scouts consent route, donate IBAN pointer, general-inquiry clean base, dormant-path regression, demand+honeypot regression
+- [x] Regressions: v1.0.23 lead 18/18, v1.0.22 demands 36/36, v1.0.24 volunteers 66/66
+- [x] Commit a506fd2 → push static-live → deploy 5e26ac3c → live: 4 pages 200, donate IBAN intact (2), volunteers/mission50 APIs 401 unauth, public wall ok:true, lead intake ok:true (ack dormant — 1 test lead "V1025 Check", owner admin se delete kar sakta hai)
+
+### Open items
+- Resend DNS + API key owner ke paas pending (v1.0.23 se) — activation ke baad ye enriched email foran live ho jayega, koi aur kaam nahi
+- Email wording owner review kare — catalog.js ek hi jagah hai, ek word badlo to sab emails update
+- Baqi owner-blocked: Waqas/Mirha/Green Meadow calls, hero details ✏️, Bug 7 de-dup
