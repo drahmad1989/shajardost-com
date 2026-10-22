@@ -1038,3 +1038,38 @@ Owner sawal: "saray projects ki list bna len, aur un ke lye task assigned b tart
 - Resend DNS + API key owner ke paas pending (v1.0.23 se) — activation ke baad ye enriched email foran live ho jayega, koi aur kaam nahi
 - Email wording owner review kare — catalog.js ek hi jagah hai, ek word badlo to sab emails update
 - Baqi owner-blocked: Waqas/Mirha/Green Meadow calls, hero details ✏️, Bug 7 de-dup
+
+## v1.0.26–v1.0.29 — 2026-10-23 00:30 (Asia/Karachi): RESEND EMAIL LIVE — automatic acknowledgment emails ACTIVE
+
+Owner ne Resend mein domain add ki (Resend Forge + Cloudflare provider, region ap-northeast-1 Tokyo) — Resend ne Cloudflare OAuth authorization se 3 DNS records KHUD add kiye aur domain 2 minute mein verified ho gaya (agent ka manual DNS step zaroori na raha; agent ne zone inspect kar ke tasdeeq ki). Owner ne API key di → secret set → pehli 2 live form-tests SILENT FAIL hui (na email, na error) → wrangler live-tail debugging se root cause nikala: `context.waitUntil` fire-and-forget Pages Functions mein chal hi nahi raha tha → inline `await` fix → ab har form filler ko foran confirmation email jaati hai.
+
+### Changes
+- **RESEND_API_KEY secret** production par set — email system dormant → LIVE
+- **functions/api/lead.js (321 lines):** (v1.0.28) sendAck ab **inline await** (context.waitUntil is setup mein reliably run nahi hota tha) + `[ack-email]` logs — har lead ke tail mein outcome nazar aata hai (`gate key=set email=yes` → `sent SD-XXXXXX id=...` ya `FAILED`/`resend <status>`); (v1.0.29) Resend fetch par `AbortSignal.timeout(8000)` — Resend slow/hang ho to lead response na atke (AbortError → FAILED log, lead phir bhi save)
+- Intake guarantees UNCHANGED: email fail ho to bhi try/catch lead ko ok:true return karta hai — intake kabhi email ki nazar se fail nahi hota
+- **KV cleanup:** tamam test records admin API se delete — "V1025 Check" lead (v1.0.25), "TEST Volunteer" vol record (v1.0.24), Resend Test B/C(×2)/D/F leads + 5 vol records. Dashboard ab sirf ASLI leads
+
+### Files
+- MODIFIED: functions/api/lead.js (306→321)
+- Scripts: scripts/resend-e2e-v1026.py, scripts/cleanup-v1026.py, scripts/cleanup-v1029.py, scripts/tail-test-v1027.sh (live-tail + test-lead harness)
+
+### Deploy chain (4 deployments — static content bilkul same, sirf functions/api/lead.js badla)
+- v1.0.26 = b1b753c1 (RESEND_API_KEY secret bind)
+- v1.0.27 = 22234fec (sendAck response logging — waitUntil ab bhi dead tha)
+- v1.0.28 = bd7f5315 (**inline await + gate diagnostic — PEHLI LIVE EMAIL**)
+- v1.0.29 = d9a28f30 (8s timeout — **FINAL, live-proven**) — rollback target: v1.0.25=5e26ac3c
+
+### Verification
+- [x] Zone inspect: send + rsend CNAMEs (forge.rmta.net) aur resend._domainkey TXT Resend Forge ne add kiye; `_dmarc` TXT (`v=DMARC1; p=none`) pehle se mojood; legacy MX/SPF/ftp records (purana PHP-era mail server) UNTOUCHED — Resend ka return-path alag rsend subdomain par hai, koi conflict nahi
+- [x] Direct Resend API test → TEST 1 email accepted (id 01a16503)
+- [x] Live tail proof: v1.0.28 par `[ack-email] sent SD-9F316E id=01a16510` aur final v1.0.29 par `[ack-email] gate key=set(len=36) email=yes` + `sent SD-854E55 id=01a16512`
+- [x] Resend log: 3 emails `no-reply@shajardost.com → ahmad22mao@gmail.com` (19:08/19:22/19:24 UTC) — v1.0.25 ka rich template (task box + projects list) live chala
+- [x] Lead intake regression: volunteer → lead + vol record + email, ok:true; honeypot/rate-limit untouched
+- [x] Post-cleanup KV: 5 asli leads (Muhammad Ahsan Iqbal [NEW], Green Meadow, Mirha, Waqas, Daniel-spam) — 0 test records, 0 test vols
+- [x] Live pages 200 (/, /donate, /volunteer, /free-plants, /mission-fifty) | IndexNow 4 URLs → 200
+
+### Open items
+- Owner: ahmad22mao@gmail.com inbox mein 3 test emails check karein (TEST 1 / SD-9F316E / SD-854E55) — spam folder bhi; spam mein gain to "Not spam" + no-reply@shajardost.com contacts add
+- **NAYA REAL LEAD:** Muhammad Ahsan Iqbal (Volunteer) 20 Oct se dashboard mein 'new' para hai — 24hr rule ke mutabiq CALL karein
+- Weekly owner-report email (cron.js) ab isi key se chal sakta hai — owner chahen to activate
+- Baqi owner-blocked: Waqas/Mirha/Green Meadow calls, hero details ✏️, Bug 7 de-dup
