@@ -237,14 +237,16 @@ export async function onRequestPost({ request, env, context }) {
     } catch (e) { /* mission50 enqueue fail-open */ }
   }
 
-  /* v1.0.5 auto-acknowledgment email (Resend) — fire-and-forget.
-   * RESEND_API_KEY secret set na ho to silently skip (lead phir bhi safe).
-   * Email fail ho to bhi lead intake kabi fail nahi hota.
-   * v1.0.27: failures ab console.error par visible (wrangler tail se pakde ja sakte hain). */
-  if (lead.email && env.RESEND_API_KEY && context && context.waitUntil) {
-    context.waitUntil(sendAck(env, lead, { role: clean(d.role, 60) }).catch(function (e) {
+  /* v1.0.5 auto-acknowledgment email (Resend) — RESEND_API_KEY na ho to skip (lead phir bhi safe).
+   * v1.0.28: inline await (waitUntil ki jagah) + gate diagnostic — email outcome
+   * ab har request ke tail logs mein nazar aata hai; intake fail-safe (try/catch). */
+  console.log('[ack-email] gate key=' + (env.RESEND_API_KEY ? 'set(len=' + String(env.RESEND_API_KEY).length + ')' : 'MISSING') + ' email=' + (lead.email ? 'yes' : 'no'));
+  if (lead.email && env.RESEND_API_KEY) {
+    try {
+      await sendAck(env, lead, { role: clean(d.role, 60) });
+    } catch (e) {
       console.error('[ack-email] FAILED:', (e && (e.stack || e.message)) || String(e));
-    }));
+    }
   }
   return json({ ok: true, id: key });
 }
