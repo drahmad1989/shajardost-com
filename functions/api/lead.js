@@ -239,9 +239,12 @@ export async function onRequestPost({ request, env, context }) {
 
   /* v1.0.5 auto-acknowledgment email (Resend) — fire-and-forget.
    * RESEND_API_KEY secret set na ho to silently skip (lead phir bhi safe).
-   * Email fail ho to bhi lead intake kabi fail nahi hota. */
+   * Email fail ho to bhi lead intake kabi fail nahi hota.
+   * v1.0.27: failures ab console.error par visible (wrangler tail se pakde ja sakte hain). */
   if (lead.email && env.RESEND_API_KEY && context && context.waitUntil) {
-    context.waitUntil(sendAck(env, lead, { role: clean(d.role, 60) }).catch(function () { }));
+    context.waitUntil(sendAck(env, lead, { role: clean(d.role, 60) }).catch(function (e) {
+      console.error('[ack-email] FAILED:', (e && (e.stack || e.message)) || String(e));
+    }));
   }
   return json({ ok: true, id: key });
 }
@@ -292,7 +295,9 @@ async function sendAck(env, lead, extra) {
     + '<p style="margin-top:16px">Foran rabta karna ho to call karein: <b><a href="tel:03333197977" style="color:#2d6a4f">0333-3197977</a></b></p>'
     + '<p style="color:#7a7872;font-size:12.5px;margin-top:18px">Shukriya ke aap ne ped lagane mein hamara saath diya \u2014 har ped zindagi deti hai.</p>'
     + '</div></div>';
-  await fetch('https://api.resend.com/emails', {
+  /* v1.0.27: Resend response ab log hota hai — 2xx par id, warna status+body
+   * (wrangler pages deployment tail se foran nazar aata hai ke email gayi ya nahi). */
+  const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { 'Authorization': 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -303,4 +308,11 @@ async function sendAck(env, lead, extra) {
       html: html
     })
   });
+  if (!r.ok) {
+    const t = await r.text().catch(function () { return '(no body)'; });
+    console.error('[ack-email] resend ' + r.status + ' for SD-' + ref + ':', String(t).slice(0, 400));
+  } else {
+    const j = await r.json().catch(function () { return {}; });
+    console.log('[ack-email] sent SD-' + ref + ' id=' + (j.id || '?') + ' to=' + lead.email);
+  }
 }
