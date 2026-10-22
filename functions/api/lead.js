@@ -301,6 +301,8 @@ async function sendAck(env, lead, extra) {
    * (wrangler pages deployment tail se foran nazar aata hai ke email gayi ya nahi). */
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
+    /* v1.0.29: 8s cap — Resend slow/hang ho to lead response na atke (AbortError → FAILED log) */
+    signal: AbortSignal.timeout(8000),
     headers: { 'Authorization': 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: from,
